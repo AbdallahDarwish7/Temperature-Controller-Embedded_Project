@@ -5,5 +5,5 @@
 #include "TC72.h"
 
 void test(void){
-    SPI_initMaster();
+    SPI_initSlave();
 }

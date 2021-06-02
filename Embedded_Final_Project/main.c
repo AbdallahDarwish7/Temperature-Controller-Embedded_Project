@@ -7,12 +7,14 @@
 
 #include <avr/io.h>
 
-#include "DIO.h"
 #include "TC72.h"
+#include "LCD.h"
 
 int main(void)
 {
     /* Replace with your application code */
+	
+	test_LCD();
 	test();
     while (1) 
     {
