@@ -1,7 +1,7 @@
 #include "SPI.h"
 #include <avr/io.h>
 #include "DIO.h"
-#include "../../Macros.h"
+#include "Macros.h"
 
 #define SPI_PORT ((unsigned char)1)
 
