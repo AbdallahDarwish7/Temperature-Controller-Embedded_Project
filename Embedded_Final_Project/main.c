@@ -15,7 +15,6 @@ int main(void)
     /* Replace with your application code */
 	
 	test_LCD();
-	test();
     while (1) 
     {
     }

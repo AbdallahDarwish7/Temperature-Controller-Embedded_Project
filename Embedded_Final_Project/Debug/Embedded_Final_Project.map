@@ -28,12 +28,27 @@ Discarded input sections
  .text          0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
  .data          0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
  .bss           0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
+ .text.init     0x00000000       0x1a HAL/TC72_Temp_sensor/TC72.o
+ .text.ReadTemperature
+                0x00000000       0x10 HAL/TC72_Temp_sensor/TC72.o
+ .debug_info    0x00000000      0x164 HAL/TC72_Temp_sensor/TC72.o
+ .debug_abbrev  0x00000000       0xcc HAL/TC72_Temp_sensor/TC72.o
+ .debug_loc     0x00000000       0x4e HAL/TC72_Temp_sensor/TC72.o
+ .debug_aranges
+                0x00000000       0x28 HAL/TC72_Temp_sensor/TC72.o
+ .debug_ranges  0x00000000       0x18 HAL/TC72_Temp_sensor/TC72.o
+ .debug_line    0x00000000       0xba HAL/TC72_Temp_sensor/TC72.o
+ .debug_str     0x00000000      0x1d6 HAL/TC72_Temp_sensor/TC72.o
+ .comment       0x00000000       0x31 HAL/TC72_Temp_sensor/TC72.o
+ .debug_frame   0x00000000       0x3c HAL/TC72_Temp_sensor/TC72.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
  .text          0x00000000        0x0 MCAL/DIO/DIO.o
  .data          0x00000000        0x0 MCAL/DIO/DIO.o
  .bss           0x00000000        0x0 MCAL/DIO/DIO.o
+ .text.DIO_ChannelDir
+                0x00000000       0x40 MCAL/DIO/DIO.o
  .text.DIO_ChannelRead
                 0x00000000       0x42 MCAL/DIO/DIO.o
  .text.DIO_PortDir
@@ -50,14 +65,22 @@ Discarded input sections
  .bss           0x00000000        0x0 MCAL/SPI/SPI.o
  .text.SPI_initMaster
                 0x00000000       0x42 MCAL/SPI/SPI.o
+ .text.SPI_initSlave
+                0x00000000       0x2c MCAL/SPI/SPI.o
  .text.SPI_sendByte
                 0x00000000        0x8 MCAL/SPI/SPI.o
  .text.SPI_recieveByte
                 0x00000000        0x8 MCAL/SPI/SPI.o
- .text.SPI_SendString
-                0x00000000       0x2c MCAL/SPI/SPI.o
- .text.SPI_ReceiveString
-                0x00000000       0x42 MCAL/SPI/SPI.o
+ .debug_info    0x00000000      0x20e MCAL/SPI/SPI.o
+ .debug_abbrev  0x00000000       0xe2 MCAL/SPI/SPI.o
+ .debug_loc     0x00000000       0x4e MCAL/SPI/SPI.o
+ .debug_aranges
+                0x00000000       0x38 MCAL/SPI/SPI.o
+ .debug_ranges  0x00000000       0x28 MCAL/SPI/SPI.o
+ .debug_line    0x00000000      0x195 MCAL/SPI/SPI.o
+ .debug_str     0x00000000      0x1ef MCAL/SPI/SPI.o
+ .comment       0x00000000       0x31 MCAL/SPI/SPI.o
+ .debug_frame   0x00000000       0x5c MCAL/SPI/SPI.o
  .text          0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
  .data          0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
  .bss           0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
@@ -229,7 +252,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3a6
+.text           0x00000000      0x330
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
                 0x00000000                __vector_default
@@ -342,27 +365,19 @@ END GROUP
  .text.test_LCD
                 0x000001c4       0xac HAL/LCD/LCD.o
                 0x000001c4                test_LCD
- .text.test     0x00000270        0x6 HAL/TC72_Temp_sensor/TC72.o
-                0x00000270                test
- .text.main     0x00000276        0xa main.o
-                0x00000276                main
+ .text.main     0x00000270        0x6 main.o
+                0x00000270                main
  .text.DIO_Init
-                0x00000280       0x76 MCAL/DIO/DIO.o
-                0x00000280                DIO_Init
- .text.DIO_ChannelDir
-                0x000002f6       0x40 MCAL/DIO/DIO.o
-                0x000002f6                DIO_ChannelDir
+                0x00000276       0x76 MCAL/DIO/DIO.o
+                0x00000276                DIO_Init
  .text.DIO_ChannelWrite
-                0x00000336       0x40 MCAL/DIO/DIO.o
-                0x00000336                DIO_ChannelWrite
- .text.SPI_initSlave
-                0x00000376       0x2c MCAL/SPI/SPI.o
-                0x00000376                SPI_initSlave
-                0x000003a2                . = ALIGN (0x2)
+                0x000002ec       0x40 MCAL/DIO/DIO.o
+                0x000002ec                DIO_ChannelWrite
+                0x0000032c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003a2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000003a2                _exit
-                0x000003a2                exit
+ .fini9         0x0000032c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x0000032c                _exit
+                0x0000032c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -381,11 +396,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003a2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000032c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003a6                _etext = .
+                0x00000330                _etext = .
 
-.data           0x00800060       0x86 load address 0x000003a6
+.data           0x00800060       0x86 load address 0x00000330
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -415,8 +430,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000003a6                __data_load_start = LOADADDR (.data)
-                0x0000042c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000330                __data_load_start = LOADADDR (.data)
+                0x000003b6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008000e6        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -467,11 +482,9 @@ END GROUP
  .comment       0x00000000       0x30 HAL/LCD/LCD.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x31 HAL/LCD/LCD_Cfg.o
- .comment       0x00000030       0x31 HAL/TC72_Temp_sensor/TC72.o
  .comment       0x00000030       0x31 main.o
  .comment       0x00000030       0x31 MCAL/DIO/DIO.o
  .comment       0x00000030       0x31 MCAL/DIO/DIO_Cfg.o
- .comment       0x00000030       0x31 MCAL/SPI/SPI.o
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x3c
@@ -493,90 +506,73 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x1a0
+.debug_aranges  0x00000000      0x138
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x98 HAL/LCD/LCD.o
  .debug_aranges
                 0x00000098       0x18 HAL/LCD/LCD_Cfg.o
  .debug_aranges
-                0x000000b0       0x20 HAL/TC72_Temp_sensor/TC72.o
+                0x000000b0       0x20 main.o
  .debug_aranges
-                0x000000d0       0x20 main.o
+                0x000000d0       0x50 MCAL/DIO/DIO.o
  .debug_aranges
-                0x000000f0       0x50 MCAL/DIO/DIO.o
- .debug_aranges
-                0x00000140       0x18 MCAL/DIO/DIO_Cfg.o
- .debug_aranges
-                0x00000158       0x48 MCAL/SPI/SPI.o
+                0x00000120       0x18 MCAL/DIO/DIO_Cfg.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x16bd
+.debug_info     0x00000000     0x1370
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_info    0x000004e6      0x900 HAL/LCD/LCD.o
  .debug_info    0x00000de6       0xf7 HAL/LCD/LCD_Cfg.o
- .debug_info    0x00000edd       0x93 HAL/TC72_Temp_sensor/TC72.o
- .debug_info    0x00000f70       0xbc main.o
- .debug_info    0x0000102c      0x351 MCAL/DIO/DIO.o
- .debug_info    0x0000137d       0x9c MCAL/DIO/DIO_Cfg.o
- .debug_info    0x00001419      0x2a4 MCAL/SPI/SPI.o
+ .debug_info    0x00000edd       0xa6 main.o
+ .debug_info    0x00000f83      0x351 MCAL/DIO/DIO.o
+ .debug_info    0x000012d4       0x9c MCAL/DIO/DIO_Cfg.o
 
-.debug_abbrev   0x00000000      0xace
+.debug_abbrev   0x00000000      0x957
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_abbrev  0x000004a3      0x258 HAL/LCD/LCD.o
  .debug_abbrev  0x000006fb       0x79 HAL/LCD/LCD_Cfg.o
- .debug_abbrev  0x00000774       0x63 HAL/TC72_Temp_sensor/TC72.o
- .debug_abbrev  0x000007d7       0x68 main.o
- .debug_abbrev  0x0000083f      0x10d MCAL/DIO/DIO.o
- .debug_abbrev  0x0000094c       0x6e MCAL/DIO/DIO_Cfg.o
- .debug_abbrev  0x000009ba      0x114 MCAL/SPI/SPI.o
+ .debug_abbrev  0x00000774       0x68 main.o
+ .debug_abbrev  0x000007dc      0x10d MCAL/DIO/DIO.o
+ .debug_abbrev  0x000008e9       0x6e MCAL/DIO/DIO_Cfg.o
 
-.debug_line     0x00000000      0xaa3
+.debug_line     0x00000000      0x817
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_line    0x00000115      0x408 HAL/LCD/LCD.o
  .debug_line    0x0000051d       0x50 HAL/LCD/LCD_Cfg.o
- .debug_line    0x0000056d       0x65 HAL/TC72_Temp_sensor/TC72.o
- .debug_line    0x000005d2       0x7b main.o
- .debug_line    0x0000064d      0x217 MCAL/DIO/DIO.o
- .debug_line    0x00000864       0x40 MCAL/DIO/DIO_Cfg.o
- .debug_line    0x000008a4      0x1ff MCAL/SPI/SPI.o
+ .debug_line    0x0000056d       0x53 main.o
+ .debug_line    0x000005c0      0x217 MCAL/DIO/DIO.o
+ .debug_line    0x000007d7       0x40 MCAL/DIO/DIO_Cfg.o
 
-.debug_frame    0x00000000      0x308
+.debug_frame    0x00000000      0x23c
  *(.debug_frame)
  .debug_frame   0x00000000      0x188 HAL/LCD/LCD.o
- .debug_frame   0x00000188       0x24 HAL/TC72_Temp_sensor/TC72.o
- .debug_frame   0x000001ac       0x24 main.o
- .debug_frame   0x000001d0       0x90 MCAL/DIO/DIO.o
- .debug_frame   0x00000260       0xa8 MCAL/SPI/SPI.o
+ .debug_frame   0x00000188       0x24 main.o
+ .debug_frame   0x000001ac       0x90 MCAL/DIO/DIO.o
 
-.debug_str      0x00000000      0x69c
+.debug_str      0x00000000      0x5fa
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_str     0x00000196      0x342 HAL/LCD/LCD.o
                                 0x380 (size before relaxing)
  .debug_str     0x000004d8       0x15 HAL/LCD/LCD_Cfg.o
                                 0x1f4 (size before relaxing)
- .debug_str     0x000004ed       0x32 HAL/TC72_Temp_sensor/TC72.o
-                                0x18a (size before relaxing)
- .debug_str     0x0000051f       0x11 main.o
-                                0x192 (size before relaxing)
- .debug_str     0x00000530       0xe6 MCAL/DIO/DIO.o
+ .debug_str     0x000004ed       0x11 main.o
+                                0x18d (size before relaxing)
+ .debug_str     0x000004fe       0xe6 MCAL/DIO/DIO.o
                                 0x27d (size before relaxing)
- .debug_str     0x00000616       0x16 MCAL/DIO/DIO_Cfg.o
+ .debug_str     0x000005e4       0x16 MCAL/DIO/DIO_Cfg.o
                                 0x16c (size before relaxing)
- .debug_str     0x0000062c       0x70 MCAL/SPI/SPI.o
-                                0x210 (size before relaxing)
 
-.debug_loc      0x00000000      0xad0
+.debug_loc      0x00000000      0x92a
  *(.debug_loc)
  .debug_loc     0x00000000      0x64a HAL/LCD/LCD.o
  .debug_loc     0x0000064a      0x2e0 MCAL/DIO/DIO.o
- .debug_loc     0x0000092a      0x1a6 MCAL/SPI/SPI.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -596,13 +592,11 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x120
+.debug_ranges   0x00000000       0xd8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x88 HAL/LCD/LCD.o
- .debug_ranges  0x00000088       0x10 HAL/TC72_Temp_sensor/TC72.o
- .debug_ranges  0x00000098       0x10 main.o
- .debug_ranges  0x000000a8       0x40 MCAL/DIO/DIO.o
- .debug_ranges  0x000000e8       0x38 MCAL/SPI/SPI.o
+ .debug_ranges  0x00000088       0x10 main.o
+ .debug_ranges  0x00000098       0x40 MCAL/DIO/DIO.o
 
 .debug_macro
  *(.debug_macro)

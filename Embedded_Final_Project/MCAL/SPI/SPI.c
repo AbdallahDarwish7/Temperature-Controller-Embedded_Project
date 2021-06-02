@@ -3,13 +3,7 @@
 #include "DIO.h"
 #include "Macros.h"
 
-#define SPI_PORT_NUM ((uint8)1)
-#define SS_PIN_NUM ((uint8)4)
-#define MOSI_PIN_NUM ((uint8)5)
-#define MISO_PIN_NUM ((uint8)6)
-#define SCK_PIN_NUM ((uint8)7)
-#define MSB ((uint8)1)
-#define LSB ((uint8)0)
+
 
 
 /*******************************************************************************
@@ -43,6 +37,7 @@ void SPI_initMaster(uint8 StartBit)
 }
 
 
+
 /***********CONFIGURE DEVICE AS SPI SLAVE************
  *
  *
@@ -61,6 +56,8 @@ void SPI_initSlave(void)
     SET_BIT(SPCR, SPE);
 }
 
+
+
 /************* SEND BYTE OF DATA ********************
  *
  * @param data : THE DATA BYTE THAT WILL BE SENT TO THE SLAVE
@@ -71,35 +68,18 @@ void SPI_sendByte(const uint8 data)
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data is sent correctly)
 }
 
+
+
 /************* RECEIVE BYTE OF DATA ******************
  *
  * @return THE DATA WHICH HAVE BEEN READ FROM THE SLAVE
  */
-unsigned char SPI_recieveByte(void)
+int8 SPI_recieveByte(void)
 {
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1(data is receive correctly)
     return SPDR; //return the received byte from SPI data register
 }
 
-void SPI_SendString(const char *Str)
-{
-    unsigned char i = 0;
-    while(Str[i] != '\0')
-    {
-        SPI_sendByte(Str[i]);
-        i++;
-    }
-}
 
-void SPI_ReceiveString(char *Str)
-{
-    unsigned char i = 0;
-    Str[i] = SPI_recieveByte();
-    while(Str[i] != '#')
-    {
-        i++;
-        Str[i] = SPI_recieveByte();
-    }
-    Str[i] = '\0';
-}
+
 

@@ -10,7 +10,8 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- ../HAL/TC72_Temp_sensor/TC72.h ../HAL/LCD/LCD.h ../typedefs.h
+ ../HAL/TC72_Temp_sensor/TC72.h ../MCAL/SPI/SPI.h ../typedefs.h \
+ ../HAL/LCD/LCD.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -36,6 +37,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../HAL/TC72_Temp_sensor/TC72.h:
 
-../HAL/LCD/LCD.h:
+../MCAL/SPI/SPI.h:
 
 ../typedefs.h:
+
+../HAL/LCD/LCD.h:
