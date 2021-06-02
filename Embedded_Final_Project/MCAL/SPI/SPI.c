@@ -3,13 +3,13 @@
 #include "DIO.h"
 #include "Macros.h"
 
-#define SPI_PORT_NUM ((unsigned char)1)
-#define SS_PIN_NUM ((unsigned char)4)
-#define MOSI_PIN_NUM ((unsigned char)5)
-#define MISO_PIN_NUM ((unsigned char)6)
-#define SCK_PIN_NUM ((unsigned char)7)
-#define MSB ((unsigned char)1)
-#define LSB ((unsigned char)0)
+#define SPI_PORT_NUM ((uint8)1)
+#define SS_PIN_NUM ((uint8)4)
+#define MOSI_PIN_NUM ((uint8)5)
+#define MISO_PIN_NUM ((uint8)6)
+#define SCK_PIN_NUM ((uint8)7)
+#define MSB ((uint8)1)
+#define LSB ((uint8)0)
 
 
 /*******************************************************************************
@@ -21,7 +21,7 @@
  *
  * @param StartBit
  */
-void SPI_initMaster(unsigned char StartBit)
+void SPI_initMaster(uint8 StartBit)
 {
     /* SET SS PIN AS OUTPUT PIN */
     DIO_ChannelDir(SPI_PORT_NUM, SS_PIN_NUM, 0xff);
@@ -34,12 +34,12 @@ void SPI_initMaster(unsigned char StartBit)
     /* ENABLE MSTR BIT TO MAKE DEVICE THE MASTER */
     SET_BIT(SPCR, MSTR);
     /* SET CLOCK FREQUENCY = */
-    CLEAR_BIT(SPIE, SPR0);
-    CLEAR_BIT(SPIE, SPR1);
+    CLEAR_BIT(SPCR, SPR0);
+    CLEAR_BIT(SPCR, SPR1);
     /* SET SPE PIN TO ENABLE SPI */
     SET_BIT(SPCR, SPE);
     /* SET DATA ORDER ACCORDING TO StartInput Parameter */
-    (StartBit == 1)? SET_BIT(SPCR , DORD) : CLEAR_BIT (SPCR , DORD;
+    (StartBit == 1)? SET_BIT(SPCR , DORD) : CLEAR_BIT (SPCR , DORD);
 }
 
 
@@ -65,7 +65,7 @@ void SPI_initSlave(void)
  *
  * @param data : THE DATA BYTE THAT WILL BE SENT TO THE SLAVE
  */
-void SPI_sendByte(const unsigned char data)
+void SPI_sendByte(const uint8 data)
 {
     SPDR = data; //send data by SPI
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data is sent correctly)
@@ -81,7 +81,7 @@ unsigned char SPI_recieveByte(void)
     return SPDR; //return the received byte from SPI data register
 }
 
-void SPI_SendString(const unsigned char *Str)
+void SPI_SendString(const char *Str)
 {
     unsigned char i = 0;
     while(Str[i] != '\0')

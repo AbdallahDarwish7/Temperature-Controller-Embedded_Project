@@ -4,12 +4,14 @@
 
 #ifndef FINAL_PROJECT_SPI_H
 #define FINAL_PROJECT_SPI_H
-typedef unsigned char uint8;
-void SPI_initMaster(void);
+
+#include "typedefs.h"
+
+void SPI_initMaster(uint8 StartBit);
 void SPI_initSlave(void);
 void SPI_sendByte(const uint8 data);
 uint8 SPI_recieveByte(void);
-void SPI_sendString(const uint8 *Str);
+void SPI_sendString(const char *Str);
 void SPI_receiveString(char *Str);
 
 #endif //FINAL_PROJECT_SPI_H
