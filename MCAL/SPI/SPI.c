@@ -3,47 +3,78 @@
 #include "DIO.h"
 #include "../../Macros.h"
 
-#define SPI_PORT ((unsigned char)1)
+#define SPI_PORT_NUM ((unsigned char)1)
+#define SS_PIN_NUM ((unsigned char)4)
+#define MOSI_PIN_NUM ((unsigned char)5)
+#define MISO_PIN_NUM ((unsigned char)6)
+#define SCK_PIN_NUM ((unsigned char)7)
+#define MSB ((unsigned char)1)
+#define LSB ((unsigned char)0)
+
 
 /*******************************************************************************
  *                      Functions Definitions                                  *
  *******************************************************************************/
-void SPI_initMaster(void)
+
+
+/***********CONFIGURE DEVICE AS SPI MASTER************
+ *
+ * @param StartBit
+ */
+void SPI_initMaster(unsigned char StartBit)
 {
-    /******** Configure SPI Master Pins *********
-     * SS(PB4)   --> Output
-     * MOSI(PB5) --> Output
-     * MISO(PB6) --> Input
-     * SCK(PB7) --> Output
-     ********************************************/
-    DIO_ChannelDir(1, 4, 0xff);
-    DIO_ChannelDir(1, 5, 0xff);
-    DIO_ChannelDir(1, 6, 0x00);
-    DIO_ChannelDir(1, 7, 0xff);
-    SPCR = (1<<SPE) | (1<<MSTR); // enable SPI + enable Master + choose SPI clock = Fosc/4
+    /* SET SS PIN AS OUTPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, SS_PIN_NUM, 0xff);
+    /* SET MOSI PIN AS OUTPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, MOSI_PIN_NUM, 0xff);
+    /* SET MISO PIN AS INPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, MISO_PIN_NUM, 0x00);
+    /* SET SCK PIN AS OUTPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, SCK_PIN_NUM, 0xff);
+    /* ENABLE MSTR BIT TO MAKE DEVICE THE MASTER */
+    SET_BIT(SPCR, MSTR);
+    /* SET CLOCK FREQUENCY = */
+    CLEAR_BIT(SPIE, SPR0);
+    CLEAR_BIT(SPIE, SPR1);
+    /* SET SPE PIN TO ENABLE SPI */
+    SET_BIT(SPCR, SPE);
+    /* SET DATA ORDER ACCORDING TO StartInput Parameter */
+    (StartBit == 1)? SET_BIT(SPCR , DORD) : CLEAR_BIT (SPCR , DORD;
 }
 
+
+/***********CONFIGURE DEVICE AS SPI SLAVE************
+ *
+ *
+ */
 void SPI_initSlave(void)
 {
-    /******** Configure SPI Slave Pins *********
-     * SS(PB4)   --> Input
-     * MOSI(PB5) --> Input
-     * MISO(PB6) --> Output
-     * SCK(PB7) --> Input
-     ********************************************/
-    DIO_ChannelDir(1, 4, 0x00);
-    DIO_ChannelDir(1, 5, 0x00);
-    DIO_ChannelDir(1, 6, 0xff);
-    DIO_ChannelDir(1, 7, 0x00);
-    SPCR = (1<<SPE); // just enable SPI + choose SPI clock = Fosc/4
+    /* SET SS PIN AS INPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, SS_PIN_NUM, 0x00);
+    /* SET MOSI PIN AS INPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, MOSI_PIN_NUM, 0x00);
+    /* SET MISO PIN AS OUTPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, MISO_PIN_NUM, 0xff);
+    /* SET SCK PIN AS INPUT PIN */
+    DIO_ChannelDir(SPI_PORT_NUM, SCK_PIN_NUM, 0x00);
+    /* SET SPE PIN TO ENABLE SPI */
+    SET_BIT(SPCR, SPE);
 }
 
+/************* SEND BYTE OF DATA ********************
+ *
+ * @param data : THE DATA BYTE THAT WILL BE SENT TO THE SLAVE
+ */
 void SPI_sendByte(const unsigned char data)
 {
     SPDR = data; //send data by SPI
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data is sent correctly)
 }
 
+/************* RECEIVE BYTE OF DATA ******************
+ *
+ * @return THE DATA WHICH HAVE BEEN READ FROM THE SLAVE
+ */
 unsigned char SPI_recieveByte(void)
 {
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1(data is receive correctly)

@@ -65,12 +65,7 @@ DIO_CheckType DIO_ChannelDir(unsigned char PortId, unsigned char ChannelId, unsi
     return Result;
 }
 
-/*Function shall do the following:
-1- To Validate Channel ID
-2- To get the port ID from configuration based on the Channel ID
-3- To write port for the masked pins with the passed data value (0xff, 0x00)
-4- Data shall be written only for the output pins
- */
+
 DIO_CheckType DIO_ChannelWrite(unsigned char PortId, unsigned char ChannelId, unsigned char Data) {
     /*Add your code*/
     DIO_CheckType Result;
@@ -88,12 +83,7 @@ DIO_CheckType DIO_ChannelWrite(unsigned char PortId, unsigned char ChannelId, un
     return Result;
 }
 
-/*Function shall do the following:
-1- To Validate Channel ID
-2- To get the port ID from configuration based on the Channel ID
-3- To read port for the masked pins and other pins shall be returned by 0
-4- Data shall be read only for the input pins
- */
+
 DIO_CheckType DIO_ChannelRead(unsigned char PortId, unsigned char ChannelId, unsigned char *DataPtr) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
@@ -116,8 +106,7 @@ DIO_CheckType DIO_ChannelRead(unsigned char PortId, unsigned char ChannelId, uns
 DIO_CheckType DIO_PortDir(unsigned char PortId, unsigned char Direction) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
-        DDR_REG(PortId) = 0x00;
-        DDR_REG(PortId) |= Direction;
+        DDR_REG(PortId) = Direction;
         Result = DIO_OK;
     } else {
         Result = DIO_NOK;
@@ -141,6 +130,8 @@ DIO_CheckType DIO_PortWrite(unsigned char PortId, unsigned char Data) {
  * [Parameters] :
  *
  */
+
+
 DIO_CheckType DIO_PortRead(unsigned char PortId, unsigned char *DataPtr) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {

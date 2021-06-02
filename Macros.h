@@ -5,6 +5,12 @@
 #ifndef FINAL_PROJECT_MACROS_H
 #define FINAL_PROJECT_MACROS_H
 
-#define BIT_IS_CLEAR(PORT_NUM, BIT_NUM) (!(PORT_NUM & (1 << BIT_NUM)))
+
+
+#define BIT_IS_SET(PORT, BIT_NUM)   (PORT & BIT_NUM)
+#define BIT_IS_CLEAR(PORT, BIT_NUM) (!(PORT_NUM & (1 << BIT_NUM)))
+#define SET_BIT(PORT, BIT_NUM) (PORT |= (1 << BIT_NUM))
+#define CLEAR_BIT(PORT, BIT_NUM) (PORT &= ~(1 << BIT_NUM))
+
 
 #endif //FINAL_PROJECT_MACROS_H
