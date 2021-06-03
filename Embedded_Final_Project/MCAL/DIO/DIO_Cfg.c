@@ -113,7 +113,7 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                         /* CHANNEL 1 */
                         {
                                 0x02,
-                                0X00,
+                                0Xff,
                                 0x00
                         },
                         /* CHANNEL 2 */
@@ -164,7 +164,7 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                         /* CHANNEL 1 */
                         {
                                 0x02,
-                                0X00,
+                                0Xff,
                                 0x00
                         },
                         /* CHANNEL 2 */

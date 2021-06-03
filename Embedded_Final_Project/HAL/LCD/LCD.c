@@ -1,0 +1,151 @@
+/*
+ * CFile1.c
+ *
+ * Created: 6/2/2021 1:05:05 PM
+ *  Author: Mohamed Kamal
+ */ 
+
+
+
+#include <avr/io.h>		/* Include AVR std. library file */
+#include <util/delay.h>		/* Include inbuilt defined Delay header file */
+#include "DIO.h"
+#include "LCD.h"
+#include "LCD_Cfg.h"
+
+uint8 CheckBit(uint8 Data, uint8 bitNum) {
+	uint8 result ;
+	if (Data & (1 << bitNum)){
+		result = 0xff;
+		} else {
+		result = 0x00;
+	}
+	return result;
+}
+
+void LCD_Write_Data(uint8 char_data) {
+	uint8 loop;
+	uint8 data;
+	for (loop = (uint8) 0; loop < LCD_NUM_OF_DATA_PINS; loop++)
+	{
+		data = CheckBit(char_data, loop);
+		DIO_ChannelWrite(LCD_ConfigParam.DataPortId,LCD_ConfigParam.DataPinsChannel[loop],  data);
+	}
+}
+
+void LCD_RS_Command() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RSPinChannel, 0x00);
+}
+
+void LCD_RS_Reg() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RSPinChannel, 0xff);
+}
+
+void LCD_Read_Operation() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RWPinChannel, 0xff);
+}
+
+void LCD_Write_Operation() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RWPinChannel, 0x00);
+}
+
+void LCD_Enable() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.EnablePinChannel, 0xff);
+}
+
+void LCD_Disable() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.EnablePinChannel, 0x00);
+}
+
+void LCD_Command(uint8 cmnd)
+{
+	LCD_Write_Data(cmnd) ;
+	LCD_RS_Command();	/* RS=0 command reg. */
+	LCD_Write_Operation();	/* RW=0 Write operation */
+	LCD_Enable();	/* Enable pulse */
+	_delay_us(1);
+	LCD_Disable();
+	_delay_ms(2);
+}
+
+void LCD_Char (uint8 char_data)  /* LCD data write function */
+{
+	LCD_Write_Data(char_data);
+	LCD_RS_Reg();	/* RS=0 command reg. */
+	LCD_Write_Operation();	/* RW=0 Write operation */
+	LCD_Enable();	/* Enable pulse */
+	_delay_us(1);
+	LCD_Disable();
+	_delay_ms(2);			/* Data write delay */
+}
+
+void LCD_Init (void)			/* LCD Initialize function */
+{
+	_delay_ms(20);			/* LCD Power ON delay always >15ms */
+	
+	LCD_Command (0x38);		/* Initialization of 16X2 LCD in 8bit mode */
+	LCD_Command (0x0C);		/* Display ON Cursor OFF */
+	LCD_Command (0x06);		/* Auto Increment cursor */
+	LCD_Command (0x01);		/* clear display */
+	_delay_ms(2);			/* Clear display command delay> 1.63 ms */
+	LCD_Command (0x80);		/* Cursor at home position */
+}
+
+
+void LCD_String (uint8 *str)		/* Send string to LCD function */
+{
+	int i;
+	for(i=0;str[i]!=0;i++)		/* Send each char of string till the NULL */
+	{
+		LCD_Char ((uint8)str[i]);
+	}
+}
+
+void LCD_String_xy (uint8 row, uint8 pos, uint8 *str)  /* Send string to LCD with xy position */
+{
+	if (row == 0 && pos<16)
+	LCD_Command((pos & 0x0F)|0x80);	/* Command of first row and required position<16 */
+	else if (row == (uint8)1 && pos<(uint8)16)
+	LCD_Command((pos & 0x0F)|0xC0);	/* Command of first row and required position<16 */
+	LCD_String(str);		/* Call LCD string function */
+}
+
+void LCD_Clear()
+{
+	LCD_Command (0x01);		/* clear display */
+	LCD_Command (0x80);		/* cursor at home position */
+}
+
+
+void LCD_Custom_Char (uint8 loc, uint8 *msg)
+{
+	uint8 i;
+	if(loc<8)
+	{
+		LCD_Command (0x40 + (loc*8));	/* Command 0x40 and onwards forces the device to point CGRAM address */
+		for(i=0;i<8;i++)	/* Write 8 byte for generation of 1 character */
+		LCD_Char(msg[i]);
+	}
+}
+
+void test_LCD(void) {
+	unsigned char loop;
+
+	uint8 Characters[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+
+	DIO_Init(2);
+	DIO_Init(3);
+	LCD_Init();
+	LCD_Command(0x80);
+	LCD_String(" ");
+	LCD_String_xy(0, (uint8)0,"HELLO");
+	LCD_String_xy(0, (uint8)12,"KIMO");
+	LCD_Command(0xc0);
+	
+	for (loop = (uint8)0; loop < (uint8)8; loop++)
+	{
+		LCD_Char(Characters[loop]);
+		LCD_Char(' ');
+		
+	}
+}
