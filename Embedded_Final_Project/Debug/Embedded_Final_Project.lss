@@ -945,10 +945,60 @@ DIO_CheckType DIO_ChannelRead(uint8 PortId, uint8 ChannelId, uint8 *DataPtr) {
     }
     return Result;
 }
+<<<<<<< HEAD
  4c8:	08 95       	ret
+=======
+<<<<<<< HEAD
+  cc:	08 95       	ret
+
+000000ce <SPI_InitMaster>:
+     * SS(PB4)   --> Output
+     * MOSI(PB5) --> Output
+     * MISO(PB6) --> Input
+     * SCK(PB7) --> Output
+     ********************************************/
+    DIO_ChannelDir(1, 4, 0xff);
+  ce:	4f ef       	ldi	r20, 0xFF	; 255
+  d0:	64 e0       	ldi	r22, 0x04	; 4
+  d2:	81 e0       	ldi	r24, 0x01	; 1
+  d4:	0e 94 47 00 	call	0x8e	; 0x8e <DIO_ChannelDir>
+    DIO_ChannelDir(1, 5, 0xff);
+  d8:	4f ef       	ldi	r20, 0xFF	; 255
+  da:	65 e0       	ldi	r22, 0x05	; 5
+  dc:	81 e0       	ldi	r24, 0x01	; 1
+  de:	0e 94 47 00 	call	0x8e	; 0x8e <DIO_ChannelDir>
+    DIO_ChannelDir(1, 6, 0x00);
+  e2:	40 e0       	ldi	r20, 0x00	; 0
+  e4:	66 e0       	ldi	r22, 0x06	; 6
+  e6:	81 e0       	ldi	r24, 0x01	; 1
+  e8:	0e 94 47 00 	call	0x8e	; 0x8e <DIO_ChannelDir>
+    DIO_ChannelDir(1, 7, 0xff);
+  ec:	4f ef       	ldi	r20, 0xFF	; 255
+  ee:	67 e0       	ldi	r22, 0x07	; 7
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	0e 94 47 00 	call	0x8e	; 0x8e <DIO_ChannelDir>
+    SPCR = (1<<SPE) | (1<<MSTR); // enable SPI + enable Master + choose SPI clock = Fosc/4
+  f6:	80 e5       	ldi	r24, 0x50	; 80
+  f8:	8d b9       	out	0x0d, r24	; 13
+  fa:	08 95       	ret
+
+000000fc <_exit>:
+  fc:	f8 94       	cli
+
+000000fe <__stop_program>:
+  fe:	ff cf       	rjmp	.-2      	; 0xfe <__stop_program>
+=======
+ 32a:	08 95       	ret
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731
 
 000004ca <_exit>:
  4ca:	f8 94       	cli
 
+<<<<<<< HEAD
 000004cc <__stop_program>:
  4cc:	ff cf       	rjmp	.-2      	; 0x4cc <__stop_program>
+=======
+0000032e <__stop_program>:
+ 32e:	ff cf       	rjmp	.-2      	; 0x32e <__stop_program>
+>>>>>>> f926000c9e01c3d94d6074c4e9e41513dd7bd78e
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731

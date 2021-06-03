@@ -71,10 +71,15 @@ Discarded input sections
  .text.SPI_initMaster
                 0x00000000       0x42 MCAL/SPI/SPI.o
  .text.SPI_initSlave
+<<<<<<< HEAD
+                0x00000000       0x2e MCAL/SPI/SPI.o
+ .text.SPI_SendByte
+=======
                 0x00000000       0x2c MCAL/SPI/SPI.o
  .text.SPI_sendByte
+>>>>>>> f926000c9e01c3d94d6074c4e9e41513dd7bd78e
                 0x00000000        0x8 MCAL/SPI/SPI.o
- .text.SPI_recieveByte
+ .text.SPI_RecieveByte
                 0x00000000        0x8 MCAL/SPI/SPI.o
  .debug_info    0x00000000      0x20e MCAL/SPI/SPI.o
  .debug_abbrev  0x00000000       0xe2 MCAL/SPI/SPI.o
@@ -339,6 +344,7 @@ END GROUP
                 0x0000007e                __vector_20
                 0x00000082                . = ALIGN (0x2)
  *(.text.*)
+<<<<<<< HEAD
  .text.initialize_KeyPad
                 0x00000082       0x3a HAL/KeyPad/KeyPad.o
                 0x00000082                initialize_KeyPad
@@ -348,6 +354,21 @@ END GROUP
  .text.test_KeyPad_Lcd
                 0x0000017c       0x92 HAL/KeyPad/KeyPad.o
                 0x0000017c                test_KeyPad_Lcd
+=======
+<<<<<<< HEAD
+ .text.test     0x00000082        0x6 HAL/TC72_Temp_sensor/TC72.o
+                0x00000082                test
+ .text.main     0x00000088        0x6 main.o
+                0x00000088                main
+ .text.DIO_ChannelDir
+                0x0000008e       0x40 MCAL/DIO/DIO.o
+                0x0000008e                DIO_ChannelDir
+ .text.SPI_initMaster
+                0x000000ce       0x2e MCAL/SPI/SPI.o
+                0x000000ce                SPI_InitMaster
+                0x000000fc                . = ALIGN (0x2)
+=======
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731
  .text.LCD_Write_Data
                 0x0000020e       0x54 HAL/LCD/LCD.o
                 0x0000020e                LCD_Write_Data
@@ -390,12 +411,19 @@ END GROUP
                 0x00000408       0x40 MCAL/DIO/DIO.o
                 0x00000408                DIO_ChannelDir
  .text.DIO_ChannelWrite
+<<<<<<< HEAD
                 0x00000448       0x40 MCAL/DIO/DIO.o
                 0x00000448                DIO_ChannelWrite
  .text.DIO_ChannelRead
                 0x00000488       0x42 MCAL/DIO/DIO.o
                 0x00000488                DIO_ChannelRead
                 0x000004ca                . = ALIGN (0x2)
+=======
+                0x000002ec       0x40 MCAL/DIO/DIO.o
+                0x000002ec                DIO_ChannelWrite
+                0x0000032c                . = ALIGN (0x2)
+>>>>>>> f926000c9e01c3d94d6074c4e9e41513dd7bd78e
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731
  *(.fini9)
  .fini9         0x000004ca        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                 0x000004ca                _exit
