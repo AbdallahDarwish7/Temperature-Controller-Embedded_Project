@@ -56,7 +56,7 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                         /* CHANNEL 0 */
                         {
                                 0x01,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 1 */
@@ -68,7 +68,7 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                         /* CHANNEL 2 */
                         {
                                 0x04,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 3 */
@@ -176,25 +176,25 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                         /* CHANNEL 3 */
                         {
                                 0x08,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 4 */
                         {
                                 0x10,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 5 */
                         {
                                 0x20,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 6 */
                         {
                                 0x40,
-                                0xff,
+                                0x00,
                                 0x00
                         },
                         /* CHANNEL 7 */

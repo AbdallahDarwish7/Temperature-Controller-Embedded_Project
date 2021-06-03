@@ -8,15 +8,13 @@
 #include <avr/io.h>
 
 #include "TC72.h"
-#include "LCD.h"
+#include "KeyPad.h"
 
 int main(void)
 {
     /* Replace with your application code */
 	
-	test_LCD();
-    while (1) 
-    {
-    }
+	test_KeyPad_Lcd();
+    
 }
 

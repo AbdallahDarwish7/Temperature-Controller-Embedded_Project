@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+HAL\KeyPad\KeyPad.c
+
+HAL\KeyPad\KeyPad_Cfg.c
+
 HAL\LCD\LCD.c
 
 HAL\LCD\LCD_Cfg.c
