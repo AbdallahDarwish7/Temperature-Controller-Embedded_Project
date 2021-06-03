@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "TC72.h"
+#include "LCD.h"
 
 int main(void)
 {
