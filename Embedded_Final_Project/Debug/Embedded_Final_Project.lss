@@ -160,7 +160,7 @@ DIO_CheckType DIO_ChannelDir(unsigned char PortId, unsigned char ChannelId, unsi
 }
   cc:	08 95       	ret
 
-000000ce <SPI_initMaster>:
+000000ce <SPI_InitMaster>:
      * SS(PB4)   --> Output
      * MOSI(PB5) --> Output
      * MISO(PB6) --> Input

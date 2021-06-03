@@ -1,7 +1,14 @@
 #ifndef DIO_H_INCLUDED
 #define DIO_H_INCLUDED
 
-#include "typedefs.h"
+typedef unsigned char uint8;
+typedef unsigned short uint16;
+typedef unsigned int uint32;
+typedef unsigned long long uint64;
+typedef signed char int8;
+typedef signed short int16;
+typedef signed int int32;
+typedef signed long long int64;
 
 #define DIO_OK  ((unsigned char)0)
 #define DIO_NOK ((unsigned char)1)

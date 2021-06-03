@@ -1,1 +1,1 @@
-add_subdirectory(TC72_Temp_sensor)
+add_subdirectory(TC72_Temp_sensor 7segment)

@@ -47,9 +47,9 @@ Discarded input sections
  .bss           0x00000000        0x0 MCAL/SPI/SPI.o
  .text.SPI_initSlave
                 0x00000000       0x2e MCAL/SPI/SPI.o
- .text.SPI_sendByte
+ .text.SPI_SendByte
                 0x00000000        0x8 MCAL/SPI/SPI.o
- .text.SPI_recieveByte
+ .text.SPI_RecieveByte
                 0x00000000        0x8 MCAL/SPI/SPI.o
  .text.SPI_SendString
                 0x00000000       0x2c MCAL/SPI/SPI.o
@@ -311,7 +311,7 @@ END GROUP
                 0x0000008e                DIO_ChannelDir
  .text.SPI_initMaster
                 0x000000ce       0x2e MCAL/SPI/SPI.o
-                0x000000ce                SPI_initMaster
+                0x000000ce                SPI_InitMaster
                 0x000000fc                . = ALIGN (0x2)
  *(.fini9)
  .fini9         0x000000fc        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
