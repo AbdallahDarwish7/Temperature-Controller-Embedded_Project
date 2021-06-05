@@ -3,29 +3,29 @@ Embedded_Final_Project.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000100  00000000  00000000  00000074  2**1
+  0 .text         000004ce  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000004  00800060  00000100  00000174  2**0
+  1 .data         000000b6  00800060  000004ce  00000542  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  00000178  2**0
+  2 .comment      00000030  00000000  00000000  000005f8  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001a8  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000628  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 000000d8  00000000  00000000  000001e4  2**0
+  4 .debug_aranges 00000180  00000000  00000000  00000664  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000b6e  00000000  00000000  000002bc  2**0
+  5 .debug_info   000017fc  00000000  00000000  000007e4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000076a  00000000  00000000  00000e2a  2**0
+  6 .debug_abbrev 00000b23  00000000  00000000  00001fe0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000059d  00000000  00000000  00001594  2**0
+  7 .debug_line   000009e8  00000000  00000000  00002b03  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000178  00000000  00000000  00001b34  2**2
+  8 .debug_frame  000002fc  00000000  00000000  000034ec  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000049f  00000000  00000000  00001cac  2**0
+  9 .debug_str    000006bc  00000000  00000000  000037e8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000464  00000000  00000000  0000214b  2**0
+ 10 .debug_loc    00000b31  00000000  00000000  00003ea4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000098  00000000  00000000  000025af  2**0
+ 11 .debug_ranges 000000f8  00000000  00000000  000049d5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -62,105 +62,896 @@ Disassembly of section .text:
   5e:	cd bf       	out	0x3d, r28	; 61
 
 00000060 <__do_copy_data>:
-  60:	10 e0       	ldi	r17, 0x00	; 0
+  60:	11 e0       	ldi	r17, 0x01	; 1
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e0 e0       	ldi	r30, 0x00	; 0
-  68:	f1 e0       	ldi	r31, 0x01	; 1
+  66:	ee ec       	ldi	r30, 0xCE	; 206
+  68:	f4 e0       	ldi	r31, 0x04	; 4
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
-  70:	a4 36       	cpi	r26, 0x64	; 100
+  70:	a6 31       	cpi	r26, 0x16	; 22
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
-  76:	0e 94 44 00 	call	0x88	; 0x88 <main>
-  7a:	0c 94 7e 00 	jmp	0xfc	; 0xfc <_exit>
+  76:	0e 94 c4 01 	call	0x388	; 0x388 <main>
+  7a:	0c 94 65 02 	jmp	0x4ca	; 0x4ca <_exit>
 
 0000007e <__bad_interrupt>:
   7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-00000082 <test>:
-//
-#include "SPI.h"
-#include "TC72.h"
+00000082 <initialize_KeyPad>:
+#include "DIO.h"
+#include "KeyPad.h"
+#include "KeyPad_Cfg.h"
+#include "LCD.h"
 
-void test(void){
-    SPI_initMaster();
-  82:	0e 94 67 00 	call	0xce	; 0xce <SPI_initMaster>
-  86:	08 95       	ret
+void initialize_KeyPad(void) {
+  82:	ef 92       	push	r14
+  84:	ff 92       	push	r15
+  86:	1f 93       	push	r17
+  88:	cf 93       	push	r28
+  8a:	df 93       	push	r29
+  8c:	c0 ea       	ldi	r28, 0xA0	; 160
+  8e:	d0 e0       	ldi	r29, 0x00	; 0
+  90:	0f 2e       	mov	r0, r31
+  92:	f4 ea       	ldi	r31, 0xA4	; 164
+  94:	ef 2e       	mov	r14, r31
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	ff 2e       	mov	r15, r31
+  9a:	f0 2d       	mov	r31, r0
+	uint8 r;
+	for(r=0;r<4;r++)
+	{
+		DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId,KeyPad_ConfigParam.RowsPinsChannels[r], 0xff);
+  9c:	10 91 9f 00 	lds	r17, 0x009F	; 0x80009f <KeyPad_ConfigParam+0x4>
+  a0:	69 91       	ld	r22, Y+
+  a2:	4f ef       	ldi	r20, 0xFF	; 255
+  a4:	81 2f       	mov	r24, r17
+  a6:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+#include "KeyPad_Cfg.h"
+#include "LCD.h"
 
-00000088 <main>:
-#include "TC72.h"
+void initialize_KeyPad(void) {
+	uint8 r;
+	for(r=0;r<4;r++)
+  aa:	ce 15       	cp	r28, r14
+  ac:	df 05       	cpc	r29, r15
+  ae:	c1 f7       	brne	.-16     	; 0xa0 <initialize_KeyPad+0x1e>
+	{
+		DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId,KeyPad_ConfigParam.RowsPinsChannels[r], 0xff);
+	}
+}
+  b0:	df 91       	pop	r29
+  b2:	cf 91       	pop	r28
+  b4:	1f 91       	pop	r17
+  b6:	ff 90       	pop	r15
+  b8:	ef 90       	pop	r14
+  ba:	08 95       	ret
+
+000000bc <pressed_Key>:
+
+uint8 pressed_Key(void){
+  bc:	4f 92       	push	r4
+  be:	5f 92       	push	r5
+  c0:	6f 92       	push	r6
+  c2:	7f 92       	push	r7
+  c4:	8f 92       	push	r8
+  c6:	9f 92       	push	r9
+  c8:	af 92       	push	r10
+  ca:	bf 92       	push	r11
+  cc:	cf 92       	push	r12
+  ce:	df 92       	push	r13
+  d0:	ef 92       	push	r14
+  d2:	ff 92       	push	r15
+  d4:	0f 93       	push	r16
+  d6:	1f 93       	push	r17
+  d8:	cf 93       	push	r28
+  da:	df 93       	push	r29
+  dc:	0f 2e       	mov	r0, r31
+  de:	fc e9       	ldi	r31, 0x9C	; 156
+  e0:	af 2e       	mov	r10, r31
+  e2:	f0 e0       	ldi	r31, 0x00	; 0
+  e4:	bf 2e       	mov	r11, r31
+  e6:	f0 2d       	mov	r31, r0
+
+	uint8 c;
+	uint8 r;
+	uint8* row; 
+	
+	uint8 key = 0xff;
+  e8:	55 24       	eor	r5, r5
+  ea:	5a 94       	dec	r5
+	for(c=0;c<3;c++)
+  ec:	71 2c       	mov	r7, r1
+	{
+		DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId,KeyPad_ConfigParam.ColsPinsChannels[c], 0xff);
+  ee:	0f 2e       	mov	r0, r31
+  f0:	fb e9       	ldi	r31, 0x9B	; 155
+  f2:	8f 2e       	mov	r8, r31
+  f4:	f0 e0       	ldi	r31, 0x00	; 0
+  f6:	9f 2e       	mov	r9, r31
+  f8:	f0 2d       	mov	r31, r0
+  fa:	f4 01       	movw	r30, r8
+  fc:	40 80       	ld	r4, Z
+  fe:	0f 2e       	mov	r0, r31
+ 100:	f4 ea       	ldi	r31, 0xA4	; 164
+ 102:	cf 2e       	mov	r12, r31
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	df 2e       	mov	r13, r31
+ 108:	f0 2d       	mov	r31, r0
+ 10a:	f5 01       	movw	r30, r10
+ 10c:	61 90       	ld	r6, Z+
+ 10e:	5f 01       	movw	r10, r30
+ 110:	4f ef       	ldi	r20, 0xFF	; 255
+ 112:	66 2d       	mov	r22, r6
+ 114:	84 2d       	mov	r24, r4
+ 116:	0e 94 04 02 	call	0x408	; 0x408 <DIO_ChannelDir>
+ 11a:	c0 ea       	ldi	r28, 0xA0	; 160
+ 11c:	d0 e0       	ldi	r29, 0x00	; 0
+ 11e:	f7 2c       	mov	r15, r7
+		for(r=0;r<4;r++)
+		{
+			DIO_ChannelRead(KeyPad_ConfigParam.RowsPortId, KeyPad_ConfigParam.RowsPinsChannels[r], row);
+ 120:	f4 01       	movw	r30, r8
+ 122:	e4 80       	ldd	r14, Z+4	; 0x04
+ 124:	69 91       	ld	r22, Y+
+ 126:	00 e0       	ldi	r16, 0x00	; 0
+ 128:	10 e0       	ldi	r17, 0x00	; 0
+ 12a:	a8 01       	movw	r20, r16
+ 12c:	8e 2d       	mov	r24, r14
+ 12e:	0e 94 44 02 	call	0x488	; 0x488 <DIO_ChannelRead>
+			if((*row == 0x00))
+ 132:	f8 01       	movw	r30, r16
+ 134:	80 81       	ld	r24, Z
+ 136:	81 11       	cpse	r24, r1
+ 138:	01 c0       	rjmp	.+2      	; 0x13c <pressed_Key+0x80>
+			{
+				key =  (r*3 +c);
+ 13a:	5f 2c       	mov	r5, r15
+ 13c:	f3 e0       	ldi	r31, 0x03	; 3
+ 13e:	ff 0e       	add	r15, r31
+	
+	uint8 key = 0xff;
+	for(c=0;c<3;c++)
+	{
+		DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId,KeyPad_ConfigParam.ColsPinsChannels[c], 0xff);
+		for(r=0;r<4;r++)
+ 140:	cc 15       	cp	r28, r12
+ 142:	dd 05       	cpc	r29, r13
+ 144:	79 f7       	brne	.-34     	; 0x124 <pressed_Key+0x68>
+			if((*row == 0x00))
+			{
+				key =  (r*3 +c);
+			}
+		}
+		DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId,KeyPad_ConfigParam.ColsPinsChannels[c], 0x00);
+ 146:	40 e0       	ldi	r20, 0x00	; 0
+ 148:	66 2d       	mov	r22, r6
+ 14a:	84 2d       	mov	r24, r4
+ 14c:	0e 94 04 02 	call	0x408	; 0x408 <DIO_ChannelDir>
+	uint8 c;
+	uint8 r;
+	uint8* row; 
+	
+	uint8 key = 0xff;
+	for(c=0;c<3;c++)
+ 150:	73 94       	inc	r7
+ 152:	83 e0       	ldi	r24, 0x03	; 3
+ 154:	78 12       	cpse	r7, r24
+ 156:	d9 cf       	rjmp	.-78     	; 0x10a <pressed_Key+0x4e>
+		}
+		DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId,KeyPad_ConfigParam.ColsPinsChannels[c], 0x00);
+		
+	}
+	return key;//Indicate No key pressed*
+}
+ 158:	85 2d       	mov	r24, r5
+ 15a:	df 91       	pop	r29
+ 15c:	cf 91       	pop	r28
+ 15e:	1f 91       	pop	r17
+ 160:	0f 91       	pop	r16
+ 162:	ff 90       	pop	r15
+ 164:	ef 90       	pop	r14
+ 166:	df 90       	pop	r13
+ 168:	cf 90       	pop	r12
+ 16a:	bf 90       	pop	r11
+ 16c:	af 90       	pop	r10
+ 16e:	9f 90       	pop	r9
+ 170:	8f 90       	pop	r8
+ 172:	7f 90       	pop	r7
+ 174:	6f 90       	pop	r6
+ 176:	5f 90       	pop	r5
+ 178:	4f 90       	pop	r4
+ 17a:	08 95       	ret
+
+0000017c <test_KeyPad_Lcd>:
+
+
+void test_KeyPad_Lcd(void) {
+ 17c:	cf 93       	push	r28
+ 17e:	df 93       	push	r29
+ 180:	cd b7       	in	r28, 0x3d	; 61
+ 182:	de b7       	in	r29, 0x3e	; 62
+ 184:	68 97       	sbiw	r28, 0x18	; 24
+ 186:	0f b6       	in	r0, 0x3f	; 63
+ 188:	f8 94       	cli
+ 18a:	de bf       	out	0x3e, r29	; 62
+ 18c:	0f be       	out	0x3f, r0	; 63
+ 18e:	cd bf       	out	0x3d, r28	; 61
+	unsigned char loop;
+	uint8* Characters[12] = {"*", "0", "3", "7", "8", "9", "4", "5", "6", "3", "2", "1"};
+ 190:	88 e1       	ldi	r24, 0x18	; 24
+ 192:	e0 e6       	ldi	r30, 0x60	; 96
+ 194:	f0 e0       	ldi	r31, 0x00	; 0
+ 196:	de 01       	movw	r26, r28
+ 198:	11 96       	adiw	r26, 0x01	; 1
+ 19a:	01 90       	ld	r0, Z+
+ 19c:	0d 92       	st	X+, r0
+ 19e:	8a 95       	dec	r24
+ 1a0:	e1 f7       	brne	.-8      	; 0x19a <test_KeyPad_Lcd+0x1e>
+
+	DIO_Init(2);
+ 1a2:	82 e0       	ldi	r24, 0x02	; 2
+ 1a4:	0e 94 c9 01 	call	0x392	; 0x392 <DIO_Init>
+	DIO_Init(3);
+ 1a8:	83 e0       	ldi	r24, 0x03	; 3
+ 1aa:	0e 94 c9 01 	call	0x392	; 0x392 <DIO_Init>
+	DIO_Init(1);
+ 1ae:	81 e0       	ldi	r24, 0x01	; 1
+ 1b0:	0e 94 c9 01 	call	0x392	; 0x392 <DIO_Init>
+	initialize_KeyPad();
+ 1b4:	0e 94 41 00 	call	0x82	; 0x82 <initialize_KeyPad>
+	LCD_Init();
+ 1b8:	0e 94 7d 01 	call	0x2fa	; 0x2fa <LCD_Init>
+	LCD_Command(0x80);
+ 1bc:	80 e8       	ldi	r24, 0x80	; 128
+ 1be:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	LCD_String(" ");
+ 1c2:	8e e7       	ldi	r24, 0x7E	; 126
+ 1c4:	90 e0       	ldi	r25, 0x00	; 0
+ 1c6:	0e 94 99 01 	call	0x332	; 0x332 <LCD_String>
+	LCD_String("HELLO: ");
+ 1ca:	88 e7       	ldi	r24, 0x78	; 120
+ 1cc:	90 e0       	ldi	r25, 0x00	; 0
+ 1ce:	0e 94 99 01 	call	0x332	; 0x332 <LCD_String>
+	LCD_String_xy(0, (uint8)10,"KIMO");
+ 1d2:	40 e8       	ldi	r20, 0x80	; 128
+ 1d4:	50 e0       	ldi	r21, 0x00	; 0
+ 1d6:	6a e0       	ldi	r22, 0x0A	; 10
+ 1d8:	80 e0       	ldi	r24, 0x00	; 0
+ 1da:	0e 94 a8 01 	call	0x350	; 0x350 <LCD_String_xy>
+	LCD_Command(0xc0);
+ 1de:	80 ec       	ldi	r24, 0xC0	; 192
+ 1e0:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	uint8 key;
+	while(1)
+	{
+		key = pressed_Key();
+ 1e4:	0e 94 5e 00 	call	0xbc	; 0xbc <pressed_Key>
+		if(key != 0xff){
+ 1e8:	8f 3f       	cpi	r24, 0xFF	; 255
+ 1ea:	e1 f3       	breq	.-8      	; 0x1e4 <test_KeyPad_Lcd+0x68>
+			LCD_String_xy(1, 0, Characters[key]);
+ 1ec:	e8 2f       	mov	r30, r24
+ 1ee:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f0:	ee 0f       	add	r30, r30
+ 1f2:	ff 1f       	adc	r31, r31
+ 1f4:	81 e0       	ldi	r24, 0x01	; 1
+ 1f6:	90 e0       	ldi	r25, 0x00	; 0
+ 1f8:	8c 0f       	add	r24, r28
+ 1fa:	9d 1f       	adc	r25, r29
+ 1fc:	e8 0f       	add	r30, r24
+ 1fe:	f9 1f       	adc	r31, r25
+ 200:	40 81       	ld	r20, Z
+ 202:	51 81       	ldd	r21, Z+1	; 0x01
+ 204:	60 e0       	ldi	r22, 0x00	; 0
+ 206:	81 e0       	ldi	r24, 0x01	; 1
+ 208:	0e 94 a8 01 	call	0x350	; 0x350 <LCD_String_xy>
+ 20c:	eb cf       	rjmp	.-42     	; 0x1e4 <test_KeyPad_Lcd+0x68>
+
+0000020e <LCD_Write_Data>:
+void LCD_RS_Reg() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RSPinChannel, 0xff);
+}
+
+void LCD_Read_Operation() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RWPinChannel, 0xff);
+ 20e:	df 92       	push	r13
+ 210:	ef 92       	push	r14
+ 212:	ff 92       	push	r15
+ 214:	0f 93       	push	r16
+ 216:	1f 93       	push	r17
+ 218:	cf 93       	push	r28
+ 21a:	df 93       	push	r29
+ 21c:	09 ea       	ldi	r16, 0xA9	; 169
+ 21e:	10 e0       	ldi	r17, 0x00	; 0
+ 220:	c0 e0       	ldi	r28, 0x00	; 0
+ 222:	d0 e0       	ldi	r29, 0x00	; 0
+ 224:	e8 2e       	mov	r14, r24
+ 226:	f1 2c       	mov	r15, r1
+ 228:	d0 90 a8 00 	lds	r13, 0x00A8	; 0x8000a8 <LCD_ConfigParam+0x4>
+ 22c:	f8 01       	movw	r30, r16
+ 22e:	61 91       	ld	r22, Z+
+ 230:	8f 01       	movw	r16, r30
+ 232:	a7 01       	movw	r20, r14
+ 234:	0c 2e       	mov	r0, r28
+ 236:	02 c0       	rjmp	.+4      	; 0x23c <LCD_Write_Data+0x2e>
+ 238:	55 95       	asr	r21
+ 23a:	47 95       	ror	r20
+ 23c:	0a 94       	dec	r0
+ 23e:	e2 f7       	brpl	.-8      	; 0x238 <LCD_Write_Data+0x2a>
+ 240:	41 70       	andi	r20, 0x01	; 1
+ 242:	41 95       	neg	r20
+ 244:	8d 2d       	mov	r24, r13
+ 246:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 24a:	21 96       	adiw	r28, 0x01	; 1
+ 24c:	c8 30       	cpi	r28, 0x08	; 8
+ 24e:	d1 05       	cpc	r29, r1
+ 250:	69 f7       	brne	.-38     	; 0x22c <LCD_Write_Data+0x1e>
+ 252:	df 91       	pop	r29
+ 254:	cf 91       	pop	r28
+ 256:	1f 91       	pop	r17
+ 258:	0f 91       	pop	r16
+ 25a:	ff 90       	pop	r15
+ 25c:	ef 90       	pop	r14
+ 25e:	df 90       	pop	r13
+ 260:	08 95       	ret
+
+00000262 <LCD_RS_Command>:
+ 262:	e4 ea       	ldi	r30, 0xA4	; 164
+ 264:	f0 e0       	ldi	r31, 0x00	; 0
+ 266:	40 e0       	ldi	r20, 0x00	; 0
+ 268:	61 81       	ldd	r22, Z+1	; 0x01
+ 26a:	80 81       	ld	r24, Z
+ 26c:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 270:	08 95       	ret
+
+00000272 <LCD_RS_Reg>:
+ 272:	e4 ea       	ldi	r30, 0xA4	; 164
+ 274:	f0 e0       	ldi	r31, 0x00	; 0
+ 276:	4f ef       	ldi	r20, 0xFF	; 255
+ 278:	61 81       	ldd	r22, Z+1	; 0x01
+ 27a:	80 81       	ld	r24, Z
+ 27c:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 280:	08 95       	ret
+
+00000282 <LCD_Write_Operation>:
+}
+
+void LCD_Write_Operation() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.RWPinChannel, 0x00);
+ 282:	e4 ea       	ldi	r30, 0xA4	; 164
+ 284:	f0 e0       	ldi	r31, 0x00	; 0
+ 286:	40 e0       	ldi	r20, 0x00	; 0
+ 288:	62 81       	ldd	r22, Z+2	; 0x02
+ 28a:	80 81       	ld	r24, Z
+ 28c:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 290:	08 95       	ret
+
+00000292 <LCD_Enable>:
+}
+
+void LCD_Enable() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.EnablePinChannel, 0xff);
+ 292:	e4 ea       	ldi	r30, 0xA4	; 164
+ 294:	f0 e0       	ldi	r31, 0x00	; 0
+ 296:	4f ef       	ldi	r20, 0xFF	; 255
+ 298:	63 81       	ldd	r22, Z+3	; 0x03
+ 29a:	80 81       	ld	r24, Z
+ 29c:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 2a0:	08 95       	ret
+
+000002a2 <LCD_Disable>:
+}
+
+void LCD_Disable() {
+	DIO_ChannelWrite(LCD_ConfigParam.ControlPortId, LCD_ConfigParam.EnablePinChannel, 0x00);
+ 2a2:	e4 ea       	ldi	r30, 0xA4	; 164
+ 2a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 2a6:	40 e0       	ldi	r20, 0x00	; 0
+ 2a8:	63 81       	ldd	r22, Z+3	; 0x03
+ 2aa:	80 81       	ld	r24, Z
+ 2ac:	0e 94 24 02 	call	0x448	; 0x448 <DIO_ChannelWrite>
+ 2b0:	08 95       	ret
+
+000002b2 <LCD_Command>:
+}
+
+void LCD_Command(uint8 cmnd)
+{
+	LCD_Write_Data(cmnd) ;
+ 2b2:	0e 94 07 01 	call	0x20e	; 0x20e <LCD_Write_Data>
+	LCD_RS_Command();	/* RS=0 command reg. */
+ 2b6:	0e 94 31 01 	call	0x262	; 0x262 <LCD_RS_Command>
+	LCD_Write_Operation();	/* RW=0 Write operation */
+ 2ba:	0e 94 41 01 	call	0x282	; 0x282 <LCD_Write_Operation>
+	LCD_Enable();	/* Enable pulse */
+ 2be:	0e 94 49 01 	call	0x292	; 0x292 <LCD_Enable>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2c2:	00 00       	nop
+	_delay_us(1);
+	LCD_Disable();
+ 2c4:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LCD_Disable>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2c8:	83 ef       	ldi	r24, 0xF3	; 243
+ 2ca:	91 e0       	ldi	r25, 0x01	; 1
+ 2cc:	01 97       	sbiw	r24, 0x01	; 1
+ 2ce:	f1 f7       	brne	.-4      	; 0x2cc <LCD_Command+0x1a>
+ 2d0:	00 c0       	rjmp	.+0      	; 0x2d2 <LCD_Command+0x20>
+ 2d2:	00 00       	nop
+ 2d4:	08 95       	ret
+
+000002d6 <LCD_Char>:
+	_delay_ms(2);
+}
+
+void LCD_Char (uint8 char_data)  /* LCD data write function */
+{
+	LCD_Write_Data(char_data);
+ 2d6:	0e 94 07 01 	call	0x20e	; 0x20e <LCD_Write_Data>
+	LCD_RS_Reg();	/* RS=0 command reg. */
+ 2da:	0e 94 39 01 	call	0x272	; 0x272 <LCD_RS_Reg>
+	LCD_Write_Operation();	/* RW=0 Write operation */
+ 2de:	0e 94 41 01 	call	0x282	; 0x282 <LCD_Write_Operation>
+	LCD_Enable();	/* Enable pulse */
+ 2e2:	0e 94 49 01 	call	0x292	; 0x292 <LCD_Enable>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2e6:	00 00       	nop
+	_delay_us(1);
+	LCD_Disable();
+ 2e8:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LCD_Disable>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2ec:	83 ef       	ldi	r24, 0xF3	; 243
+ 2ee:	91 e0       	ldi	r25, 0x01	; 1
+ 2f0:	01 97       	sbiw	r24, 0x01	; 1
+ 2f2:	f1 f7       	brne	.-4      	; 0x2f0 <LCD_Char+0x1a>
+ 2f4:	00 c0       	rjmp	.+0      	; 0x2f6 <LCD_Char+0x20>
+ 2f6:	00 00       	nop
+ 2f8:	08 95       	ret
+
+000002fa <LCD_Init>:
+ 2fa:	87 e8       	ldi	r24, 0x87	; 135
+ 2fc:	93 e1       	ldi	r25, 0x13	; 19
+ 2fe:	01 97       	sbiw	r24, 0x01	; 1
+ 300:	f1 f7       	brne	.-4      	; 0x2fe <LCD_Init+0x4>
+ 302:	00 c0       	rjmp	.+0      	; 0x304 <LCD_Init+0xa>
+ 304:	00 00       	nop
+
+void LCD_Init (void)			/* LCD Initialize function */
+{
+	_delay_ms(20);			/* LCD Power ON delay always >15ms */
+	
+	LCD_Command (0x38);		/* Initialization of 16X2 LCD in 8bit mode */
+ 306:	88 e3       	ldi	r24, 0x38	; 56
+ 308:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	LCD_Command (0x0C);		/* Display ON Cursor OFF */
+ 30c:	8c e0       	ldi	r24, 0x0C	; 12
+ 30e:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	LCD_Command (0x06);		/* Auto Increment cursor */
+ 312:	86 e0       	ldi	r24, 0x06	; 6
+ 314:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	LCD_Command (0x01);		/* clear display */
+ 318:	81 e0       	ldi	r24, 0x01	; 1
+ 31a:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+ 31e:	83 ef       	ldi	r24, 0xF3	; 243
+ 320:	91 e0       	ldi	r25, 0x01	; 1
+ 322:	01 97       	sbiw	r24, 0x01	; 1
+ 324:	f1 f7       	brne	.-4      	; 0x322 <LCD_Init+0x28>
+ 326:	00 c0       	rjmp	.+0      	; 0x328 <LCD_Init+0x2e>
+ 328:	00 00       	nop
+	_delay_ms(2);			/* Clear display command delay> 1.63 ms */
+	LCD_Command (0x80);		/* Cursor at home position */
+ 32a:	80 e8       	ldi	r24, 0x80	; 128
+ 32c:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+ 330:	08 95       	ret
+
+00000332 <LCD_String>:
+}
+
+
+void LCD_String (uint8 *str)		/* Send string to LCD function */
+{
+ 332:	cf 93       	push	r28
+ 334:	df 93       	push	r29
+ 336:	ec 01       	movw	r28, r24
+	int i;
+	for(i=0;str[i]!=0;i++)		/* Send each char of string till the NULL */
+ 338:	88 81       	ld	r24, Y
+ 33a:	88 23       	and	r24, r24
+ 33c:	31 f0       	breq	.+12     	; 0x34a <LCD_String+0x18>
+ 33e:	21 96       	adiw	r28, 0x01	; 1
+	{
+		LCD_Char ((uint8)str[i]);
+ 340:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <LCD_Char>
+
+
+void LCD_String (uint8 *str)		/* Send string to LCD function */
+{
+	int i;
+	for(i=0;str[i]!=0;i++)		/* Send each char of string till the NULL */
+ 344:	89 91       	ld	r24, Y+
+ 346:	81 11       	cpse	r24, r1
+ 348:	fb cf       	rjmp	.-10     	; 0x340 <LCD_String+0xe>
+	{
+		LCD_Char ((uint8)str[i]);
+	}
+}
+ 34a:	df 91       	pop	r29
+ 34c:	cf 91       	pop	r28
+ 34e:	08 95       	ret
+
+00000350 <LCD_String_xy>:
+
+void LCD_String_xy (uint8 row, uint8 pos, uint8 *str)  /* Send string to LCD with xy position */
+{
+ 350:	cf 93       	push	r28
+ 352:	df 93       	push	r29
+ 354:	ea 01       	movw	r28, r20
+	if (row == 0 && pos<16)
+ 356:	81 11       	cpse	r24, r1
+ 358:	08 c0       	rjmp	.+16     	; 0x36a <LCD_String_xy+0x1a>
+ 35a:	60 31       	cpi	r22, 0x10	; 16
+ 35c:	78 f4       	brcc	.+30     	; 0x37c <LCD_String_xy+0x2c>
+	LCD_Command((pos & 0x0F)|0x80);	/* Command of first row and required position<16 */
+ 35e:	86 2f       	mov	r24, r22
+ 360:	8f 70       	andi	r24, 0x0F	; 15
+ 362:	80 68       	ori	r24, 0x80	; 128
+ 364:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+ 368:	09 c0       	rjmp	.+18     	; 0x37c <LCD_String_xy+0x2c>
+	else if (row == (uint8)1 && pos<(uint8)16)
+ 36a:	81 30       	cpi	r24, 0x01	; 1
+ 36c:	39 f4       	brne	.+14     	; 0x37c <LCD_String_xy+0x2c>
+ 36e:	60 31       	cpi	r22, 0x10	; 16
+ 370:	28 f4       	brcc	.+10     	; 0x37c <LCD_String_xy+0x2c>
+	LCD_Command((pos & 0x0F)|0xC0);	/* Command of first row and required position<16 */
+ 372:	86 2f       	mov	r24, r22
+ 374:	8f 70       	andi	r24, 0x0F	; 15
+ 376:	80 6c       	ori	r24, 0xC0	; 192
+ 378:	0e 94 59 01 	call	0x2b2	; 0x2b2 <LCD_Command>
+	LCD_String(str);		/* Call LCD string function */
+ 37c:	ce 01       	movw	r24, r28
+ 37e:	0e 94 99 01 	call	0x332	; 0x332 <LCD_String>
+}
+ 382:	df 91       	pop	r29
+ 384:	cf 91       	pop	r28
+ 386:	08 95       	ret
+
+00000388 <main>:
 
 int main(void)
 {
     /* Replace with your application code */
-	test();
-  88:	0e 94 41 00 	call	0x82	; 0x82 <test>
-  8c:	ff cf       	rjmp	.-2      	; 0x8c <main+0x4>
+	
+	test_KeyPad_Lcd();
+ 388:	0e 94 be 00 	call	0x17c	; 0x17c <test_KeyPad_Lcd>
+    
+}
+ 38c:	80 e0       	ldi	r24, 0x00	; 0
+ 38e:	90 e0       	ldi	r25, 0x00	; 0
+ 390:	08 95       	ret
 
-0000008e <DIO_ChannelDir>:
+00000392 <DIO_Init>:
+                PORTB_BASE_ADDRESS,
+                PORTC_BASE_ADDRESS,
+                PORTD_BASE_ADDRESS
+        };
+
+DIO_CheckType DIO_Init(uint8 PortId) {
+ 392:	cf 93       	push	r28
+ 394:	df 93       	push	r29
+    uint8 Loop;
+    DIO_CheckType Result;
+    /*verify Port Id*/
+    if (PortId < NUM_OF_PORTS) {
+ 396:	84 30       	cpi	r24, 0x04	; 4
+ 398:	98 f5       	brcc	.+102    	; 0x400 <__LOCK_REGION_LENGTH__>
+        for (Loop = 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
+            /*init port direction for the masked pins*/
+            DDR_REG(PortId) &= ~(DIO_ConfigParam[PortId][Loop].PortMask);
+ 39a:	90 e0       	ldi	r25, 0x00	; 0
+ 39c:	fc 01       	movw	r30, r24
+ 39e:	ef 54       	subi	r30, 0x4F	; 79
+ 3a0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3a2:	a0 81       	ld	r26, Z
+ 3a4:	b0 e0       	ldi	r27, 0x00	; 0
+ 3a6:	ed 01       	movw	r28, r26
+ 3a8:	21 97       	sbiw	r28, 0x01	; 1
+ 3aa:	fc 01       	movw	r30, r24
+ 3ac:	ee 0f       	add	r30, r30
+ 3ae:	ff 1f       	adc	r31, r31
+ 3b0:	e8 0f       	add	r30, r24
+ 3b2:	f9 1f       	adc	r31, r25
+ 3b4:	ee 0f       	add	r30, r30
+ 3b6:	ff 1f       	adc	r31, r31
+ 3b8:	ee 0f       	add	r30, r30
+ 3ba:	ff 1f       	adc	r31, r31
+ 3bc:	ee 0f       	add	r30, r30
+ 3be:	ff 1f       	adc	r31, r31
+ 3c0:	eb 54       	subi	r30, 0x4B	; 75
+ 3c2:	ff 4f       	sbci	r31, 0xFF	; 255
+            DDR_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection;
+            /*init pull up resistor in case of input direction only*/
+            PORT_REG(PortId) &= (~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection);
+ 3c4:	48 e0       	ldi	r20, 0x08	; 8
+    DIO_CheckType Result;
+    /*verify Port Id*/
+    if (PortId < NUM_OF_PORTS) {
+        for (Loop = 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
+            /*init port direction for the masked pins*/
+            DDR_REG(PortId) &= ~(DIO_ConfigParam[PortId][Loop].PortMask);
+ 3c6:	88 81       	ld	r24, Y
+ 3c8:	30 81       	ld	r19, Z
+ 3ca:	93 2f       	mov	r25, r19
+ 3cc:	90 95       	com	r25
+ 3ce:	89 23       	and	r24, r25
+ 3d0:	88 83       	st	Y, r24
+            DDR_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection;
+ 3d2:	28 81       	ld	r18, Y
+ 3d4:	81 81       	ldd	r24, Z+1	; 0x01
+ 3d6:	53 2f       	mov	r21, r19
+ 3d8:	58 23       	and	r21, r24
+ 3da:	25 2b       	or	r18, r21
+ 3dc:	28 83       	st	Y, r18
+            /*init pull up resistor in case of input direction only*/
+            PORT_REG(PortId) &= (~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection);
+ 3de:	2c 91       	ld	r18, X
+ 3e0:	98 2b       	or	r25, r24
+ 3e2:	92 23       	and	r25, r18
+ 3e4:	9c 93       	st	X, r25
+            PORT_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask &
+ 3e6:	9c 91       	ld	r25, X
+ 3e8:	22 81       	ldd	r18, Z+2	; 0x02
+ 3ea:	23 23       	and	r18, r19
+ 3ec:	80 95       	com	r24
+ 3ee:	82 23       	and	r24, r18
+ 3f0:	89 2b       	or	r24, r25
+ 3f2:	8c 93       	st	X, r24
+ 3f4:	41 50       	subi	r20, 0x01	; 1
+ 3f6:	33 96       	adiw	r30, 0x03	; 3
+DIO_CheckType DIO_Init(uint8 PortId) {
+    uint8 Loop;
+    DIO_CheckType Result;
+    /*verify Port Id*/
+    if (PortId < NUM_OF_PORTS) {
+        for (Loop = 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
+ 3f8:	41 11       	cpse	r20, r1
+ 3fa:	e5 cf       	rjmp	.-54     	; 0x3c6 <DIO_Init+0x34>
+            /*init pull up resistor in case of input direction only*/
+            PORT_REG(PortId) &= (~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection);
+            PORT_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask &
+                                ((~DIO_ConfigParam[PortId][Loop].PortDirection) & DIO_ConfigParam[PortId][Loop].IsPullupResistorUsed);
+        }
+        Result = DIO_OK;
+ 3fc:	80 e0       	ldi	r24, 0x00	; 0
+ 3fe:	01 c0       	rjmp	.+2      	; 0x402 <__LOCK_REGION_LENGTH__+0x2>
+    } else {
+        /*invalid port*/
+        Result = DIO_NOK;
+ 400:	81 e0       	ldi	r24, 0x01	; 1
+    }
     return Result;
 }
+ 402:	df 91       	pop	r29
+ 404:	cf 91       	pop	r28
+ 406:	08 95       	ret
 
-DIO_CheckType DIO_ChannelDir(unsigned char PortId, unsigned char ChannelId, unsigned char Direction) {
+00000408 <DIO_ChannelDir>:
+
+DIO_CheckType DIO_ChannelDir(uint8 PortId, uint8 ChannelId, uint8 Direction) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
-  8e:	84 30       	cpi	r24, 0x04	; 4
-  90:	d0 f4       	brcc	.+52     	; 0xc6 <DIO_ChannelDir+0x38>
+ 408:	84 30       	cpi	r24, 0x04	; 4
+ 40a:	d0 f4       	brcc	.+52     	; 0x440 <DIO_ChannelDir+0x38>
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
-  92:	68 30       	cpi	r22, 0x08	; 8
-  94:	d0 f4       	brcc	.+52     	; 0xca <DIO_ChannelDir+0x3c>
+ 40c:	68 30       	cpi	r22, 0x08	; 8
+ 40e:	d0 f4       	brcc	.+52     	; 0x444 <DIO_ChannelDir+0x3c>
             DDR_REG(PortId) &= ~(1 << ChannelId);
-  96:	e8 2f       	mov	r30, r24
-  98:	f0 e0       	ldi	r31, 0x00	; 0
-  9a:	e0 5a       	subi	r30, 0xA0	; 160
-  9c:	ff 4f       	sbci	r31, 0xFF	; 255
-  9e:	e0 81       	ld	r30, Z
-  a0:	f0 e0       	ldi	r31, 0x00	; 0
-  a2:	22 91       	ld	r18, -Z
-  a4:	81 e0       	ldi	r24, 0x01	; 1
-  a6:	90 e0       	ldi	r25, 0x00	; 0
-  a8:	02 c0       	rjmp	.+4      	; 0xae <DIO_ChannelDir+0x20>
-  aa:	88 0f       	add	r24, r24
-  ac:	99 1f       	adc	r25, r25
-  ae:	6a 95       	dec	r22
-  b0:	e2 f7       	brpl	.-8      	; 0xaa <DIO_ChannelDir+0x1c>
-  b2:	98 2f       	mov	r25, r24
-  b4:	90 95       	com	r25
-  b6:	92 23       	and	r25, r18
-  b8:	90 83       	st	Z, r25
+ 410:	e8 2f       	mov	r30, r24
+ 412:	f0 e0       	ldi	r31, 0x00	; 0
+ 414:	ef 54       	subi	r30, 0x4F	; 79
+ 416:	ff 4f       	sbci	r31, 0xFF	; 255
+ 418:	e0 81       	ld	r30, Z
+ 41a:	f0 e0       	ldi	r31, 0x00	; 0
+ 41c:	22 91       	ld	r18, -Z
+ 41e:	81 e0       	ldi	r24, 0x01	; 1
+ 420:	90 e0       	ldi	r25, 0x00	; 0
+ 422:	02 c0       	rjmp	.+4      	; 0x428 <DIO_ChannelDir+0x20>
+ 424:	88 0f       	add	r24, r24
+ 426:	99 1f       	adc	r25, r25
+ 428:	6a 95       	dec	r22
+ 42a:	e2 f7       	brpl	.-8      	; 0x424 <DIO_ChannelDir+0x1c>
+ 42c:	98 2f       	mov	r25, r24
+ 42e:	90 95       	com	r25
+ 430:	92 23       	and	r25, r18
+ 432:	90 83       	st	Z, r25
             DDR_REG(PortId) |= ((1 << ChannelId) & Direction);
-  ba:	90 81       	ld	r25, Z
-  bc:	84 23       	and	r24, r20
-  be:	89 2b       	or	r24, r25
-  c0:	80 83       	st	Z, r24
+ 434:	90 81       	ld	r25, Z
+ 436:	84 23       	and	r24, r20
+ 438:	89 2b       	or	r24, r25
+ 43a:	80 83       	st	Z, r24
             Result = DIO_OK;
-  c2:	80 e0       	ldi	r24, 0x00	; 0
-  c4:	08 95       	ret
+ 43c:	80 e0       	ldi	r24, 0x00	; 0
+ 43e:	08 95       	ret
         } else{
             Result = DIO_NOK;
         }
     } else {
         Result = DIO_NOK;
-  c6:	81 e0       	ldi	r24, 0x01	; 1
-  c8:	08 95       	ret
+ 440:	81 e0       	ldi	r24, 0x01	; 1
+ 442:	08 95       	ret
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
             DDR_REG(PortId) &= ~(1 << ChannelId);
             DDR_REG(PortId) |= ((1 << ChannelId) & Direction);
             Result = DIO_OK;
         } else{
             Result = DIO_NOK;
-  ca:	81 e0       	ldi	r24, 0x01	; 1
+ 444:	81 e0       	ldi	r24, 0x01	; 1
         }
     } else {
         Result = DIO_NOK;
     }
     return Result;
 }
+ 446:	08 95       	ret
+
+00000448 <DIO_ChannelWrite>:
+
+
+DIO_CheckType DIO_ChannelWrite(uint8 PortId, uint8 ChannelId, uint8 Data) {
+    /*Add your code*/
+    DIO_CheckType Result;
+    if (PortId < DIO_NUM_OF_PORTS) {
+ 448:	84 30       	cpi	r24, 0x04	; 4
+ 44a:	d0 f4       	brcc	.+52     	; 0x480 <DIO_ChannelWrite+0x38>
+        if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
+ 44c:	68 30       	cpi	r22, 0x08	; 8
+ 44e:	d0 f4       	brcc	.+52     	; 0x484 <DIO_ChannelWrite+0x3c>
+            PORT_REG(PortId) &= ~(1 << ChannelId);
+ 450:	e8 2f       	mov	r30, r24
+ 452:	f0 e0       	ldi	r31, 0x00	; 0
+ 454:	ef 54       	subi	r30, 0x4F	; 79
+ 456:	ff 4f       	sbci	r31, 0xFF	; 255
+ 458:	e0 81       	ld	r30, Z
+ 45a:	f0 e0       	ldi	r31, 0x00	; 0
+ 45c:	20 81       	ld	r18, Z
+ 45e:	81 e0       	ldi	r24, 0x01	; 1
+ 460:	90 e0       	ldi	r25, 0x00	; 0
+ 462:	02 c0       	rjmp	.+4      	; 0x468 <DIO_ChannelWrite+0x20>
+ 464:	88 0f       	add	r24, r24
+ 466:	99 1f       	adc	r25, r25
+ 468:	6a 95       	dec	r22
+ 46a:	e2 f7       	brpl	.-8      	; 0x464 <DIO_ChannelWrite+0x1c>
+ 46c:	98 2f       	mov	r25, r24
+ 46e:	90 95       	com	r25
+ 470:	92 23       	and	r25, r18
+ 472:	90 83       	st	Z, r25
+            PORT_REG(PortId) |= (1 << ChannelId) & Data;
+ 474:	90 81       	ld	r25, Z
+ 476:	84 23       	and	r24, r20
+ 478:	89 2b       	or	r24, r25
+ 47a:	80 83       	st	Z, r24
+            Result = DIO_OK;
+ 47c:	80 e0       	ldi	r24, 0x00	; 0
+ 47e:	08 95       	ret
+        } else{
+            Result = DIO_NOK;
+        }
+    } else {
+        Result = DIO_NOK;
+ 480:	81 e0       	ldi	r24, 0x01	; 1
+ 482:	08 95       	ret
+        if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
+            PORT_REG(PortId) &= ~(1 << ChannelId);
+            PORT_REG(PortId) |= (1 << ChannelId) & Data;
+            Result = DIO_OK;
+        } else{
+            Result = DIO_NOK;
+ 484:	81 e0       	ldi	r24, 0x01	; 1
+        }
+    } else {
+        Result = DIO_NOK;
+    }
+    return Result;
+}
+ 486:	08 95       	ret
+
+00000488 <DIO_ChannelRead>:
+
+
+DIO_CheckType DIO_ChannelRead(uint8 PortId, uint8 ChannelId, uint8 *DataPtr) {
+    DIO_CheckType Result;
+    if (PortId < DIO_NUM_OF_PORTS) {
+ 488:	84 30       	cpi	r24, 0x04	; 4
+ 48a:	d8 f4       	brcc	.+54     	; 0x4c2 <DIO_ChannelRead+0x3a>
+        if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
+ 48c:	68 30       	cpi	r22, 0x08	; 8
+ 48e:	d8 f4       	brcc	.+54     	; 0x4c6 <DIO_ChannelRead+0x3e>
+            if ((1 << ChannelId) & PIN_REG(PortId)) {
+ 490:	e8 2f       	mov	r30, r24
+ 492:	f0 e0       	ldi	r31, 0x00	; 0
+ 494:	ef 54       	subi	r30, 0x4F	; 79
+ 496:	ff 4f       	sbci	r31, 0xFF	; 255
+ 498:	e0 81       	ld	r30, Z
+ 49a:	f0 e0       	ldi	r31, 0x00	; 0
+ 49c:	32 97       	sbiw	r30, 0x02	; 2
+ 49e:	80 81       	ld	r24, Z
+ 4a0:	90 e0       	ldi	r25, 0x00	; 0
+ 4a2:	02 c0       	rjmp	.+4      	; 0x4a8 <DIO_ChannelRead+0x20>
+ 4a4:	95 95       	asr	r25
+ 4a6:	87 95       	ror	r24
+ 4a8:	6a 95       	dec	r22
+ 4aa:	e2 f7       	brpl	.-8      	; 0x4a4 <DIO_ChannelRead+0x1c>
+ 4ac:	80 ff       	sbrs	r24, 0
+ 4ae:	05 c0       	rjmp	.+10     	; 0x4ba <DIO_ChannelRead+0x32>
+                *DataPtr = (uint8)0xff;
+ 4b0:	8f ef       	ldi	r24, 0xFF	; 255
+ 4b2:	fa 01       	movw	r30, r20
+ 4b4:	80 83       	st	Z, r24
+            } else {
+                *DataPtr = (uint8)0x00;
+            }
+            Result = DIO_OK;
+ 4b6:	80 e0       	ldi	r24, 0x00	; 0
+ 4b8:	08 95       	ret
+    if (PortId < DIO_NUM_OF_PORTS) {
+        if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
+            if ((1 << ChannelId) & PIN_REG(PortId)) {
+                *DataPtr = (uint8)0xff;
+            } else {
+                *DataPtr = (uint8)0x00;
+ 4ba:	fa 01       	movw	r30, r20
+ 4bc:	10 82       	st	Z, r1
+            }
+            Result = DIO_OK;
+ 4be:	80 e0       	ldi	r24, 0x00	; 0
+ 4c0:	08 95       	ret
+        } else{
+            Result = DIO_NOK;
+        }
+    } else {
+        Result = DIO_NOK;
+ 4c2:	81 e0       	ldi	r24, 0x01	; 1
+ 4c4:	08 95       	ret
+            } else {
+                *DataPtr = (uint8)0x00;
+            }
+            Result = DIO_OK;
+        } else{
+            Result = DIO_NOK;
+ 4c6:	81 e0       	ldi	r24, 0x01	; 1
+        }
+    } else {
+        Result = DIO_NOK;
+    }
+    return Result;
+}
+<<<<<<< HEAD
+ 4c8:	08 95       	ret
+=======
+<<<<<<< HEAD
   cc:	08 95       	ret
 
-000000ce <SPI_initMaster>:
+000000ce <SPI_InitMaster>:
      * SS(PB4)   --> Output
      * MOSI(PB5) --> Output
      * MISO(PB6) --> Input
@@ -196,3 +987,18 @@ DIO_CheckType DIO_ChannelDir(unsigned char PortId, unsigned char ChannelId, unsi
 
 000000fe <__stop_program>:
   fe:	ff cf       	rjmp	.-2      	; 0xfe <__stop_program>
+=======
+ 32a:	08 95       	ret
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731
+
+000004ca <_exit>:
+ 4ca:	f8 94       	cli
+
+<<<<<<< HEAD
+000004cc <__stop_program>:
+ 4cc:	ff cf       	rjmp	.-2      	; 0x4cc <__stop_program>
+=======
+0000032e <__stop_program>:
+ 32e:	ff cf       	rjmp	.-2      	; 0x32e <__stop_program>
+>>>>>>> f926000c9e01c3d94d6074c4e9e41513dd7bd78e
+>>>>>>> 1e08d83cdc2ea6d3e43a4619d090476319746731

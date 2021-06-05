@@ -1,15 +1,9 @@
+//
+// Created by abdulla167 on ٢‏/٦‏/٢٠٢١.
+//
 #include "SPI.h"
 #include <avr/io.h>
-#include "DIO.h"
 #include "Macros.h"
-
-#define SPI_PORT_NUM ((uint8)1)
-#define SS_PIN_NUM ((uint8)4)
-#define MOSI_PIN_NUM ((uint8)5)
-#define MISO_PIN_NUM ((uint8)6)
-#define SCK_PIN_NUM ((uint8)7)
-#define MSB ((uint8)1)
-#define LSB ((uint8)0)
 
 
 /*******************************************************************************
@@ -17,11 +11,12 @@
  *******************************************************************************/
 
 
-/***********CONFIGURE DEVICE AS SPI MASTER************
- *
+/********************** SPI_InitMaster **********************
+ * [Description] :
  * @param StartBit
+ * @param ClkPolarity
  */
-void SPI_initMaster(uint8 StartBit)
+void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
 {
     /* SET SS PIN AS OUTPUT PIN */
     DIO_ChannelDir(SPI_PORT_NUM, SS_PIN_NUM, 0xff);
@@ -38,68 +33,32 @@ void SPI_initMaster(uint8 StartBit)
     CLEAR_BIT(SPCR, SPR1);
     /* SET SPE PIN TO ENABLE SPI */
     SET_BIT(SPCR, SPE);
-    /* SET DATA ORDER ACCORDING TO StartInput Parameter */
-    (StartBit == 1)? SET_BIT(SPCR , DORD) : CLEAR_BIT (SPCR , DORD);
+    /* SEND DATA ORDER ACCORDING TO StartInput Parameter */
+    (StartBit == LSB)? SET_BIT(SPCR , DORD) : CLEAR_BIT (SPCR , DORD);
+    /* SAMPLING ON SECOND EDGE OF THE CLOCK */
+    (ClkPolarity == LEADING_EDGE)? SET_BIT(SPCR , CPHA) : CLEAR_BIT (SPCR , CPHA);
 }
 
-
-/***********CONFIGURE DEVICE AS SPI SLAVE************
- *
- *
+/********************** SPI_SendByte **********************
+ * [Description] :
+ * @param data :
  */
-void SPI_initSlave(void)
-{
-    /* SET SS PIN AS INPUT PIN */
-    DIO_ChannelDir(SPI_PORT_NUM, SS_PIN_NUM, 0x00);
-    /* SET MOSI PIN AS INPUT PIN */
-    DIO_ChannelDir(SPI_PORT_NUM, MOSI_PIN_NUM, 0x00);
-    /* SET MISO PIN AS OUTPUT PIN */
-    DIO_ChannelDir(SPI_PORT_NUM, MISO_PIN_NUM, 0xff);
-    /* SET SCK PIN AS INPUT PIN */
-    DIO_ChannelDir(SPI_PORT_NUM, SCK_PIN_NUM, 0x00);
-    /* SET SPE PIN TO ENABLE SPI */
-    SET_BIT(SPCR, SPE);
-}
-
-/************* SEND BYTE OF DATA ********************
- *
- * @param data : THE DATA BYTE THAT WILL BE SENT TO THE SLAVE
- */
-void SPI_sendByte(const uint8 data)
+void SPI_SendByte(uint8 data)
 {
     SPDR = data; //send data by SPI
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data is sent correctly)
 }
 
-/************* RECEIVE BYTE OF DATA ******************
- *
+/**********************  SPI_RecieveByte **********************
+ * [Description] :
  * @return THE DATA WHICH HAVE BEEN READ FROM THE SLAVE
  */
-unsigned char SPI_recieveByte(void)
+int8 SPI_RecieveByte(void)
 {
     while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1(data is receive correctly)
     return SPDR; //return the received byte from SPI data register
 }
 
-void SPI_SendString(const char *Str)
-{
-    unsigned char i = 0;
-    while(Str[i] != '\0')
-    {
-        SPI_sendByte(Str[i]);
-        i++;
-    }
-}
 
-void SPI_ReceiveString(char *Str)
-{
-    unsigned char i = 0;
-    Str[i] = SPI_recieveByte();
-    while(Str[i] != '#')
-    {
-        i++;
-        Str[i] = SPI_recieveByte();
-    }
-    Str[i] = '\0';
-}
+
 

@@ -1,1 +1,0 @@
-MCAL/SPI/SPI_Cfg.d MCAL/SPI/SPI_Cfg.o: ../MCAL/SPI/SPI_Cfg.c

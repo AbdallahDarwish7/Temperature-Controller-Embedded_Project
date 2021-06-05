@@ -16,4 +16,3 @@ int main(void) {
     Timer_Start(0, TIMER0_PRESCALER_8);
     while (1) {}
 }
-

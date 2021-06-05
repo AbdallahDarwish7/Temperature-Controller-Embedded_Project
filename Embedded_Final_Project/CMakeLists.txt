@@ -19,7 +19,7 @@ SET(CMAKE_CXX_COMPILER ${AVRBIN}/avr-g++)
 #============================================================================================
 PROJECT(Embedded_Final_Project)                                          # <-- Prjectname
 
-SET(SOURCE_FILES main.c Macros.h typedefs.h)                                          # <-- Source file(s)
+SET(SOURCE_FILES main.c Macros.h typedefs.h )                                          # <-- Source file(s)
 
 SET(DEVICE atmega32)                                       # <-- MCU
 SET(F_CPU 8000000UL)                                         # <-- MCU-Frequency
