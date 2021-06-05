@@ -22,7 +22,7 @@ PROJECT(Embedded_Final_Project)                                          # <-- P
 SET(SOURCE_FILES main.c Macros.h typedefs.h )                                          # <-- Source file(s)
 
 SET(DEVICE atmega32)                                       # <-- MCU
-SET(F_CPU 8000000UL)                                         # <-- MCU-Frequency
+SET(F_CPU 8000000)                                         # <-- MCU-Frequency
 
 #*******************************************************************************
 
@@ -48,7 +48,9 @@ ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 add_subdirectory(MCAL)
 add_subdirectory(HAL)
 target_link_libraries(tc72 SPI)
-target_link_libraries(${CMAKE_PROJECT_NAME} tc72 Timer)
+target_link_libraries(LCD DIO)
+target_link_libraries(KeyPad DIO)
+target_link_libraries(${CMAKE_PROJECT_NAME} tc72 Timer KeyPad)
 
 ADD_CUSTOM_COMMAND(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${AVRBIN}/${AVROBJCOPY} -O ihex -R .eeprom ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.elf ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.hex)
 
