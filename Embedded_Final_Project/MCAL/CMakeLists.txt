@@ -1,4 +1,6 @@
 add_subdirectory(DIO)
 add_subdirectory(SPI)
 add_subdirectory(Timer)
+add_subdirectory(PWM)
 target_link_libraries(SPI DIO)
+target_link_libraries(PWM Timer DIO)

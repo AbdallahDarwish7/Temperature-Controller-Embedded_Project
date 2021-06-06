@@ -21,7 +21,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom);
 
 void Timer_Start(uint8 TimerId, uint16 TimerPreScaler);
 
-void PWM_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom);
+void Timer_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom);
 
 void Timer_Stop(uint8 TimerId);
 

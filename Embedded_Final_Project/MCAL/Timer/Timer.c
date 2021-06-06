@@ -243,7 +243,7 @@ void Timer_Stop(uint8 TimerId) {
     }
 }
 
-void PWM_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom) {
+void Timer_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom) {
     if (TimerId < NUM_TIMERS) {
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
             uint8 TimerIndex = 0;
