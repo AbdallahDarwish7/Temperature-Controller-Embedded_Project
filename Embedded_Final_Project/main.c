@@ -8,14 +8,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "TC72.h"
-#include "LCD.h"
+//#include "KeyPad.h"
+
 
 int main(void)
 {
+    test_KeyPad_Lcd();
     /* Replace with your application code */
-	
-    while (1)
-    {
+	while (1)
+	{
 
-    }
+	}
+
 }

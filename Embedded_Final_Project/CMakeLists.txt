@@ -48,7 +48,10 @@ ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 add_subdirectory(MCAL)
 add_subdirectory(HAL)
 target_link_libraries(tc72 SPI)
-target_link_libraries(${CMAKE_PROJECT_NAME} tc72)
+target_link_libraries(lcd DIO )
+target_link_libraries(keypad DIO lcd)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} tc72 lcd keypad)
 
 ADD_CUSTOM_COMMAND(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${AVRBIN}/${AVROBJCOPY} -O ihex -R .eeprom ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.elf ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.hex)
 

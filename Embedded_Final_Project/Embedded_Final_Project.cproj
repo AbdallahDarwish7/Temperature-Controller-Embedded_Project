@@ -103,6 +103,7 @@
       <Value>../HAL/TC72_Temp_sensor</Value>
       <Value>../HAL/LCD</Value>
       <Value>..</Value>
+      <Value>../HAL/KeyPad</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -125,6 +126,18 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HAL\KeyPad\KeyPad.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\KeyPad\KeyPad.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\KeyPad\KeyPad_Cfg.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\KeyPad\KeyPad_Cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\LCD\LCD.c">
       <SubType>compile</SubType>
     </Compile>
@@ -176,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HAL\LCD" />
+    <Folder Include="HAL\KeyPad" />
     <Folder Include="HAL\TC72_Temp_sensor" />
     <Folder Include="MCAL" />
     <Folder Include="MCAL\DIO" />
@@ -190,6 +204,9 @@
       <SubType>compile</SubType>
     </None>
     <None Include="HAL\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="HAL\KeyPad\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
     <None Include="HAL\LCD\CMakeLists.txt">
