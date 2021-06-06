@@ -20,5 +20,3 @@ MCAL\DIO\DIO_Cfg.c
 
 MCAL\SPI\SPI.c
 
-MCAL\SPI\SPI_Cfg.c
-

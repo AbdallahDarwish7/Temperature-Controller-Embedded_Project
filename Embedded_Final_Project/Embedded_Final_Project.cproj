@@ -102,8 +102,8 @@
       <Value>../MCAL/SPI</Value>
       <Value>../HAL/TC72_Temp_sensor</Value>
       <Value>../HAL/LCD</Value>
-      <Value>..</Value>
       <Value>../HAL/KeyPad</Value>
+      <Value>..</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -178,12 +178,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\SPI\SPI.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="MCAL\SPI\SPI_Cfg.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="MCAL\SPI\SPI_Cfg.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
