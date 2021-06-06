@@ -5,6 +5,7 @@
  * Author : AbdallahDrwesh
  */
 
+
 #include "Timer.h"
 #include "DIO.h"
 #include "Temp_MGR.h"
@@ -43,8 +44,6 @@ void display(char count){
     else{
         digit1 = digit1 & 0x247 ;
     }
-
-
     int digit2 = count/10 ;
     int digit2_bit = (digit2 >> 3) & 1U;
     if (digit2_bit == 1){
@@ -53,10 +52,6 @@ void display(char count){
     else{
         digit2 = digit2 & 0x247 ;
     }
-
-
-
-
     PORTA = PORTA | ( 1<<3) ; //PIN3 of port A is high
     PORTC = digit1;
     _delay_ms(5);
@@ -65,10 +60,6 @@ void display(char count){
     PORTC = digit2;
     _delay_ms(5);
     PORTA = 0x00;
-
-
-
-
 }
 
 

@@ -11,7 +11,11 @@
 #include "typedefs.h"
 uint8 CheckBit(uint8 Data, uint8 bitNum);
 
-void LCD_Write_Data(uint8 char_data);
+
+void LCD_Write_Upper(uint8 char_data);
+
+void LCD_Write_Lower(uint8 char_data);
+
 
 void LCD_RS_Command(void);
 	
@@ -36,6 +40,8 @@ void LCD_String (uint8 *str);		/* Send string to LCD function */
 void LCD_String_xy (uint8 row, uint8 pos, uint8 *str);  /* Send string to LCD with xy position */
 
 void LCD_Clear();
+
+void LCD_NewLine();
 
 void LCD_Custom_Char (uint8 loc, uint8 *msg);
 

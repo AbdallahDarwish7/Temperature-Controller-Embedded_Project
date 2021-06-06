@@ -1,5 +1,5 @@
 MCAL/SPI/SPI.d MCAL/SPI/SPI.o: ../MCAL/SPI/SPI.c ../MCAL/SPI/SPI.h \
- ../typedefs.h \
+ ../MCAL/DIO/DIO.h ../typedefs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -11,9 +11,11 @@ MCAL/SPI/SPI.d MCAL/SPI/SPI.o: ../MCAL/SPI/SPI.c ../MCAL/SPI/SPI.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- ../MCAL/DIO/DIO.h ../Macros.h
+ ../Macros.h
 
 ../MCAL/SPI/SPI.h:
+
+../MCAL/DIO/DIO.h:
 
 ../typedefs.h:
 
@@ -38,7 +40,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
-
-../MCAL/DIO/DIO.h:
 
 ../Macros.h:
