@@ -7,16 +7,16 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 
 Discarded input sections
 
- .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
+ .data0          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .text          0x00000000        0x0 HAL/KeyPad/KeyPad.o
- .data          0x00000000        0x0 HAL/KeyPad/KeyPad.o
+ .data0          0x00000000        0x0 HAL/KeyPad/KeyPad.o
  .bss           0x00000000        0x0 HAL/KeyPad/KeyPad.o
  .text          0x00000000        0x0 HAL/KeyPad/KeyPad_Cfg.o
- .data          0x00000000        0x0 HAL/KeyPad/KeyPad_Cfg.o
+ .data0          0x00000000        0x0 HAL/KeyPad/KeyPad_Cfg.o
  .bss           0x00000000        0x0 HAL/KeyPad/KeyPad_Cfg.o
  .text          0x00000000        0x0 HAL/LCD/LCD.o
- .data          0x00000000        0x0 HAL/LCD/LCD.o
+ .data0          0x00000000        0x0 HAL/LCD/LCD.o
  .bss           0x00000000        0x0 HAL/LCD/LCD.o
  .text.CheckBit
                 0x00000000       0x12 HAL/LCD/LCD.o
@@ -32,10 +32,10 @@ Discarded input sections
  .text.test_LCD
                 0x00000000       0xac HAL/LCD/LCD.o
  .text          0x00000000        0x0 HAL/LCD/LCD_Cfg.o
- .data          0x00000000        0x0 HAL/LCD/LCD_Cfg.o
+ .data0          0x00000000        0x0 HAL/LCD/LCD_Cfg.o
  .bss           0x00000000        0x0 HAL/LCD/LCD_Cfg.o
  .text          0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
- .data          0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
+ .data0          0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
  .bss           0x00000000        0x0 HAL/TC72_Temp_sensor/TC72.o
  .text.init     0x00000000       0x1a HAL/TC72_Temp_sensor/TC72.o
  .text.ReadTemperature
@@ -51,10 +51,10 @@ Discarded input sections
  .comment       0x00000000       0x31 HAL/TC72_Temp_sensor/TC72.o
  .debug_frame   0x00000000       0x3c HAL/TC72_Temp_sensor/TC72.o
  .text          0x00000000        0x0 main.o
- .data          0x00000000        0x0 main.o
+ .data0          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
  .text          0x00000000        0x0 MCAL/DIO/DIO.o
- .data          0x00000000        0x0 MCAL/DIO/DIO.o
+ .data0          0x00000000        0x0 MCAL/DIO/DIO.o
  .bss           0x00000000        0x0 MCAL/DIO/DIO.o
  .text.DIO_PortDir
                 0x00000000       0x1c MCAL/DIO/DIO.o
@@ -63,10 +63,10 @@ Discarded input sections
  .text.DIO_PortRead
                 0x00000000       0x20 MCAL/DIO/DIO.o
  .text          0x00000000        0x0 MCAL/DIO/DIO_Cfg.o
- .data          0x00000000        0x0 MCAL/DIO/DIO_Cfg.o
+ .data0          0x00000000        0x0 MCAL/DIO/DIO_Cfg.o
  .bss           0x00000000        0x0 MCAL/DIO/DIO_Cfg.o
  .text          0x00000000        0x0 MCAL/SPI/SPI.o
- .data          0x00000000        0x0 MCAL/SPI/SPI.o
+ .data0          0x00000000        0x0 MCAL/SPI/SPI.o
  .bss           0x00000000        0x0 MCAL/SPI/SPI.o
  .text.SPI_initMaster
                 0x00000000       0x42 MCAL/SPI/SPI.o
@@ -92,13 +92,13 @@ Discarded input sections
  .comment       0x00000000       0x31 MCAL/SPI/SPI.o
  .debug_frame   0x00000000       0x5c MCAL/SPI/SPI.o
  .text          0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
- .data          0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
+ .data0          0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
  .bss           0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
  .debug_line    0x00000000        0x0 MCAL/SPI/SPI_Cfg.o
  .debug_str     0x00000000      0x105 MCAL/SPI/SPI_Cfg.o
  .comment       0x00000000       0x31 MCAL/SPI/SPI_Cfg.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .data0          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -114,7 +114,7 @@ Discarded input sections
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
- .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
+ .data0          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
@@ -134,7 +134,7 @@ Memory Configuration
 
 Name             Origin             Length             Attributes
 text             0x00000000         0x00020000         xr
-data             0x00800060         0x0000ffa0         rw !x
+data0             0x00800060         0x0000ffa0         rw !x
 eeprom           0x00810000         0x00010000         rw !x
 fuse             0x00820000         0x00000002         rw !x
 lock             0x00830000         0x00000400         rw !x
@@ -224,14 +224,14 @@ END GROUP
  *(.rela.rodata.*)
  *(.rela.gnu.linkonce.r*)
 
-.rel.data
- *(.rel.data)
- *(.rel.data.*)
+.rel.data0
+ *(.rel.data0)
+ *(.rel.data0.*)
  *(.rel.gnu.linkonce.d*)
 
-.rela.data
- *(.rela.data)
- *(.rela.data.*)
+.rela.data0
+ *(.rela.data0)
+ *(.rela.data0.*)
  *(.rela.gnu.linkonce.d*)
 
 .rel.ctors
@@ -277,8 +277,8 @@ END GROUP
  .trampolines   0x00000054        0x0 linker stubs
  *(.trampolines*)
                 0x00000054                __trampolines_end = .
- *libprintf_flt.a:*(.progmem.data)
- *libc.a:*(.progmem.data)
+ *libprintf_flt.a:*(.progmem.data0)
+ *libc.a:*(.progmem.data0)
  *(.progmem*)
                 0x00000054                . = ALIGN (0x2)
  *(.jumptables)
@@ -450,10 +450,10 @@ END GROUP
  *(.fini0)
                 0x000004ce                _etext = .
 
-.data           0x00800060       0xb6 load address 0x000004ce
+.data0           0x00800060       0xb6 load address 0x000004ce
                 0x00800060                PROVIDE (__data_start, .)
- *(.data)
- *(.data*)
+ *(.data0)
+ *(.data0*)
  *(.gnu.linkonce.d*)
  *(.rodata)
  .rodata        0x00800060       0x18 HAL/KeyPad/KeyPad.o
@@ -485,8 +485,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000004ce                __data_load_start = LOADADDR (.data)
-                0x00000584                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000004ce                __data_load_start = LOADADDR (.data0)
+                0x00000584                __data_load_end = (__data_load_start + SIZEOF (.data0))
 
 .noinit         0x00800116        0x0
                 [!provide]                PROVIDE (__noinit_start, .)

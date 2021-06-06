@@ -2,9 +2,7 @@
  * Created by abdallah drwesh on 6/2/21.
  */
 #include "Timer.h"
-#include "Macros.h"
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
 #define TIMER_1_REG ((uint8) 0U)
 #define TIMER_2_REG ((uint8) 1U)
@@ -22,7 +20,7 @@
 #define NUM_TIMER1_PRESCALERS  ((uint8) 5U)
 #define TIMER1_PRESCALER_MASK ((uint16) 0xF8FF)
 #define NUM_TIMER1_MODES  ((uint8) 15U)
-#define TIMER1_MODES_MASK ((uint16) 0xF3FC)
+#define TIMER1_MODES_MASK ((uint16) 0xE7FC)
 
 #define NUM_TIMER2_PRESCALERS  ((uint8) 7U)
 #define TIMER2_PRESCALER_MASK ((uint8) 0xF8)
@@ -33,7 +31,7 @@
 
 
 #define TIMERS1REG_STOP_MASK (TIMER0_PRESCALER_MASK)
-#define TIMERS2REG_STOP_MASK (TIMER2_PRESCALER_MASK)
+#define TIMERS2REG_STOP_MASK (TIMER1_PRESCALER_MASK)
 
 uint8 TimersRegMode[NUM_TIMERS] = {TIMER_1_REG, TIMER_2_REG, TIMER_1_REG};
 uint8 Timers1RegIds[NUM_TIMERS_1_REG] = {0, 2};
@@ -68,11 +66,10 @@ uint16 Timer1Prescalers[NUM_TIMER1_PRESCALERS] = {1, 8, 64, 256, 1024};
 uint16 Timer1PrescalersRegValues[NUM_TIMER1_PRESCALERS] = {0x0100, 0x0200, 0x0300, 0x0400, 0x0500};
 
 uint8 Timer1Modes[NUM_TIMER1_MODES] = {TIMER_NORMAL_MODE, TIMER_CTC_MODE, TIMER_PWD_PHASE_CORRECT_MODE,
-                                       TIMER_PWD_FAST_MODE,
-};
+                                       TIMER_PWD_FAST_MODE};
 
-uint16 Timer1ModesRegValues[NUM_TIMER1_MODES] = {0x0000, 0x0800, 0x0040, 0x0048,
-};
+uint16 Timer1ModesRegValues[NUM_TIMER1_MODES] = {0x0000, 0x0800, 0x0040, 0x0048};
+
 /* Timer 2 */
 uint16 Timer2Prescalers[NUM_TIMER2_PRESCALERS] = {1, 8, 32, 64, 128, 256, 1024};
 uint8 Timer2PrescalersRegValues[NUM_TIMER2_PRESCALERS] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07};
@@ -158,10 +155,11 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
                     TimerModeRegValue = TimerModesRegValues[Loop];
                 }
             }
-            *(TCCRs2[TimerIndex]) &= Timers2RegModesMask[TimerIndex];
-            *(TCCRs2[TimerIndex + 1]) &= Timers2RegModesMask[TimerIndex] >> 8;
-            *(TCCRs2[TimerIndex]) |= TimerModeRegValue;
-            *(TCCRs2[TimerIndex + 1]) |= TimerModeRegValue >> 8;
+            *(TCCRs2[TimerIndex]) &= (uint8)(Timers2RegModesMask[TimerIndex] & 0x00FF);
+            *(TCCRs2[TimerIndex + 1]) &= (uint8)(Timers2RegModesMask[TimerIndex] >> 8);
+            *(TCCRs2[TimerIndex]) |= (uint8)TimerModeRegValue;
+            *(TCCRs2[TimerIndex + 1]) |= (uint8)(TimerModeRegValue >> 8);
+            /* TODO: Implementation Timer1 COM Modes*/
         }
     }
 }
@@ -207,10 +205,10 @@ void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
                     TimerPrescalerRegValue = TimerPrescalerRegValues[Loop];
                 }
             }
-            *(TCCRs2[TimerIndex]) &= Timers2RegPrescalerMask[TimerIndex];
-            *(TCCRs2[TimerIndex + 1]) &= Timers2RegPrescalerMask[TimerIndex] >> 8;
-            *(TCCRs2[TimerIndex]) |= TimerPrescalerRegValue;
-            *(TCCRs2[TimerIndex + 1]) |= TimerPrescalerRegValue >> 8;
+            *(TCCRs2[TimerIndex]) &= (uint8)(Timers2RegPrescalerMask[TimerIndex]);
+            *(TCCRs2[TimerIndex + 1]) &= (uint8)(Timers2RegPrescalerMask[TimerIndex] >> 8);
+            *(TCCRs2[TimerIndex]) |= (uint8)TimerPrescalerRegValue;
+            *(TCCRs2[TimerIndex + 1]) |= (uint8)(TimerPrescalerRegValue >> 8);
         }
     }
 }
@@ -273,32 +271,38 @@ void PWM_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 Ti
     }
 }
 
-
-Callback GlobalCallback;
-uint16 NumOfTimerOverflow = 0;
-uint16 count = 0;
-uint8 GlobalTimerId;
-
-void Timer_Delay(uint8 TimerId, int16 Delay_ms, Callback callback){
-    GlobalTimerId = TimerId;
-    GlobalCallback = callback;
-    Timer_Init(TimerId, TIMER_CTC_MODE, TIMER_DISCONCTED_COM);
-    OCR2 = 99;
-    Timer_Start(TimerId, TIMER2_PRESCALER_8);
-    NumOfTimerOverflow = 10000;
-    count = 0;
-    SET_BIT(TIMSK, OCIE2);
-    sei();
-}
-
-
-ISR(TIMER2_COMP_vect) {
-    count ++;
-    if (NumOfTimerOverflow == count){
-        count =0;
-        GlobalCallback();
-//        CLEAR_BIT(TIMSK, OCIE0);
-//        Timer_Stop(GlobalTimerId);
+uint8 Timer_Is_Running(uint8 TimerId){
+    uint16 IsRunning = 0;
+    if (TimerId < NUM_TIMERS) {
+        if (TimersRegMode[TimerId] == TIMER_1_REG) {
+            uint8 TimerIndex = 0;
+            uint8 Loop;
+            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+                if(Timers1RegIds[Loop] == TimerId){
+                    TimerIndex = Loop;
+                    break;
+                }
+            }
+            IsRunning = *(TCCRs1[TimerIndex]) & (~TIMERS1REG_STOP_MASK);
+            IsRunning = IsRunning & 0x00FF;
+        } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
+            uint8 TimerIndex = 0;
+            uint8 Loop;
+            for (Loop= 0; Loop < NUM_TIMERS_2_REG; Loop++) {
+                if(Timers2RegIds[Loop] == TimerId){
+                    TimerIndex = Loop;
+                    break;
+                }
+            }
+            IsRunning = *(TCCRs2[TimerIndex]) & (~TIMERS2REG_STOP_MASK);
+            IsRunning = IsRunning & 0x00FF;
+            IsRunning = IsRunning + *(TCCRs2[TimerIndex + 1]) & (~(TIMERS2REG_STOP_MASK >> 8));
+        }
+    }
+    if (IsRunning == 0U){
+        return 0U;
+    } else {
+        return 1U;
     }
 }
 

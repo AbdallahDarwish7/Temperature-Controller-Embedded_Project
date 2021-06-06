@@ -5,7 +5,7 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .text         000004ce  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         000000b6  00800060  000004ce  00000542  2**0
+  1 .data0         000000b6  00800060  000004ce  00000542  2**0
                   CONTENTS, ALLOC, LOAD, DATA
   2 .comment      00000030  00000000  00000000  000005f8  2**0
                   CONTENTS, READONLY
@@ -495,7 +495,7 @@ void LCD_Command(uint8 cmnd)
 	_delay_ms(2);
 }
 
-void LCD_Char (uint8 char_data)  /* LCD data write function */
+void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 {
 	LCD_Write_Data(char_data);
  2d6:	0e 94 07 01 	call	0x20e	; 0x20e <LCD_Write_Data>

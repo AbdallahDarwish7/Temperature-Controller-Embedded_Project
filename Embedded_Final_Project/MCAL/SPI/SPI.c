@@ -45,8 +45,8 @@ void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
  */
 void SPI_SendByte(uint8 data)
 {
-    SPDR = data; //send data by SPI
-    while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data is sent correctly)
+    SPDR = data; //send data0 by SPI
+    while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1 (data0 is sent correctly)
 }
 
 /**********************  SPI_RecieveByte **********************
@@ -55,8 +55,8 @@ void SPI_SendByte(uint8 data)
  */
 int8 SPI_RecieveByte(void)
 {
-    while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1(data is receive correctly)
-    return SPDR; //return the received byte from SPI data register
+    while(BIT_IS_CLEAR(SPSR,SPIF)){} //wait until SPI interrupt flag=1(data0 is receive correctly)
+    return SPDR; //return the received byte from SPI data0 register
 }
 
 

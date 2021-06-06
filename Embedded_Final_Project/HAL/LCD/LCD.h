@@ -27,7 +27,7 @@ void LCD_Disable(void);
 
 void LCD_Command(uint8 cmnd);
 
-void LCD_Char (uint8 char_data);  /* LCD data write function */
+void LCD_Char (uint8 char_data);  /* LCD data0 write function */
 
 void LCD_Init (void);			/* LCD Initialize function */
 

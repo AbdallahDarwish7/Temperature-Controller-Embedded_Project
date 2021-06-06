@@ -68,7 +68,7 @@ void LCD_Command(uint8 cmnd)
 	_delay_ms(2);
 }
 
-void LCD_Char (uint8 char_data)  /* LCD data write function */
+void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 {
 	LCD_Write_Data(char_data);
 	LCD_RS_Reg();	/* RS=0 command reg. */
