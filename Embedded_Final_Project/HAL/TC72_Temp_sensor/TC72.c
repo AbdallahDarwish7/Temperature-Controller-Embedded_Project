@@ -1,6 +1,7 @@
 //
 // Created by abdulla167 on ٢‏/٦‏/٢٠٢١.
 //
+
 #include <util/delay.h>
 #include "TC72.h"
 
@@ -46,7 +47,3 @@ float TC72_ReadTemperature(void){
     MSBValue = SPI_RecieveByte();
     return MSBValue;
 }
-
-
-
-

@@ -13,8 +13,7 @@ int main(void)
 	test_KeyPad_Lcd();
     /* Replace with your application code */
 	while (1)
-	{
+	{}
 
-	}
 
 }
