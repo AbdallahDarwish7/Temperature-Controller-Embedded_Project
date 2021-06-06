@@ -7,6 +7,8 @@
 
 #include "typedefs.h"
 
+typedef void (*Callback)(void);
+
 #define NUM_TIMERS ((uint8) 3U)
 #define TIMER_NORMAL_MODE ((uint8) 0U)
 #define TIMER_CTC_MODE ((uint8) 1U)
@@ -22,6 +24,8 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom);
 void Timer_Start(uint8 TimerId, uint16 TimerPreScaler);
 
 void PWM_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom);
+
+void Timer_Delay(uint8 TimerId, int16 Delay_ms, Callback callback);
 
 void Timer_Stop(uint8 TimerId);
 
