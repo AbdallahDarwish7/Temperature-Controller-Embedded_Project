@@ -134,7 +134,7 @@ void LCD_String_xy (uint8 row, uint8 pos, uint8 *str)  /* Send string to LCD wit
 {
 	if (row == 0 && pos<16)
 	LCD_Command((pos & 0x0F)|0x80);	/* Command of first row and required position<16 */
-	else if (row == (uint8)1 && pos<(uint8)16)
+	else if (row == 1 && pos<16)
 	LCD_Command((pos & 0x0F)|0xC0);	/* Command of first row and required position<16 */
 	LCD_String(str);		/* Call LCD string function */
 }
@@ -142,7 +142,11 @@ void LCD_String_xy (uint8 row, uint8 pos, uint8 *str)  /* Send string to LCD wit
 void LCD_Clear()
 {
 	LCD_Command (0x01);		/* clear display */
-	LCD_Command (0x80);		/* cursor at home position */
+}
+
+void LCD_NewLine()
+{
+	LCD_Command (0xc0);		/* clear display */
 }
 
 

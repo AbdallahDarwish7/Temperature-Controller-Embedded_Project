@@ -13,7 +13,8 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
- ../HAL/KeyPad/KeyPad.h ../typedefs.h
+ ../HAL/KeyPad/KeyPad.h ../typedefs.h ../Manager/LCDManager/LCD_Manager.h \
+ ../Manager/LCDManager/LCD_Manager_cfg.h ../HAL/LCD/LCD.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -46,3 +47,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../HAL/KeyPad/KeyPad.h:
 
 ../typedefs.h:
+
+../Manager/LCDManager/LCD_Manager.h:
+
+../Manager/LCDManager/LCD_Manager_cfg.h:
+
+../HAL/LCD/LCD.h:

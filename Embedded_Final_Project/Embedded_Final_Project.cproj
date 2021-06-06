@@ -103,6 +103,7 @@
       <Value>../HAL/TC72_Temp_sensor</Value>
       <Value>../HAL/LCD</Value>
       <Value>../HAL/KeyPad</Value>
+      <Value>../Manager/LCDManager</Value>
       <Value>..</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
@@ -162,6 +163,15 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Manager\LCDManager\LCD_Manager.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Manager\LCDManager\LCD_Manager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Manager\LCDManager\LCD_Manager_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\DIO\DIO.c">
       <SubType>compile</SubType>
     </Compile>
@@ -185,10 +195,12 @@
     <Folder Include="HAL\LCD" />
     <Folder Include="HAL\KeyPad" />
     <Folder Include="HAL\TC72_Temp_sensor" />
+    <Folder Include="Manager\LCDManager" />
     <Folder Include="MCAL" />
     <Folder Include="MCAL\DIO" />
     <Folder Include="MCAL\SPI" />
     <Folder Include="HAL" />
+    <Folder Include="Manager" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore">

@@ -41,6 +41,8 @@ void LCD_String_xy (uint8 row, uint8 pos, uint8 *str);  /* Send string to LCD wi
 
 void LCD_Clear();
 
+void LCD_NewLine();
+
 void LCD_Custom_Char (uint8 loc, uint8 *msg);
 
 void test_LCD(void);

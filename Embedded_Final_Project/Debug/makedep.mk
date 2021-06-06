@@ -14,6 +14,8 @@ HAL\TC72_Temp_sensor\TC72.c
 
 main.c
 
+Manager\LCDManager\LCD_Manager.c
+
 MCAL\DIO\DIO.c
 
 MCAL\DIO\DIO_Cfg.c
