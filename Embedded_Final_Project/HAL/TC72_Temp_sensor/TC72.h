@@ -5,12 +5,12 @@
 #define FINAL_PROJECT_TC72_H
 
 #include "SPI.h"
-typedef uint8 Mode;
 
 
 /*******************************************************************************
  *                      TC72 Operation Modes                                  *
  *******************************************************************************/
+typedef uint8 Mode;
 
 #define CONTINUOUS_MODE ((uint8)0x00)
 #define ONE_SHOT_MODE ((uint8)0x05)
@@ -30,8 +30,8 @@ typedef uint8 Mode;
  *******************************************************************************/
 
 void TC72_Init(Mode operationMode);
-float TC72_ReadTemperature(void);
-float TC72_ConvertReadToTemp(uint8 Msb, uint8 Lsb);
+int8 TC72_ReadTemperature(void);
+Mode GetTC72Mode();
 
 
 #endif //FINAL_PROJECT_TC72_H

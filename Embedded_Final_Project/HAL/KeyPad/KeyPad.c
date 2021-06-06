@@ -5,13 +5,7 @@
  *  Author: Mohamed Kamal
  */ 
 
- #define KEYPAD B  //KEYPAD IS ATTACHED ON PORTA
- 
-  //Don't Touch the lines below
-//*******************************
-#define KEYPAD_PORT PORT(KEYPAD)
-#define KEYPAD_DDR   DDR(KEYPAD)
-#define KEYPAD_PIN   PIN(KEYPAD)
+
 
 #include <avr/io.h>		/* Include AVR std. library file */
 #include <util/delay.h>		/* Include inbuilt defined Delay header file */
@@ -55,16 +49,15 @@ uint8 pressed_Key(void){
 
 void test_KeyPad_Lcd(void) {
 	unsigned char loop;
-	uint8* Characters[12] = {"*", "0", "3", "7", "8", "9", "4", "5", "6", "3", "2", "1"};
+	uint8* Characters[12] = {"*", "0", "#", "7", "8", "9", "4", "5", "6", "1", "2", "3"};
 
 	DIO_Init(2);
 	DIO_Init(3);
 	DIO_Init(1);
 	initialize_KeyPad();
 	LCD_Init();
-	LCD_Command(0x80);
-	LCD_String(" ");
-	LCD_String("HELLO: ");
+	LCD_Char(" ");
+	LCD_String_xy(0, 0, "HELLO: ");
 	LCD_String_xy(0, (uint8)10,"KIMO");
 	LCD_Command(0xc0);
 	uint8 key;

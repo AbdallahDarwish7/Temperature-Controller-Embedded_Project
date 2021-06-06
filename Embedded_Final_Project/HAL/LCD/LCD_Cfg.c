@@ -7,7 +7,7 @@ const LCD_ConfigParamType LCD_ConfigParam = {
 	2, /*LCD ENABLE  DIO channel*/
 	2, /*LCD Data Port*/
     {
-        0,1,2,3,4,5,6,7 /*LCD data0 DIO groups*/
+       4,5,6,7 /*LCD data DIO groups*/
     }
 };
     
