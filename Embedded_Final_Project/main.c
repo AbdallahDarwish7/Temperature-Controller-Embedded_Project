@@ -67,12 +67,12 @@ int main(void) {
     DDRA &= ~(1 << PA0);
     PORTA |= (1 << PA0);
     while (1) {
-        int8 temp = GetCurrentTemp();
-        if (temp == NO_READ){
-            display(99);
-        } else{
-            display(temp);
-        }
+//        int8 temp = GetCurrentTemp();
+//        if (temp == NO_READ){
+//            display(99);
+//        } else{
+//            display(temp);
+//        }
 
     }
 }

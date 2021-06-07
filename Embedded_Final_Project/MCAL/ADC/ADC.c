@@ -10,7 +10,7 @@ void Init_ADC(void)
 	ADCSRA |= ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0));  /*Setting the prescaler, choosing a division factor = 128, make the lowest frequency but highest accuracy = 16MHz / 128 = 125KHz*/
 }
 
-uint16_t ADC_Read(uint8_t channel)
+uint16 ADC_Read(uint8 channel)
 {	
 	DIO_ChannelDir(0,channel,0); /* setting portid to A , setting the chosen channel , setting its direction to input*/
 	ADMUX &= 0xF0;			/* Clear the old reading from the channel */
