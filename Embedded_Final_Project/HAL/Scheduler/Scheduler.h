@@ -8,7 +8,7 @@
 
 typedef void (*VoidCallback)(void);
 
-void Delay_ms(uint32 Delay_ms, VoidCallback callback);
+void Delay_ms(uint32 delay_ms, VoidCallback callback);
 
 void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback);
 
