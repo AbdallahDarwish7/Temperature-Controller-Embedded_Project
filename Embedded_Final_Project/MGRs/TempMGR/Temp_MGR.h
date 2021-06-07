@@ -8,12 +8,13 @@
 
 #define NO_READ ((int8)-128)
 
+extern int8 CurrentTemp;
+extern int8 SetTemp;
 
-int8 GetCurrentTemp();
 
-int8 GetInputTemp();
+void UpdateCurrentTemp();
 
-void SetInputTemp(int8 InputTemp);
+void UpdateSetTemp(int8 InputTemp);
 
 void Shutdown_TC72();
 

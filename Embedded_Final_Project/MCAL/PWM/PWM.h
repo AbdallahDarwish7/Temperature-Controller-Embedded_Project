@@ -7,15 +7,27 @@
 #include "typedefs.h"
 #include "Timer.h"
 
+/*******************************************************************************
+ *                             PWM Modes                                       *
+ *******************************************************************************/
+#define PWM_PHASE_CORRECT_MODE (TIMER_PWD_PHASE_CORRECT_MODE)
+#define PWM_FAST_MODE (TIMER_PWD_FAST_MODE)
+
+/*******************************************************************************
+ *                            Output Compare Modes                             *
+ *******************************************************************************/
+#define PWM_NON_INVERTED_OC (TIMER_NON_INVERTED_COM)
+#define PWM_INVERTED_OC (TIMER_INVERTED_COM)
+
+/*******************************************************************************
+ *                         Functions Declarations                              *
+ *******************************************************************************/
+
 void PWM_SetDutyCycle(float Percentage, uint8 PwmMode, uint8 PwmOutputCompareMode);
 void PWM_Start();
 void PWM_Stop();
 
-#define PWM_PHASE_CORRECT_MODE (TIMER_PWD_PHASE_CORRECT_MODE)
-#define PWM_FAST_MODE (TIMER_PWD_FAST_MODE)
 
-#define PWM_NON_INVERTED_OC (TIMER_NON_INVERTED_COM)
-#define PWM_INVERTED_OC (TIMER_INVERTED_COM)
 
 
 #endif //EMBEDDED_FINAL_PROJECT_PWD_H
