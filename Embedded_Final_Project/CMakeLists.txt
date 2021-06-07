@@ -53,6 +53,7 @@ target_link_libraries(tc72 SPI)
 target_link_libraries(LCD DIO)
 target_link_libraries(KeyPad DIO)
 target_link_libraries(Scheduler Timer)
+target_link_libraries(TempMGR tc72)
 target_link_libraries(${CMAKE_PROJECT_NAME} tc72 Timer KeyPad Scheduler)
 target_link_libraries(${CMAKE_PROJECT_NAME} tc72 Timer KeyPad TempMGR ModeMGR)
 
