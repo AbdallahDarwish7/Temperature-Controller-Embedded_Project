@@ -59,7 +59,7 @@ target_link_libraries(ModeMGR Timer)
 target_link_libraries(Calibrator ADC)
 target_link_libraries(LCDManager LCD)
 target_link_libraries(${CMAKE_PROJECT_NAME} TC72 Timer KeyPad Scheduler)
-target_link_libraries(${CMAKE_PROJECT_NAME} TC72 Timer KeyPad TempMGR ModeMGR)
+target_link_libraries(${CMAKE_PROJECT_NAME} TC72 Timer KeyPad TempMGR ModeMGR LCDManager)
 
 ADD_CUSTOM_COMMAND(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${AVRBIN}/${AVROBJCOPY} -O ihex -R .eeprom ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.elf ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.hex)
 
