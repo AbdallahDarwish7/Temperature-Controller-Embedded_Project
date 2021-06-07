@@ -8,10 +8,10 @@
 
 #include "Timer.h"
 #include "DIO.h"
-//<<<<<<< HEAD
+
 //#include "KeyPad.h"
 //#include "Scheduler.h"
-//
+//#include <util/delay.h>
 //uint8 data0 = 0xff;
 //uint8 data1 = 0xff;
 //uint8 data2 = 0xff;
@@ -42,10 +42,14 @@
 //    DIO_ChannelDir(0, 1, 0xff);
 //    DIO_ChannelDir(0, 2, 0xff);
 //    Periodic_Delay_ms(1000, ToggleBit0);
-//    Periodic_Delay_ms(2000, ToggleBit1);
-//    Periodic_Delay_ms(4000, ToggleBit2);
+////    Periodic_Delay_ms(2000, ToggleBit1);
+////    Periodic_Delay_ms(4000, ToggleBit2);
+////    Start_Periodic_Delay_ms(ToggleBit0);
+////    _delay_ms(3000);
+////    Stop_Periodic_Delay_ms(ToggleBit0);
 //    while (1) {}
-//=======
+//}
+
 #include "Temp_MGR.h"
 #include "avr/io.h"
 #include "avr/delay.h"
