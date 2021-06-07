@@ -15,6 +15,7 @@
 typedef uint8 machine_state;
 
 void InitSystemPeriodicity();
+void SetMachineState(machine_state state);
 float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp, uint8 CalibratorRead);
 void CheckHeaterResponse();
 

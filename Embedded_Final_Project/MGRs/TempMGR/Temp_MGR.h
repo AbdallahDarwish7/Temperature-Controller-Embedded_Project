@@ -19,7 +19,7 @@ void UpdateCurrentTemp();
 
 void UpdateSetTemp(int8 InputTemp);
 
-void Shutdown_TC72();
+void Deactivate_TC72();
 
 void Activate_TC72();
 

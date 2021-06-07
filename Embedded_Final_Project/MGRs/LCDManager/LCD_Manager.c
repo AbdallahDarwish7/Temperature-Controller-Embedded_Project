@@ -21,8 +21,6 @@ void display_Welcome_screen(uint8 times) {
 		times--;
 	}
 	idle_screen();
-	_delay_ms(1000);
-	write_Set_Temp(7);
 }
 
 void display_Welcome_once(void){

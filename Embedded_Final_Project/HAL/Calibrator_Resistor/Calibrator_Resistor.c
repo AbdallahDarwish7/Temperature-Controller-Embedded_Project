@@ -5,13 +5,13 @@
 #include "Calibrator_Resistor.h"
 #include "ADC.h"
 
-uint8 calibratorRead = 0;
+float calibratorRead = 20;
 
 void InitCalibrator(){
     Init_ADC();
 }
 
-void GetCalibratorRead(){
+void UpdateCalibratorRead(){
     calibratorRead = ADC_Read(CALIBRATOR_CHANNEL);
 }
 

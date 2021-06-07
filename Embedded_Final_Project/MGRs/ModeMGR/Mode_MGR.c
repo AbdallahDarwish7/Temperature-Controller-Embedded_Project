@@ -20,12 +20,12 @@ static void UpdateSystem(machine_state state);
  *******************************************************************************/
 void InitSystemPeriodicity(){
     PeriodicDelay_ms(200, UpdateCurrentTemp);
-    PeriodicDelay_ms(500, GetCalibratorRead);
+    PeriodicDelay_ms(500, UpdateCalibratorRead);
 }
 
 void SetMachineState(machine_state state){
     if (machineState != ERROR){
-        UpdateSystem(machineState);
+        UpdateSystem(state);
     }
 }
 
@@ -40,8 +40,8 @@ static void UpdateSystem(machine_state state){
         {
             if (machineState != STANDBY){
                 StopPeriodicDelay_ms(UpdateCurrentTemp);
-                StopPeriodicDelay_ms(GetCalibratorRead);
-                Shutdown_TC72();
+                StopPeriodicDelay_ms(UpdateCalibratorRead);
+                Deactivate_TC72();
                 PWM_Stop();
                 machineState = STANDBY;
             }
@@ -49,28 +49,29 @@ static void UpdateSystem(machine_state state){
         }
         case OPERATIONAL:
         {
-            if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
-                machineState = NORMAL;
-                UpdateSystem(machineState);
-            } else if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
-                machineState = ERROR;
-                UpdateSystem(machineState);
-            } else if ((setTemp > currentTemp) && ((setTemp - currentTemp) > 5)){
-                if (CheckHeaterResponseFlag == 0){
-                    CheckHeaterResponseFlag = 1;
-                    Delay_ms(180000, CheckHeaterResponse);
-                }
-            } else{
-                if (machineState != OPERATIONAL){
-                    Activate_TC72();
-                    StartPeriodicDelay_ms(UpdateCurrentTemp);
-                    StartPeriodicDelay_ms(GetCalibratorRead);
-                    machineState = OPERATIONAL;
-                }
-                DutyCycle = CalculateDutyCycle(currentTemp, setTemp, calibratorRead);
-                PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
-                PWM_Start();
+            if (machineState != OPERATIONAL){
+                Activate_TC72();
+//                StartPeriodicDelay_ms(UpdateCurrentTemp);
+//                StartPeriodicDelay_ms(UpdateCalibratorRead);
+                machineState = OPERATIONAL;
             }
+            UpdateCurrentTemp();
+            UpdateCalibratorRead();
+//            DutyCycle = CalculateDutyCycle(currentTemp, setTemp, calibratorRead);
+//            PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
+//            PWM_Start();
+//            if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
+//                machineState = NORMAL;
+//                UpdateSystem(machineState);
+//            } else if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
+//                machineState = ERROR;
+//                UpdateSystem(machineState);
+//            } else if ((setTemp > currentTemp) && ((setTemp - currentTemp) > 5)){
+//                if (CheckHeaterResponseFlag == 0){
+//                    CheckHeaterResponseFlag = 1;
+//                    Delay_ms(180000, CheckHeaterResponse);
+//                }
+//            }
             break;
         }
         case NORMAL:
@@ -83,8 +84,8 @@ static void UpdateSystem(machine_state state){
         case ERROR:
         {
             StopPeriodicDelay_ms(UpdateCurrentTemp);
-            StopPeriodicDelay_ms(GetCalibratorRead);
-            Shutdown_TC72();
+            StopPeriodicDelay_ms(UpdateCalibratorRead);
+            Deactivate_TC72();
             PWM_Stop();
             break;
         }
@@ -106,6 +107,6 @@ float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp, uint8 CalibratorRead){
        Vt = ((SetTemp - CurrentTemp) / 100) * 10;
     }
     DutyCycle = (((CalibratorRead * 2) / 10) * Vt) / 10;
-    return (int8)DutyCycle;
+    return DutyCycle;
 }
 

@@ -9,8 +9,8 @@
 
 #define CALIBRATOR_CHANNEL ((uint8)0)
 
-extern uint8 calibratorRead;
+extern float calibratorRead;
 
 void InitCalibrator();
-void GetCalibratorRead();
+void UpdateCalibratorRead();
 #endif //EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H

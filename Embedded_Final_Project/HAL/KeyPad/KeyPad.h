@@ -10,6 +10,8 @@
 #define KEYPAD_H_
 #include "typedefs.h"
 
+#define NO_VALUE 0xff
+
 uint8 pressed_Key(void);
 
 uint8 pressed_Key(void);

@@ -9,7 +9,6 @@
 #include "Timer.h"
 #include "DIO.h"
 
-#include "KeyPad.h"
 #include "Scheduler.h"
 #include "LCD_Manager.h"
 #include "Mode_MGR.h"
@@ -19,20 +18,26 @@
 #include "util/delay.h"
 #include "LCD_Manager.h"
 #include "KeyPad.h"
+#include "TC72.h"
+#include "Calibrator_Resistor.h"
+#include "ADC.h"
 
 
 void config();
 
 int main(void) {
-    config();
-    while (1) {}
+//    Init_ADC();
+config();
+    while (1) {
+//        SetMachineState(OPERATIONAL);
+//        UpdateCalibratorRead();
+        write_CRT_Temp((uint8)ADC_Read(0));
+    }
 }
 
 
 void config(){
     Initialize_LCD();
-    InitSystemPeriodicity();
-    Activate_TC72();
-    InitCalibrator();
-    display_Welcome_screen(3);
+    Init_ADC();
+    display_Welcome_screen(0);
 }
