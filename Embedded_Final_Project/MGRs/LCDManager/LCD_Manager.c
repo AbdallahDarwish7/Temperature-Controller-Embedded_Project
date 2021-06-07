@@ -60,7 +60,7 @@ void write_CRT_Temp(uint8 crt_temp){
 	uint8 second = crt_temp % 10;
 	
 	char temp[2] = {numbers[first], numbers[second]};
-	LCD_String_xy(0,14,temp);
+	LCD_String_xy(0,14,&temp);
 	
 }
 
@@ -70,5 +70,10 @@ void write_Set_Temp(uint8 set_temp) {
 	uint8 second = set_temp % 10;
 	
 	char temp[2] = {numbers[first], numbers[second]};
-	LCD_String_xy(0,4,temp);
+	LCD_String_xy(0,4,&temp);
+	LCD_String_xy(0,10,"CRT");
+}
+
+void Initialize_LCD(){
+	LCD_Init();
 }

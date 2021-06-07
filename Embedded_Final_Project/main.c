@@ -53,11 +53,14 @@
 #include "Temp_MGR.h"
 #include "avr/io.h"
 #include "avr/delay.h"
+#include "LCD_Manager.h"
+#include "KeyPad.h"
+
 
 void display(char count);
 
 int main(void) {
-    Activate_TC72();
+/*    Activate_TC72();
     DDRC=0xff;   //Configure PORTB as output
     DDRA=0xff;   //Configure PORTA as output
     // DDRC = DDRC & ~(1<<5) ; // Make pin 5 of port C as a input
@@ -74,7 +77,24 @@ int main(void) {
 //            display(temp);
 //        }
 
-    }
+    }*/
+	DIO_Init(1);
+	DIO_Init(2);
+	DIO_Init(3);
+	Initialize_LCD();
+	initialize_KeyPad();
+	
+	//display_Welcome_screen(3);
+	idle_screen();
+	uint8 t;
+	while(1)		{
+		
+		t = get_set_Temp();
+		if(t != 0xff){
+			write_Set_Temp(t);
+		}
+	}
+
 }
 
 void display(char count){

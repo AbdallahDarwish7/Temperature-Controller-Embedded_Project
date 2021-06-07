@@ -14,6 +14,10 @@ uint8 pressed_Key(void);
 
 uint8 pressed_Key(void);
 
+uint8 get_set_Temp(void);
+
+void initialize_KeyPad(void);
+
 void test_KeyPad_Lcd(void);
 
 #endif /* KEYPAD_H_ */

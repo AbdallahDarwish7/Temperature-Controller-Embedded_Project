@@ -103,8 +103,16 @@
       <Value>../HAL/TC72_Temp_sensor</Value>
       <Value>../HAL/LCD</Value>
       <Value>../HAL/KeyPad</Value>
-      <Value>../Manager/LCDManager</Value>
       <Value>..</Value>
+      <Value>../MCAL/Timer</Value>
+      <Value>../MCAL/ADC</Value>
+      <Value>../MCAL/PWM</Value>
+      <Value>../HAL/Scheduler</Value>
+      <Value>../HAL/Calibrator_Resistor</Value>
+      <Value>../MGRs/LCDManager</Value>
+      <Value>../MGRs/ModeMGR</Value>
+      <Value>../MGRs/TempMGR</Value>
+      <Value>../MGRs/KeyPadMGR</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -127,6 +135,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HAL\Calibrator_Resistor\Calibrator_Resistor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Calibrator_Resistor\Calibrator_Resistor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\KeyPad\KeyPad.c">
       <SubType>compile</SubType>
     </Compile>
@@ -151,6 +165,12 @@
     <Compile Include="HAL\LCD\LCD_Cfg.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\Scheduler\Scheduler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Scheduler\Scheduler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="HAL\TC72_Temp_sensor\TC72.c">
       <SubType>compile</SubType>
     </Compile>
@@ -163,13 +183,10 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Manager\LCDManager\LCD_Manager.c">
+    <Compile Include="MCAL\ADC\ADC.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Manager\LCDManager\LCD_Manager.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Manager\LCDManager\LCD_Manager_cfg.h">
+    <Compile Include="MCAL\ADC\ADC.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\DIO\DIO.c">
@@ -184,29 +201,83 @@
     <Compile Include="MCAL\DIO\DIO_Cfg.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\PWM\PWM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\PWM\PWM.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\SPI\SPI.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\SPI\SPI.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Timer\Timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Timer\Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\LCDManager\LCD_Manager.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\LCDManager\LCD_Manager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\LCDManager\LCD_Manager_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\ModeMGR\Mode_MGR.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\ModeMGR\Mode_MGR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\TempMGR\Temp_MGR.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MGRs\TempMGR\Temp_MGR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="typedefs.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Debug\" />
+    <Folder Include="Debug\Manager\" />
+    <Folder Include="Debug\Manager\LCDManager\" />
+    <Folder Include="HAL\Calibrator_Resistor\" />
+    <Folder Include="HAL\Calibrator_Resistor\" />
     <Folder Include="HAL\LCD" />
     <Folder Include="HAL\KeyPad" />
+    <Folder Include="HAL\Scheduler\" />
     <Folder Include="HAL\TC72_Temp_sensor" />
-    <Folder Include="Manager\LCDManager" />
     <Folder Include="MCAL" />
+    <Folder Include="MCAL\ADC\" />
     <Folder Include="MCAL\DIO" />
+    <Folder Include="MCAL\PWM\" />
     <Folder Include="MCAL\SPI" />
     <Folder Include="HAL" />
-    <Folder Include="Manager" />
+    <Folder Include="MCAL\Timer\" />
+    <Folder Include="MGRs\" />
+    <Folder Include="MGRs\LCDManager\" />
+    <Folder Include="MGRs\ModeMGR\" />
+    <Folder Include="MGRs\TempMGR\" />
+    <Folder Include="PWD_Test_protus\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore">
       <SubType>compile</SubType>
     </None>
     <None Include="CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Embedded_Final_Project.componentinfo.xml">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="HAL\Calibrator_Resistor\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
     <None Include="HAL\CMakeLists.txt">
@@ -218,7 +289,13 @@
     <None Include="HAL\LCD\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
+    <None Include="HAL\Scheduler\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
     <None Include="HAL\TC72_Temp_sensor\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MCAL\ADC\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
     <None Include="MCAL\CMakeLists.txt">
@@ -227,7 +304,28 @@
     <None Include="MCAL\DIO\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
+    <None Include="MCAL\PWM\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
     <None Include="MCAL\SPI\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MCAL\Timer\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MGRs\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MGRs\LCDManager\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MGRs\ModeMGR\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="MGRs\TempMGR\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="PWD_Test_protus\New Project.pdsprj.ABDALLAH-DRWESH.abdallah.workspace">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
