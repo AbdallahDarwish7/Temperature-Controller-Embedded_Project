@@ -10,8 +10,8 @@
  *                          Global Variables                                   *
  *******************************************************************************/
 
-int8 CurrentTemp = NO_READ;
-int8 SetTemp = NO_READ;
+int8 currentTemp = NO_READ;
+int8 setTemp = NO_READ;
 
 /*******************************************************************************
  *                        Functions Definitions                                *
@@ -20,14 +20,14 @@ int8 SetTemp = NO_READ;
 
 /******************** GetCurrentTemp *********************
  * Used to get The temperature of the TC72 sensor
- * @return CurrentTemp : Temperature value
+ * @return currentTemp : Temperature value
  */
 void UpdateCurrentTemp(){
     Mode TC72_Mode = GetTC72Mode();
     if (TC72_Mode == SHUTDOWN_MODE){
-        CurrentTemp = NO_READ;
+        currentTemp = NO_READ;
     } else{
-        CurrentTemp = TC72_ReadTemperature();
+        currentTemp = TC72_ReadTemperature();
     }
 }
 
@@ -36,7 +36,7 @@ void UpdateCurrentTemp(){
  * @param InputTemp : Input temperature of the user
  */
 void UpdateInputTemp(int8 InputTemp){
-    SetTemp = InputTemp;
+    setTemp = InputTemp;
 }
 
 

@@ -14,8 +14,8 @@
 
 typedef uint8 machine_state;
 
-void InitSystem();
-float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp);
+void InitSystemPeriodicity();
+float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp, uint8 CalibratorRead);
 void CheckHeaterResponse();
 
 #endif //EMBEDDED_FINAL_PROJECT_MODE_MGR_H

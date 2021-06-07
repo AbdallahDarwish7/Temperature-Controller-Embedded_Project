@@ -14,6 +14,8 @@
 #include "KeyPad_Cfg.h"
 
 void initialize_KeyPad(void) {
+	DIO_Init(2);
+	DIO_Init(3);
 	uint8 r;
 	for(r=0;r<4;r++)
 	{
@@ -52,14 +54,17 @@ uint8 get_set_Temp(void){
 	if(key != 0xff){
 		if(key>2) {
 			t = Characters[key - 3];
-			_delay_ms(500);
-			key = 0xff;
 			
 			while(key != 0){
 				key = pressed_Key();
-				if(key >2 && key != 0xff){
-					t = 10*t +  Characters[key - 3];
-					_delay_ms(500);
+				if(key == 0xff){
+					while(key != 0){
+						key = pressed_Key();
+						if(key >2 && key != 0xff){
+							t = 10*t +  Characters[key - 3];
+							_delay_ms(300);
+						}
+					}
 				}
 			}
 		}
