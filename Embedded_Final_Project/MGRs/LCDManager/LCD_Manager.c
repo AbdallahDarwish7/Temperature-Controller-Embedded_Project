@@ -7,6 +7,7 @@
 #include "LCD.h"
 #include <util/delay.h>		/* Include inbuilt defined Delay header file */
 #include "LCD_Manager_cfg.h"
+#include "LCD_Manager.h"
 #include <string.h>
 
 char* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
