@@ -99,6 +99,7 @@ void Periodic_Delay_ms(int16 Delay_ms, VoidCallback callback) {
 }
 
 void Stop_Periodic_Delay_ms(VoidCallback callback){
+    cli();
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == callback){
@@ -107,6 +108,7 @@ void Stop_Periodic_Delay_ms(VoidCallback callback){
             break;
         }
     }
+    sei();
 }
 
 void Start_Periodic_Delay_ms(VoidCallback callback){
