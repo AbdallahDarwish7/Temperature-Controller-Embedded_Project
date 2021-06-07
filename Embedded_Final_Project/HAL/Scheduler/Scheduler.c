@@ -12,7 +12,7 @@
 
 VoidCallback OneShotCallbacks[NUM_ONE_SHOT_CALLBACKS];
 uint32 OneShotTimerOverflow[NUM_ONE_SHOT_CALLBACKS];
-uint16 OneShotCounts[NUM_ONE_SHOT_CALLBACKS];
+uint32 OneShotCounts[NUM_ONE_SHOT_CALLBACKS];
 static uint8 TimerIdForOneShotDelay = 2;
 
 VoidCallback PeriodicCallbacks[NUM_ONE_SHOT_CALLBACKS];
@@ -20,7 +20,7 @@ uint32 PeriodicTimerOverflow[NUM_ONE_SHOT_CALLBACKS];
 uint16 PeriodicCounts[NUM_ONE_SHOT_CALLBACKS];
 static uint8 TimerIdPeriodicDelay = 1;
 
-void Delay_ms(int16 Delay_ms, VoidCallback callback) {
+void Delay_ms(uint32 Delay_ms, VoidCallback callback) {
     uint8 timerIsRunning = Timer_Is_Running(TimerIdForOneShotDelay);
     uint8 Loop;
     if (!timerIsRunning) {
