@@ -11,7 +11,10 @@
 extern int8 CurrentTemp;
 extern int8 SetTemp;
 
-
+/*******************************************************************************
+ *                      Functions Declarations                                 *
+ *******************************************************************************/
+ 
 void UpdateCurrentTemp();
 
 void UpdateSetTemp(int8 InputTemp);

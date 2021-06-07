@@ -9,8 +9,17 @@
 
 machine_state machineState = STANDBY;
 
-void ChangeMachineState(machine_state state){
+uint8 CheckHeaterResponseFlag = 0;
+
+
+
+/*******************************************************************************
+ *                      Functions Definitions                                  *
+ *******************************************************************************/
+
+void SetMachineState(machine_state state){
     machineState = state;
+    UpdateSystem(machineState);
 }
 
 machine_state GetMachineState(){
@@ -19,6 +28,7 @@ machine_state GetMachineState(){
 
 void UpdateSystem(machine_state state){
     int8 DutyCycle;
+    Periodic_Delay_ms(200, UpdateCurrentTemp);
     switch (state) {
         case STANDBY:
         {
@@ -35,11 +45,11 @@ void UpdateSystem(machine_state state){
                 machineState = ERROR;
                 UpdateSystem(machineState);
             } else if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
-                void (*CheckResponsePtr)(void) = CheckHeaterResponse;
-                Delay_ms(180000, CheckResponsePtr);
+                if (CheckHeaterResponseFlag == 0){
+                    CheckHeaterResponseFlag = 1;
+                    Delay_ms(180000, CheckHeaterResponse);
+                }
             } else{
-                void (* UpdateCurrentTempPtr)(void) = UpdateCurrentTemp;
-                Periodic_Delay_ms(200, UpdateCurrentTempPtr);
                 DutyCycle = CalculateDutyCycle(CurrentTemp, SetTemp);
                 PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
                 PWM_Start();
@@ -48,8 +58,6 @@ void UpdateSystem(machine_state state){
         }
         case NORMAL:
         {
-            void (* UpdateCurrentTempPtr)(void) = UpdateCurrentTemp;
-            Periodic_Delay_ms(200, UpdateCurrentTempPtr);
             break;
         }
         case ERROR:
@@ -62,6 +70,7 @@ void UpdateSystem(machine_state state){
 }
 
 void CheckHeaterResponse(){
+    CheckHeaterResponseFlag = 0;
     if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
         machineState = ERROR;
         UpdateSystem(machineState);
@@ -70,11 +79,12 @@ void CheckHeaterResponse(){
 
 float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp){
     float Vt = 0;
+    // Get Vr from callibrator resistor
+    float Vr = 0;
     float DutyCycle = 0;
     if (SetTemp > CurrentTemp){
        Vt = ((SetTemp - CurrentTemp) / 100) * 10;
     }
-    // Get Vr from callibrator resistor
     DutyCycle = (((Vr * 2) / 10) * Vt) / 10;
     return (int8)DutyCycle;
 }
