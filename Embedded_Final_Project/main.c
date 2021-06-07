@@ -52,11 +52,71 @@
 
 #include "LCD_Manager.h"
 #include "LCD.h"
+#include "ADC.h"
+#include <avr/delay.h>
+#include <stdlib.h>
 
-int main(){
-    Initialize_LCD();
-    display_Welcome_screen(0);
-    while(1){}
+
+int main() {
+    Init_ADC(0);
+    LCD_Init();
+    _delay_ms(100);
+    LCD_Command(0x0C);
+    _delay_ms(100);
+
+    LCD_Command(0x01);
+
+    LCD_Char(' ');
+    _delay_ms(1);
+    LCD_Char('K');
+    _delay_ms(1);
+    LCD_Char('P');
+    _delay_ms(1);
+    LCD_Char('a');
+    _delay_ms(1);
+    LCD_Char('d');
+    _delay_ms(1);
+    LCD_Char('=');
+    _delay_ms(1);
+
+    LCD_Command(0xC0);
+    _delay_ms(1);
+    LCD_Command(0x0C);
+    _delay_ms(1);
+
+    LCD_Char('F');
+    _delay_ms(1);
+    LCD_Char('i');
+    _delay_ms(1);
+    LCD_Char('n');
+    _delay_ms(1);
+    LCD_Char('a');
+    _delay_ms(1);
+    LCD_Char('l');
+    _delay_ms(1);
+    LCD_Char(' ');
+    _delay_ms(1);
+    LCD_Char('=');
+    _delay_ms(1);
+    LCD_Char(' ');
+    char ch[4] = {' '};
+    uint16_t Reading = 89;
+    while (1) {
+        Reading = ADC_Read(0);        /*ADC Reading pin*/
+        for (int j = 0; j < 4; j++) {
+            ch[j] = ' ';
+        }
+        LCD_String_xy(1, 7, " ");
+        itoa(Reading, ch, 10);
+        for (int j = 0; j < 4; j++) {
+            if (ch[j] < '0' || ch[j] > '9') {
+                LCD_Char(' ');
+            } else {
+                LCD_Char(ch[j]);
+            }
+        }
+        _delay_ms(200);
+    }
 }
 
 

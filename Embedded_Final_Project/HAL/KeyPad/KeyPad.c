@@ -3,27 +3,27 @@
  *
  * Created: 6/2/2021 1:05:05 PM
  *  Author: Mohamed Kamal
- */ 
+ */
 
 
 
-#include <avr/io.h>		/* Include AVR std. library file */
-#include <util/delay.h>		/* Include inbuilt defined Delay header file */
+#include <avr/io.h>        /* Include AVR std. library file */
+#include <util/delay.h>        /* Include inbuilt defined Delay header file */
 #include "DIO.h"
 #include "KeyPad.h"
 #include "KeyPad_Cfg.h"
+#include "Scheduler.h"
 
 void initialize_KeyPad(void) {
-	DIO_Init(2);
-	DIO_Init(3);
-	uint8 r;
-	for(r=0;r<4;r++)
-	{
-		DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId,KeyPad_ConfigParam.RowsPinsChannels[r], 0xff);
-	}
+    DIO_Init(2);
+    DIO_Init(3);
+    uint8 r;
+    for (r = 0; r < 4; r++) {
+        DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId, KeyPad_ConfigParam.RowsPinsChannels[r], 0xff);
+    }
 }
 
-uint8 pressed_Key(void){
+uint8 pressed_Key(void) {
 
 	uint8 c;
 	uint8 r;

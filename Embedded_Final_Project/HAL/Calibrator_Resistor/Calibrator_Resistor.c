@@ -8,7 +8,7 @@
 uint8 calibratorRead = 0;
 
 void InitCalibrator(){
-    Init_ADC();
+    Init_ADC(0);
 }
 
 void GetCalibratorRead(){

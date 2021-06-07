@@ -13,8 +13,8 @@
 uint8 NumTimeShift = 1;
 uint8 Index = 0;
 void LCD_Shift_R(void){
+    Delay_ms(500, LCD_Shift_R);
     LCD_Command(0x1c);
-    StopPeriodicDelay_ms(LCD_Shift_R);
 }
 char* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
 char numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};
@@ -29,8 +29,8 @@ void display_Welcome_screen(uint8 times) {
 	idle_screen();
 	_delay_ms(1000);
 	write_Set_Temp(7);*/
-    PeriodicDelay_ms(100, LCD_Shift_R);
-    StartPeriodicDelay_ms(LCD_Shift_R);
+    Delay_ms(500, LCD_Shift_R);
+//    StartPeriodicDelay_ms(LCD_Shift_R);
 }
 
 void display_Welcome_once(void){
