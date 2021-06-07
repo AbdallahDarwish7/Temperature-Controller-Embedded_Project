@@ -110,6 +110,8 @@ void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 
 void LCD_Init (void)			/* LCD Initialize function */
 {
+	DIO_Init(2);
+	DIO_Init(3);
 	_delay_ms(20);			/* LCD Power ON delay always >15ms */
 	
 	LCD_Command (0X02);

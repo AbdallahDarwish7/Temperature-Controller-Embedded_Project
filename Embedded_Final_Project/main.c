@@ -78,9 +78,7 @@ int main(void) {
 //        }
 
     }*/
-	DIO_Init(1);
-	DIO_Init(2);
-	DIO_Init(3);
+
 	Initialize_LCD();
 	initialize_KeyPad();
 	
