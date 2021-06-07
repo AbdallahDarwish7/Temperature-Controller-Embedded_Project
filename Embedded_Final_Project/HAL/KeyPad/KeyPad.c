@@ -12,7 +12,6 @@
 #include "DIO.h"
 #include "KeyPad.h"
 #include "KeyPad_Cfg.h"
-#include "LCD.h"
 
 void initialize_KeyPad(void) {
 	uint8 r;
@@ -43,29 +42,27 @@ uint8 pressed_Key(void){
 		DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId,KeyPad_ConfigParam.ColsPinsChannels[c], 0x00);
 		
 	}
-	return key;//Indicate No key pressed*
+	return key;
 }
 
-
-void test_KeyPad_Lcd(void) {
-	unsigned char loop;
-	uint8* Characters[12] = {"*", "0", "#", "7", "8", "9", "4", "5", "6", "1", "2", "3"};
-
-	DIO_Init(2);
-	DIO_Init(3);
-	DIO_Init(1);
-	initialize_KeyPad();
-	LCD_Init();
-	LCD_Char(" ");
-	LCD_String_xy(0, 0, "HELLO: ");
-	LCD_String_xy(0, (uint8)10,"KIMO");
-	LCD_Command(0xc0);
-	uint8 key;
-	while(1)
-	{
-		key = pressed_Key();
-		if(key != 0xff){
-			LCD_String_xy(1, 0, Characters[key]);
+uint8 get_set_Temp(void){
+	uint8 Characters[9] = { 7, 8, 9, 4, 5, 6, 1, 2, 3};
+	uint8 t = 0xff;
+	uint8 key = pressed_Key();
+	if(key != 0xff){
+		if(key>2) {
+			t = Characters[key - 3];
+			_delay_ms(500);
+			key = 0xff;
+			
+			while(key != 0){
+				key = pressed_Key();
+				if(key >2 && key != 0xff){
+					t = 10*t +  Characters[key - 3];
+					_delay_ms(500);
+				}
+			}
 		}
 	}
+	return t;
 }

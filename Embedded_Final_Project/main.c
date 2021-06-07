@@ -16,18 +16,23 @@
 #include "Temp_MGR.h"
 #include "Calibrator_Resistor.h"
 #include "avr/io.h"
-#include "avr/delay.h"
+#include "util/delay.h"
+#include "LCD_Manager.h"
+#include "KeyPad.h"
+
 
 void config();
 
 int main(void) {
+    config();
     while (1) {}
 }
 
 
-void config(){
-    InitSystemPeriodicity();
 
+void config(){
+    Initialize_LCD();
+    InitSystemPeriodicity();
     Activate_TC72();
     InitCalibrator();
     display_Welcome_screen(3);

@@ -12,6 +12,6 @@ void InitCalibrator(){
 }
 
 void GetCalibratorRead(){
-    Calibrator_Read = ADC_Read(CALIBRATOR_CHANNEL);
+    calibratorRead = ADC_Read(CALIBRATOR_CHANNEL);
 }
 
