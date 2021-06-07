@@ -14,6 +14,8 @@
 
 typedef uint8 machine_state;
 
+void InitSystem();
+float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp);
+void CheckHeaterResponse();
 
-int8 CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp);
 #endif //EMBEDDED_FINAL_PROJECT_MODE_MGR_H

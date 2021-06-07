@@ -1,30 +1,47 @@
 //
 // Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
 //
-
 #include "Mode_MGR.h"
 #include "Temp_MGR.h"
-#include "Timer.h"
+#include "PWM.h"
+#include "Scheduler.h"
+
 
 machine_state machineState = STANDBY;
 
-void ChangeMachineState(machine_state state){
-    machineState = state;
+uint8 CheckHeaterResponseFlag = 0;
+
+
+static void UpdateSystem(machine_state state);
+
+/*******************************************************************************
+ *                      Functions Definitions                                  *
+ *******************************************************************************/
+void InitSystem(){
+    PeriodicDelay_ms(200, UpdateCurrentTemp);
+}
+
+void SetMachineState(machine_state state){
+    if (machineState != ERROR){
+        UpdateSystem(machineState);
+    }
 }
 
 machine_state GetMachineState(){
     return machineState;
 }
 
-void UpdateSystem(machine_state state){
+static void UpdateSystem(machine_state state){
     int8 DutyCycle;
-    int8 CurrentTemp = GetCurrentTemp();
-    int8 SetTemp = GetInputTemp();
     switch (state) {
         case STANDBY:
         {
-            Shutdown_TC72();
-            Timer_Stop(0);
+            if (machineState != STANDBY){
+                StopPeriodicDelay_ms(UpdateCurrentTemp);
+                Shutdown_TC72();
+                PWM_Stop();
+                machineState = STANDBY;
+            }
             break;
         }
         case OPERATIONAL:
@@ -36,44 +53,56 @@ void UpdateSystem(machine_state state){
                 machineState = ERROR;
                 UpdateSystem(machineState);
             } else if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
-                // Call Timer to execute method to check on condition again
+                if (CheckHeaterResponseFlag == 0){
+                    CheckHeaterResponseFlag = 1;
+                    Delay_ms(180000, CheckHeaterResponse);
+                }
             } else{
-                // pass function to timer to call every 200 msec
+                if (machineState != OPERATIONAL){
+                    Activate_TC72();
+                    StartPeriodicDelay_ms(UpdateCurrentTemp);
+                    machineState = OPERATIONAL;
+                }
                 DutyCycle = CalculateDutyCycle(CurrentTemp, SetTemp);
+                PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
+                PWM_Start();
             }
             break;
         }
         case NORMAL:
         {
-            // Call Timer to execute method to check on condition again
+            if (machineState != NORMAL){
+                PWM_Stop();
+            }
             break;
         }
         case ERROR:
         {
+            StopPeriodicDelay_ms(UpdateCurrentTemp);
             Shutdown_TC72();
-            Timer_Stop(0);
+            PWM_Stop();
             break;
         }
     }
 }
 
 void CheckHeaterResponse(){
-    int8 CurrentTemp = GetCurrentTemp();
-    int8 SetTemp = GetInputTemp();
+    CheckHeaterResponseFlag = 0;
     if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
         machineState = ERROR;
         UpdateSystem(machineState);
     }
 }
 
-//int8 CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp){
-//    float Vt = 0;
-//    float DutyCycle = 0;
-//    if (SetTemp > CurrentTemp){
-//       Vt = ((SetTemp - CurrentTemp) / 100) * 10;
-//    }
-//    // Get Vr from callibrator resistor
-//    DutyCycle = (((Vr * 2) / 10) * Vt) / 10;
-//    return (int8)DutyCycle;
-//}
+float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp){
+    float Vt = 0;
+    // Get Vr from callibrator resistor
+    float Vr = 0;
+    float DutyCycle = 0;
+    if (SetTemp > CurrentTemp){
+       Vt = ((SetTemp - CurrentTemp) / 100) * 10;
+    }
+    DutyCycle = (((Vr * 2) / 10) * Vt) / 10;
+    return (int8)DutyCycle;
+}
 

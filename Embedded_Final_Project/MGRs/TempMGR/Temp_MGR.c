@@ -22,29 +22,20 @@ int8 SetTemp = NO_READ;
  * Used to get The temperature of the TC72 sensor
  * @return CurrentTemp : Temperature value
  */
-int8 GetCurrentTemp(){
+void UpdateCurrentTemp(){
     Mode TC72_Mode = GetTC72Mode();
     if (TC72_Mode == SHUTDOWN_MODE){
         CurrentTemp = NO_READ;
     } else{
         CurrentTemp = TC72_ReadTemperature();
     }
-    return CurrentTemp;
-}
-
-/******************** GetCurrentTemp *********************
- * Used to get The input temperature from the user
- * @return SetTemp : Temperature value
- */
-int8 GetInputTemp(){
-    return SetTemp;
 }
 
 /******************** SetInputTemp ***********************
  * Save temperature value that we get from the user
  * @param InputTemp : Input temperature of the user
  */
-void SetInputTemp(int8 InputTemp){
+void UpdateInputTemp(int8 InputTemp){
     SetTemp = InputTemp;
 }
 
