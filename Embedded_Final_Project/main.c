@@ -50,8 +50,14 @@
 //    while (1) {}
 //}
 
-
 #include "LCD_Manager.h"
+#include "LCD.h"
+
+int main(){
+    Initialize_LCD();
+    display_Welcome_screen(0);
+    while(1){}
+}
 
 
 
