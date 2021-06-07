@@ -13,7 +13,7 @@
 #include "KeyPad.h"
 #include "KeyPad_Cfg.h"
 
-void initialize_KeyPad(void) {
+void Initialize_KeyPad(void) {
 	DIO_Init(2);
 	DIO_Init(3);
 	uint8 r;
@@ -48,6 +48,7 @@ uint8 pressed_Key(void){
 }
 
 uint8 get_set_Temp(void){
+	
 	uint8 Characters[9] = { 7, 8, 9, 4, 5, 6, 1, 2, 3};
 	uint8 t = 0xff;
 	uint8 key = pressed_Key();
@@ -62,7 +63,7 @@ uint8 get_set_Temp(void){
 						key = pressed_Key();
 						if(key >2 && key != 0xff){
 							t = 10*t +  Characters[key - 3];
-							_delay_ms(300);
+							_delay_us(100);
 						}
 					}
 				}
@@ -70,4 +71,14 @@ uint8 get_set_Temp(void){
 		}
 	}
 	return t;
+}
+
+uint8 get_Hash(void){
+	uint8 key;
+	key = pressed_Key();
+	uint8 result = 0xff ;
+	if(key == 2){
+		result = '#';
+	}
+	return result;
 }

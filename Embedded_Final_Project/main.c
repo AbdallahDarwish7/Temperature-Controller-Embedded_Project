@@ -18,21 +18,27 @@
 #include "avr/io.h"
 #include "util/delay.h"
 #include "LCD_Manager.h"
-#include "KeyPad.h"
 
 
 void config();
 
 int main(void) {
     config();
-    while (1) {}
+   /* while (1) {
+		uint8 temp = get_set_Temp();
+		if(temp!= 0xff){
+			write_Set_Temp(temp);
+		}
+	}*/
+
 }
 
 
 void config(){
     Initialize_LCD();
-    InitSystemPeriodicity();
+	Initialize_KeyPad();
+    /*InitSystemPeriodicity();
     Activate_TC72();
-    InitCalibrator();
-    display_Welcome_screen(3);
+    InitCalibrator();*/
+   // display_Welcome_screen(3);
 }

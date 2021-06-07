@@ -9,6 +9,10 @@
 #define LCD_MANAGER_H_
 #include "LCD_Manager_cfg.h"
 
+void Shift_Right(void);
+
+void Shift_Left(void);
+
 void display_Welcome_screen(uint8 times);
 
 void display_Welcome_once(void);

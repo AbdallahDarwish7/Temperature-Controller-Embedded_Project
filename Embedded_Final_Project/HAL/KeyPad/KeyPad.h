@@ -16,7 +16,9 @@ uint8 pressed_Key(void);
 
 uint8 get_set_Temp(void);
 
-void initialize_KeyPad(void);
+uint8 get_Hash(void);
+
+void Initialize_KeyPad(void);
 
 void test_KeyPad_Lcd(void);
 

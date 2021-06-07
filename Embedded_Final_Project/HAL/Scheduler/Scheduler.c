@@ -8,7 +8,7 @@
 #include <avr/interrupt.h>
 
 #define NUM_ONE_SHOT_CALLBACKS 3U
-#define NUM_PERIODIC_CALLBACKS 3U
+#define NUM_PERIODIC_CALLBACKS 5U
 
 #define PERIODIC_ON 1U
 #define PERIODIC_OFF 0U
