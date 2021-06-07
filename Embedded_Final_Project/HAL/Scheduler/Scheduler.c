@@ -72,7 +72,7 @@ ISR(TIMER2_COMP_vect) {
     }
 }
 
-void Periodic_Delay_ms(int16 Delay_ms, VoidCallback callback) {
+void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback) {
     uint8 timerIsRunning = Timer_Is_Running(TimerIdPeriodicDelay);
     uint8 Loop;
     if (!timerIsRunning) {
@@ -98,7 +98,7 @@ void Periodic_Delay_ms(int16 Delay_ms, VoidCallback callback) {
     }
 }
 
-void Stop_Periodic_Delay_ms(VoidCallback callback){
+void StopPeriodicDelay_ms(VoidCallback callback){
     cli();
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
@@ -111,7 +111,7 @@ void Stop_Periodic_Delay_ms(VoidCallback callback){
     sei();
 }
 
-void Start_Periodic_Delay_ms(VoidCallback callback){
+void StartPeriodicDelay_ms(VoidCallback callback){
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == callback){

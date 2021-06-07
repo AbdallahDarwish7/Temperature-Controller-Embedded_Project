@@ -1,39 +1,47 @@
 //
 // Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
 //
-
 #include "Mode_MGR.h"
 #include "Temp_MGR.h"
 #include "PWM.h"
 #include "Scheduler.h"
+
 
 machine_state machineState = STANDBY;
 
 uint8 CheckHeaterResponseFlag = 0;
 
 
+static void UpdateSystem(machine_state state);
 
 /*******************************************************************************
  *                      Functions Definitions                                  *
  *******************************************************************************/
+void InitSystem(){
+    PeriodicDelay_ms(200, UpdateCurrentTemp);
+}
 
 void SetMachineState(machine_state state){
-    machineState = state;
-    UpdateSystem(machineState);
+    if (machineState != ERROR){
+        UpdateSystem(machineState);
+    }
 }
 
 machine_state GetMachineState(){
     return machineState;
 }
 
-void UpdateSystem(machine_state state){
+static void UpdateSystem(machine_state state){
     int8 DutyCycle;
-    Periodic_Delay_ms(200, UpdateCurrentTemp);
     switch (state) {
         case STANDBY:
         {
-            Shutdown_TC72();
-            PWM_Stop();
+            if (machineState != STANDBY){
+                StopPeriodicDelay_ms(UpdateCurrentTemp);
+                Shutdown_TC72();
+                PWM_Stop();
+                machineState = STANDBY;
+            }
             break;
         }
         case OPERATIONAL:
@@ -50,6 +58,11 @@ void UpdateSystem(machine_state state){
                     Delay_ms(180000, CheckHeaterResponse);
                 }
             } else{
+                if (machineState != OPERATIONAL){
+                    Activate_TC72();
+                    StartPeriodicDelay_ms(UpdateCurrentTemp);
+                    machineState = OPERATIONAL;
+                }
                 DutyCycle = CalculateDutyCycle(CurrentTemp, SetTemp);
                 PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
                 PWM_Start();
@@ -58,10 +71,14 @@ void UpdateSystem(machine_state state){
         }
         case NORMAL:
         {
+            if (machineState != NORMAL){
+                PWM_Stop();
+            }
             break;
         }
         case ERROR:
         {
+            StopPeriodicDelay_ms(UpdateCurrentTemp);
             Shutdown_TC72();
             PWM_Stop();
             break;

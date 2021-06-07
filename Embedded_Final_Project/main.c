@@ -41,12 +41,12 @@
 //    DIO_ChannelDir(0, 0, 0xff);
 //    DIO_ChannelDir(0, 1, 0xff);
 //    DIO_ChannelDir(0, 2, 0xff);
-//    Periodic_Delay_ms(1000, ToggleBit0);
-////    Periodic_Delay_ms(2000, ToggleBit1);
-////    Periodic_Delay_ms(4000, ToggleBit2);
-////    Start_Periodic_Delay_ms(ToggleBit0);
+//    PeriodicDelay_ms(1000, ToggleBit0);
+////    PeriodicDelay_ms(2000, ToggleBit1);
+////    PeriodicDelay_ms(4000, ToggleBit2);
+////    StartPeriodicDelay_ms(ToggleBit0);
 ////    _delay_ms(3000);
-////    Stop_Periodic_Delay_ms(ToggleBit0);
+////    StopPeriodicDelay_ms(ToggleBit0);
 //    while (1) {}
 //}
 
