@@ -29,15 +29,15 @@ void LCD_Enable(void);
 
 void LCD_Disable(void);
 
-void LCD_Command(uint8 cmnd);
+void LCD_WriteCommand(uint8 cmnd);
 
-void LCD_Char (uint8 char_data);  /* LCD data0 write function */
+void LCD_WriteChar (uint8 char_data);  /* LCD data0 write function */
 
 void LCD_Init (void);			/* LCD Initialize function */
 
-void LCD_String (uint8 *str);		/* Send string to LCD function */
+void LCD_WriteString (uint8 *str);		/* Send string to LCD function */
 
-void LCD_String_xy (uint8 row, uint8 pos, uint8 *str);  /* Send string to LCD with xy position */
+void LCD_WriteStringAt_xy (uint8 row, uint8 pos, uint8 *str);  /* Send string to LCD with xy position */
 
 void LCD_Clear();
 
@@ -47,7 +47,7 @@ void LCD_Shift_R(void);
 
 void LCD_Shift_L(void);
 
-void LCD_Custom_Char (uint8 loc, uint8 *msg);
+void LCD_Custom_Char(uint8 loc, uint8 *msg);
 
 void test_LCD(void);
 
