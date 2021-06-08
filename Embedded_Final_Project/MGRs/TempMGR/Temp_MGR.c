@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 #include "typedefs.h"
 #include "TC72.h"
 #include "Temp_MGR.h"
@@ -22,7 +22,7 @@ int8 setTemp = NO_READ;
  * Used to get The temperature of the TC72 sensor
  * @return currentTemp : Temperature value
  */
-void UpdateCurrentTemp(){
+void UpdateCurrentTemp(void){
     Mode TC72_Mode = GetTC72Mode();
     if (TC72_Mode == SHUTDOWN_MODE){
         currentTemp = NO_READ;
@@ -43,14 +43,14 @@ void UpdateInputTemp(int8 InputTemp){
 /******************** Shutdown_TC72 ***********************
  * Config the TC72 sensor to the idle mode
  */
-void Shutdown_TC72(){
+void Shutdown_TC72(void){
     TC72_Init(SHUTDOWN_MODE);
 }
 
 /******************** Shutdown_TC72 ***********************
  * Config the TC72 sensor to the continuous mode
  */
-void Activate_TC72(){
+void Activate_TC72(void){
     TC72_Init(CONTINUOUS_MODE);
 }
 

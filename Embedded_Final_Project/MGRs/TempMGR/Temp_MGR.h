@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 
 
 #ifndef EMBEDDED_FINAL_PROJECT_TEMP_MGR_H
@@ -14,16 +14,17 @@ extern int8 setTemp;
 /*******************************************************************************
  *                      Functions Declarations                                 *
  *******************************************************************************/
- 
-void UpdateCurrentTemp();
+void UpdateInputTemp(int8 InputTemp);
+
+void UpdateCurrentTemp(void);
 
 void UpdateSetTemp(int8 InputTemp);
 
-void Shutdown_TC72();
+void Shutdown_TC72(void);
 
-void Activate_TC72();
-
-
+void Activate_TC72(void);
 
 
-#endif //EMBEDDED_FINAL_PROJECT_TEMP_MGR_H
+
+
+#endif /*EMBEDDED_FINAL_PROJECT_TEMP_MGR_H*/

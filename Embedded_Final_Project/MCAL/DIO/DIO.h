@@ -15,4 +15,4 @@ DIO_CheckType DIO_PortDir(uint8 PortId, uint8 Direction);
 DIO_CheckType DIO_PortWrite(uint8 PortId, uint8 Data);
 DIO_CheckType DIO_PortRead(uint8 PortId, uint8 *DataPtr);
 
-#endif // DIO_H_INCLUDED
+#endif /* DIO_H_INCLUDED */
