@@ -17,5 +17,5 @@
 #define SET_BIT(PORT, BIT_NUM)       (((PORT) |= (uint8)((uint8)1 << (BIT_NUM))))
 
 #define CLEAR_BIT(PORT, BIT_NUM)     ((PORT) = (uint8)((PORT) & ((uint8)(~((uint8)((uint8)1 << (BIT_NUM)))))))
-/* #define NULL 0U */
+#define NULL ((void*) 0 )
 #endif /*FINAL_PROJECT_MACROS_H*/

@@ -11,9 +11,6 @@
 #include "typedefs.h"
 #include "KeyPad.h"
 
-#include "Scheduler.h"
-
-
 char* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
 char numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};
 uint8 loop = 0;

@@ -57,7 +57,7 @@ target_link_libraries(Scheduler Timer)
 target_link_libraries(TempMGR TC72)
 target_link_libraries(ModeMGR Timer Calibrator)
 target_link_libraries(Calibrator ADC)
-target_link_libraries(LCDManager LCD Scheduler)
+target_link_libraries(LCDManager LCD Scheduler KeyPad)
 target_link_libraries(${CMAKE_PROJECT_NAME} TC72 Timer KeyPad TempMGR ModeMGR Scheduler LCDManager)
 
 
