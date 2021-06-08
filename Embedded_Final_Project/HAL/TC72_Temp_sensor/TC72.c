@@ -35,7 +35,7 @@ void TC72_Init(Mode OperMode){
  * [Description] :
  * @return
  */
-int8 TC72_ReadTemperature(void){
+uint8 TC72_ReadTemperature(void){
     uint8 dummy = 0x00;
     int8  MSBValue;
     /* ACTIVATE SLAVE TC72 */

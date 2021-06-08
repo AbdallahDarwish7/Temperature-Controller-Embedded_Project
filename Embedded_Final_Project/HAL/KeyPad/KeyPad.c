@@ -46,6 +46,8 @@ uint8 KeyPad_GetKey(void) {
         DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId, KeyPad_ConfigParam.ColsPinsChannels[column], 0x00);
 
     }
+    _delay_ms(100);
+
     return key;
 }
 
@@ -105,9 +107,9 @@ void get_set_Temp(ParamCallback callback) {
 uint8 KeyPad_Get_Hash(void) {
     uint8 key;
     key = KeyPad_GetKey();
-    uint8 result = 0xff;
+    uint8 result = 0;
     if (key == 2) {
-        result = '#';
+        result = 1;
     }
     return result;
 }

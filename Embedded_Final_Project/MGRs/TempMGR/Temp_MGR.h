@@ -6,10 +6,10 @@
 #ifndef EMBEDDED_FINAL_PROJECT_TEMP_MGR_H
 #define EMBEDDED_FINAL_PROJECT_TEMP_MGR_H
 
-#define NO_READ ((int8)-128)
+#define NO_READ ((uint8)-1)
 
-extern int8 currentTemp;
-extern int8 setTemp;
+extern uint8 currentTemp;
+extern uint8 setTemp;
 
 /*******************************************************************************
  *                      Functions Declarations                                 *

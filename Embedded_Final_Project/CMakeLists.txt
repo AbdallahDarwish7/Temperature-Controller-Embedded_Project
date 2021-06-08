@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.17)
 SET(CMAKE_SYSTEM_NAME Generic)
 SET(AVRBIN /home/abdallah/avr8-gnu-toolchain/bin)          # change compiler path
+#SET(AVRBIN /home/abdulla167/avr8-gnu-toolchain/bin)          # change compiler path
+
 SET(AVROBJCOPY avr-objcopy)
 SET(AVRSIZE avr-size)
 SET(AVRDUDE avrdude)
@@ -19,7 +21,7 @@ SET(CMAKE_CXX_COMPILER ${AVRBIN}/avr-g++)
 #============================================================================================
 PROJECT(Embedded_Final_Project)                                          # <-- Prjectname
 
-SET(SOURCE_FILES main.c Macros.h typedefs.h)                                          # <-- Source file(s)
+SET(SOURCE_FILES main.c Macros.h typedefs.h main.h)                                          # <-- Source file(s)
 
 SET(DEVICE atmega32)                                       # <-- MCU
 SET(F_CPU 8000000)                                         # <-- MCU-Frequency
@@ -32,6 +34,8 @@ SET(CMAKE_CXX_FLAGS "-Os -mmcu=${DEVICE} -DF_CPU=${F_CPU}UL -Wl,--gc-sections")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_PREFIX_PATH /home/abdallah/avr8-gnu-toolchain/avr)                  # change compiler path
+#set(CMAKE_PREFIX_PATH /home/abdulla167/avr8-gnu-toolchain/avr)                  # change compiler path
+
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
@@ -40,6 +44,9 @@ set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
         )
 
 include_directories(/home/abdallah/avr8-gnu-toolchain/avr/include)           # change compiler path
+#include_directories(/home/abdulla167/avr8-gnu-toolchain/avr/include)           # change compiler path
+
+
 
 #============================================================================================
 
