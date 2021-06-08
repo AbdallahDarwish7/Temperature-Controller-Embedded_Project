@@ -102,11 +102,11 @@ uint8 *Timers1RegComsRegValuesPtr[NUM_TIMERS_1_REG] = {Timer0ComsRegValues, Time
 /*uint16 *Timers2RegComsRegValuesPtr[NUM_TIMERS_2_REG] = {Timer1Prescalers};*/
 
 
-/*may be unavoidable when addressing memory mapped registers or other hardware specific features*/
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *TCCRs1[NUM_TIMERS_1_REG] = {&TCCR0, &TCCR2};
-/*may be unavoidable when addressing memory mapped registers or other hardware specific features*/
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *TCCRs2[NUM_TIMERS_2_REG * 2U] = {&TCCR1A, &TCCR1B};
-/*may be unavoidable when addressing memory mapped registers or other hardware specific features*/
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *OCRs[NUM_TIMERS_1_REG] = {&OCR0, &OCR2};
 
 void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
@@ -269,11 +269,11 @@ void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint
             if(TimerMode == TIMER_PWD_FAST_MODE) {
                 uint8 regVal;
                 if(TimerCom == TIMER_NON_INVERTED_COM){
-                    /*Micro Controller Registers can hold only unsigned char or char values */
+                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
                     regVal = (uint8)(((256U * Percentage) / 100U) - 1U);
                     *(OCRs[TimerIndex]) = regVal;
                 } else if (TimerCom == TIMER_INVERTED_COM) {
-                    /*Micro Controller Registers can hold only unsigned char or char values */
+                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
                     regVal = 255U - (uint8)(((256 * Percentage) / 100) - 1);
                     *(OCRs[TimerIndex]) = regVal;
                 }

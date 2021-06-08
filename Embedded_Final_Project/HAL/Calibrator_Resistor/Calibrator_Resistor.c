@@ -8,10 +8,10 @@
 uint8 calibratorRead = 0;
 
 void InitCalibrator(){
-    Init_ADC();
+    Init_ADC(0);
 }
 
 void GetCalibratorRead(){
-    calibratorRead = ADC_Read(CALIBRATOR_CHANNEL);
+    calibratorRead = (uint8)(ADC_Read(CALIBRATOR_CHANNEL) / 1024) * 5;
 }
 

@@ -4,13 +4,14 @@
  * Created: 6/6/2021 6:45:32 PM
  *  Author: river
  */ 
-#include <util/delay.h>		/* Include inbuilt defined Delay header file */
 #include "LCD_Manager.h"
 #include "LCD_Manager_cfg.h"
 #include "Scheduler.h"
 #include "LCD.h"
 #include "typedefs.h"
 #include "KeyPad.h"
+
+#include "Scheduler.h"
 
 
 char* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
@@ -20,8 +21,7 @@ uint8 count ;
 void display_Welcome_screen(uint8 times) {
 	LCD_Char(' ');
 	count = times;
-	LCD_String_xy(0, 0,"WELCOME");
-	
+	LCD_String_xy(0, 0,"WELCOME");	
 	display_Welcome_once();
 
 }
@@ -46,6 +46,7 @@ void Shift_Left(void) {
 			idle_screen();
 		}
 	}
+
 }
 void display_Welcome_once(void){
 	PeriodicDelay_ms(100,Shift_Right);

@@ -20,6 +20,7 @@ void ToggleBit2(void) {
 	DIO_ChannelWrite(0, 2, data2);
 	data2 ^= 0xff;
 }
+
 int main(void) {
 
 	/* test lcd keypad */
@@ -46,10 +47,11 @@ int main(void) {
 	Initialize_KeyPad();
 	display_Welcome_screen(1);
 	uint8 key = 0xff;
-	Delay_ms(1000, get_set_Temp);
+	Delay_ms(1000, get_set_Temp_w);
 	while(1){
 		
 	}
+	
 	
 	
 	
