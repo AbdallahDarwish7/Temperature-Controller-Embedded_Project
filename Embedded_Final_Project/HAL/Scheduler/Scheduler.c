@@ -8,7 +8,7 @@
 #include <avr/interrupt.h>
 
 #define NUM_ONE_SHOT_CALLBACKS 3U
-#define NUM_PERIODIC_CALLBACKS 5U
+#define NUM_PERIODIC_CALLBACKS 3U
 
 #define PERIODIC_ON 1U
 #define PERIODIC_OFF 0U
@@ -142,5 +142,11 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 void DeletePeriodicDelay_ms(VoidCallback callback){
-
+    uint8 Loop;
+    for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
+        if (PeriodicCallbacks[Loop] == callback) {
+            PeriodicCallbacks[Loop] = NULL;
+            break;
+        }
+    }
 }

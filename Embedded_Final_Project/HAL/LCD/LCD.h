@@ -9,13 +9,12 @@
 #ifndef LCD_H_
 #define LCD_H_
 #include "typedefs.h"
-uint8 CheckBit(uint8 Data, uint8 bitNum);
 
+uint8 CheckBit(uint8 Data, uint8 bitNum);
 
 void LCD_Write_Upper(uint8);
 
 void LCD_Write_Lower(uint8);
-
 
 void LCD_RS_Command(void);
 	

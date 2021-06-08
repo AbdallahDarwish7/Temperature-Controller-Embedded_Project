@@ -38,25 +38,16 @@ void TC72_Init(Mode OperMode){
 int8 TC72_ReadTemperature(void){
     uint8 dummy = 0x00;
     int8  MSBValue;
-    switch (TC72_mode) {
-        case SHUTDOWN_MODE:
-            MSBValue = -255;
-            break;
-        case CONTINUOUS_MODE:
-            /* ACTIVATE SLAVE TC72 */
-            DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0xff);
-            /* SEND MSB DATA REGISTER ADDRESS TO GET THE DATA */
-            SPI_SendByte(MSB_Register_Address);
-            SPI_SendByte(dummy);
-            /* DEACTIVATE SLAVE TC72 */
-            DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0x00);
-            _delay_ms(1);
-            /* READ SENSOR DATA FROM SPI DATA REGISTER */
-            MSBValue = SPI_RecieveByte();
-            break;
-        default :
-            break;
-    }
+    /* ACTIVATE SLAVE TC72 */
+    DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0xff);
+    /* SEND MSB DATA REGISTER ADDRESS TO GET THE DATA */
+    SPI_SendByte(MSB_Register_Address);
+    SPI_SendByte(dummy);
+    /* DEACTIVATE SLAVE TC72 */
+    DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0x00);
+    _delay_ms(1);
+    /* READ SENSOR DATA FROM SPI DATA REGISTER */
+    MSBValue = SPI_RecieveByte();
     return MSBValue;
 }
 

@@ -11,7 +11,7 @@
  *******************************************************************************/
 
 int8 currentTemp = NO_READ;
-int8 setTemp = NO_READ;
+int8 setTemp = 200;
 
 /*******************************************************************************
  *                        Functions Definitions                                *
@@ -43,7 +43,7 @@ void UpdateInputTemp(int8 InputTemp){
 /******************** Shutdown_TC72 ***********************
  * Config the TC72 sensor to the idle mode
  */
-void Shutdown_TC72(void){
+void Deactivate_TC72(){
     TC72_Init(SHUTDOWN_MODE);
 }
 

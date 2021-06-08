@@ -11,6 +11,7 @@
 #include "typedefs.h"
 typedef void (*ParamCallback)(uint8);
 
+#define NO_VALUE ((uint8)0xff)
 
 void get_set_Temp_wrapper(void);
 
@@ -22,6 +23,6 @@ void get_set_Temp(ParamCallback callback);
 
 uint8 KeyPad_Get_Hash(void);
 
-void KeyPad_Initialize(void);
+void KeyPad_Init(void);
 
 #endif /* KEYPAD_H_ */

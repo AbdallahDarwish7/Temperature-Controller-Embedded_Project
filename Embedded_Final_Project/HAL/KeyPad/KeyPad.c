@@ -9,7 +9,7 @@
 #include "DIO.h"
 #include "KeyPad.h"
 #include "KeyPad_Cfg.h"
-#include "LCD_Manager.h"
+#include "Display_MGR.h"
 #include "Scheduler.h"
 
 
@@ -21,21 +21,20 @@ void get_set_Temp_wrapper(void) {
     get_set_Temp(write_Set_Temp);
 }
 
-void KeyPad_Initialize(void) {
+void KeyPad_Init(void) {
     DIO_Init(2);
     DIO_Init(3);
     uint8 row;
     for (row = 0; row < 4; row++) {
         DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId, KeyPad_ConfigParam.RowsPinsChannels[row], 0xff);
     }
-
 }
 
 uint8 KeyPad_GetKey(void) {
     uint8 column;
     uint8 row;
     uint8 *rowPtr;
-    uint8 key = 0xff;
+    uint8 key = NO_VALUE;
     for (column = 0; column < 3; column++) {
         DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId, KeyPad_ConfigParam.ColsPinsChannels[column], 0xff);
         for (row = 0; row < 4; row++) {

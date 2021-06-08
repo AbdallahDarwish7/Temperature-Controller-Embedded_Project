@@ -4,17 +4,20 @@
  * Created: 6/6/2021 6:45:32 PM
  *  Author: river
  */ 
-#include "LCD_Manager.h"
+#include "Display_MGR.h"
 #include "LCD_Manager_cfg.h"
 #include "Scheduler.h"
 #include "LCD.h"
 #include "typedefs.h"
 #include "KeyPad.h"
+#include "Scheduler.h"
+
 
 char* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
 char numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};
 uint8 loop = 0;
 uint8 count ;
+
 void display_Welcome_screen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
@@ -22,6 +25,7 @@ void display_Welcome_screen(uint8 times) {
 	display_Welcome_once();
 
 }
+
 void Shift_Right(void) {
 	LCD_Shift_R();
 	loop++;
@@ -30,6 +34,7 @@ void Shift_Right(void) {
 		StartPeriodicDelay_ms(Shift_Left);
 	}
 }
+
 void Shift_Left(void) {
 	LCD_Shift_L();
 	loop--;
@@ -40,16 +45,18 @@ void Shift_Left(void) {
 			StartPeriodicDelay_ms(Shift_Right);
 			
 		}else{
+            DeletePeriodicDelay_ms(Shift_Left);
+            DeletePeriodicDelay_ms(Shift_Right);
 			idle_screen();
 		}
 	}
 
 }
+
 void display_Welcome_once(void){
 	PeriodicDelay_ms(100,Shift_Right);
 	PeriodicDelay_ms(100, Shift_Left);
 	StartPeriodicDelay_ms(Shift_Right);
-
 }
 
 void idle_screen(void){
@@ -73,7 +80,6 @@ void write_CRT_Temp(uint8 crt_temp){
 	
 	char temp[2] = {numbers[first], numbers[second]};
     LCD_WriteStringAt_xy(0, 14, temp);
-	
 }
 
 void write_Set_Temp(uint8 set_temp) {
@@ -86,6 +92,6 @@ void write_Set_Temp(uint8 set_temp) {
     LCD_WriteStringAt_xy(0, 10, "CRT");
 }
 
-void Initialize_LCD(){
+void Activate_LCD(){
 	LCD_Init();
 }
