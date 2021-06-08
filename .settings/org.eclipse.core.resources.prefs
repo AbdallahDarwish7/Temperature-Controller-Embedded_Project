@@ -33,6 +33,10 @@ encoding//Debug/Embedded_Final_Project/cmake-build-debug/CMakeFiles/3.19.2/Compi
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/CMakeFiles/3.19.2/CompilerIdCXX/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/CMakeFiles/Embedded_Final_Project.dir/subdir_rules.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/CMakeFiles/Embedded_Final_Project.dir/subdir_vars.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/Calibrator_Resistor/CMakeFiles/Calibrator.dir/subdir_rules.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/Calibrator_Resistor/CMakeFiles/Calibrator.dir/subdir_vars.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/Calibrator_Resistor/subdir_rules.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/Calibrator_Resistor/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/KeyPad/CMakeFiles/KeyPad.dir/subdir_rules.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/KeyPad/CMakeFiles/KeyPad.dir/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/KeyPad/subdir_rules.mk=UTF-8
@@ -49,6 +53,10 @@ encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/TC72_Temp_sensor/CM
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/TC72_Temp_sensor/CMakeFiles/TC72.dir/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/TC72_Temp_sensor/subdir_rules.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/HAL/TC72_Temp_sensor/subdir_vars.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/ADC/CMakeFiles/ADC.dir/subdir_rules.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/ADC/CMakeFiles/ADC.dir/subdir_vars.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/ADC/subdir_rules.mk=UTF-8
+encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/ADC/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/DIO/CMakeFiles/DIO.dir/subdir_rules.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/DIO/CMakeFiles/DIO.dir/subdir_vars.mk=UTF-8
 encoding//Debug/Embedded_Final_Project/cmake-build-debug/MCAL/DIO/subdir_rules.mk=UTF-8

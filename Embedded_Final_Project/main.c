@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * Embedded_Final_Project.c
  *
@@ -6,19 +5,17 @@
  * Author : AbdallahDrwesh
  */
 
-
-
 #include "Timer.h"
 #include "DIO.h"
 #include "typedefs.h"
 #include "Scheduler.h"
-#include "LCD_Manager.h"
+#include "Display_MGR.h"
 #include "Mode_MGR.h"
 #include "Temp_MGR.h"
 #include "Calibrator_Resistor.h"
 #include "avr/io.h"
 #include "util/delay.h"
-#include "LCD_Manager.h"
+#include "Display_MGR.h"
 #include "KeyPad.h"
 #include "TC72.h"
 #include "Calibrator_Resistor.h"
@@ -29,19 +26,18 @@ void config();
 
 int main(void) {
     config();
+    _delay_ms(4000);
     while (1) {
-        SetMachineState(OPERATIONAL);
-        UpdateCalibratorRead();
-        write_CRT_Temp((uint8)ADC_Read(0));
-    }
 
+        write_CRT_Temp(30);
+    }
 }
 
-
 void config(){
-    Initialize_LCD();
-    Init_ADC();
-    display_Welcome_screen(0);
-
+//    SystemPeriodicity_Init();
+    ADC_Init(0);
+//    KeyPad_Init();
+    Activate_LCD();
+    display_Welcome_screen(1);
 }
 

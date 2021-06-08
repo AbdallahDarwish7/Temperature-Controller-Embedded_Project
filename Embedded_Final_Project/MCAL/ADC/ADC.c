@@ -2,7 +2,7 @@
 #include "ADC.h"
 #include "DIO.h"
 
-void Init_ADC(uint8 channel) {
+void ADC_Init(uint8 channel) {
     DIO_ChannelDir(0, channel, 0);
     ADMUX |= (1 << REFS0);    /* Voltage Reference From VCC */
     ADCSRA |= (1 << ADEN);      /* Turn On ADC */
