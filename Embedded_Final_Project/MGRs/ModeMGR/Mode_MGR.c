@@ -19,7 +19,7 @@ static void UpdateSystem(machine_state state);
  *                      Functions Definitions                                  *
  *******************************************************************************/
 
-void SystemPeriodicity_Init(){
+void SystemPeriodicity_Init(void){
     PeriodicDelay_ms(200, &UpdateCurrentTemp);
     PeriodicDelay_ms(500, &UpdateCalibratorRead);
 }

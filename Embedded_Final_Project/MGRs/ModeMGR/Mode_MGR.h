@@ -20,5 +20,4 @@ void SystemPeriodicity_Init(void);
 float32 CalculateDutyCycle(int8 CurrentTemperature, int8 SetTemperature, uint8 CalibratorRead);
 void CheckHeaterResponse(void);
 
-
 #endif /*EMBEDDED_FINAL_PROJECT_MODE_MGR_H*/

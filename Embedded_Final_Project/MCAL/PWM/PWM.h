@@ -23,11 +23,11 @@
  *                         Functions Declarations                              *
  *******************************************************************************/
 
-void PWM_SetDutyCycle(float Percentage, uint8 PwmMode, uint8 PwmOutputCompareMode);
-void PWM_Start();
-void PWM_Stop();
+void PWM_SetDutyCycle(float32 Percentage, uint8 PwmMode, uint8 PwmOutputCompareMode);
+void PWM_Start(void);
+void PWM_Stop(void);
 
 
 
 
-#endif //EMBEDDED_FINAL_PROJECT_PWD_H
+#endif /*EMBEDDED_FINAL_PROJECT_PWD_H*/

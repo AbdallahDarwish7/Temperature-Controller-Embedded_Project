@@ -21,7 +21,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom);
 
 void Timer_Start(uint8 TimerId, uint16 TimerPreScaler);
 
-void Timer_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom);
+void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint8 TimerCom);
 
 void Timer_Stop(uint8 TimerId);
 
@@ -46,4 +46,4 @@ uint8 Timer_Is_Running(uint8 TimerId);
 #define TIMER2_PRESCALER_128 ((uint16) 128U)
 #define TIMER2_PRESCALER_256 ((uint16) 256U)
 #define TIMER2_PRESCALER_1024 ((uint16) 1024U)
-#endif //FINAL_PROJECT_TIMER_H
+#endif /* FINAL_PROJECT_TIMER_H */

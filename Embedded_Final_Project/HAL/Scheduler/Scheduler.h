@@ -16,4 +16,5 @@ void StopPeriodicDelay_ms(VoidCallback callback);
 
 void StartPeriodicDelay_ms(VoidCallback callback);
 
+void DeletePeriodicDelay_ms(VoidCallback callback);
 #endif /*EMBEDDED_FINAL_PROJECT_SCHEDULER_H*/

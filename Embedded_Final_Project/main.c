@@ -28,16 +28,15 @@ int main(void) {
     config();
     _delay_ms(4000);
     while (1) {
-
         write_CRT_Temp(30);
     }
 }
 
 void config(){
-//    SystemPeriodicity_Init();
-    ADC_Init(0);
-//    KeyPad_Init();
     Activate_LCD();
     display_Welcome_screen(1);
+    ADC_Init(0);
+    SystemPeriodicity_Init();
+//    KeyPad_Init();
 }
 
