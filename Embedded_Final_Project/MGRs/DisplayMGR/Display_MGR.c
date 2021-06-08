@@ -43,8 +43,8 @@ void Shift_Left(void) {
 	LCD_Shift_L();
 	loop--;
 	if(loop < 1){
+		count--;
 		if(count > 0){
-			count--;
             LCD_Shift_R();
             Delay_ms(100, Shift_Right);
 		}else{

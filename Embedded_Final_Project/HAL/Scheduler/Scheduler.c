@@ -7,8 +7,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define NUM_ONE_SHOT_CALLBACKS 2U
-#define NUM_PERIODIC_CALLBACKS 2U
+#define NUM_ONE_SHOT_CALLBACKS 5U
+#define NUM_PERIODIC_CALLBACKS 3U
 
 #define PERIODIC_ON 1U
 #define PERIODIC_OFF 0U
@@ -19,10 +19,10 @@ uint32 OneShotCounts[NUM_ONE_SHOT_CALLBACKS];
 static uint8 TimerIdForOneShotDelay = 2;
 VoidCallback TempCallback;
 
-VoidCallback PeriodicCallbacks[NUM_ONE_SHOT_CALLBACKS] = {NULL, NULL, NULL};
-uint32 PeriodicTimerOverflow[NUM_ONE_SHOT_CALLBACKS];
-uint16 PeriodicCounts[NUM_ONE_SHOT_CALLBACKS];
-uint8 PeriodicState[NUM_ONE_SHOT_CALLBACKS];
+VoidCallback PeriodicCallbacks[NUM_PERIODIC_CALLBACKS] = {NULL, NULL, NULL};
+uint32 PeriodicTimerOverflow[NUM_PERIODIC_CALLBACKS];
+uint16 PeriodicCounts[NUM_PERIODIC_CALLBACKS];
+uint8 PeriodicState[NUM_PERIODIC_CALLBACKS];
 static uint8 TimerIdPeriodicDelay = 1;
 
 void Delay_ms(uint32 delay_ms, VoidCallback callback) {

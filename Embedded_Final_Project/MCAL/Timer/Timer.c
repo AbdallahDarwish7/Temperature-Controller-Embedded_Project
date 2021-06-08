@@ -314,7 +314,7 @@ uint8 Timer_Is_Running(uint8 TimerId) {
                     break;
                 }
             }
-            IsRunning = (*(TCCRs1[TimerIndex]) & (uint8)(~TIMERS1REG_STOP_MASK));
+            IsRunning = (*(TCCRs1[TimerIndex]) & (uint8) (~TIMERS1REG_STOP_MASK));
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
             for (Loop = 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if (Timers2RegIds[Loop] == TimerId) {
@@ -322,8 +322,9 @@ uint8 Timer_Is_Running(uint8 TimerId) {
                     break;
                 }
             }
-            IsRunning = *(TCCRs2[TimerIndex]) & (uint8)(~(uint8)TIMERS2REG_STOP_MASK);
-            IsRunning = IsRunning + (*(TCCRs2[TimerIndex + 1U]) & (uint8)(~(uint8)(TIMERS2REG_STOP_MASK >> 8U)));
+//            IsRunning = *(TCCRs2[TimerIndex]) & (uint8)(~(uint8)TIMERS2REG_STOP_MASK);
+//            IsRunning = IsRunning + (*(TCCRs2[TimerIndex + 1U]) & (uint8)(~(uint8)(TIMERS2REG_STOP_MASK >> 8U)));
+            IsRunning = *(TCCRs2[TimerIndex + 1U]) & 0x07;
         } else {
             /*Timer not in the defined types*/
         }
