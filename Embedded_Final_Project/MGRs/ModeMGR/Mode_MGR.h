@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 
 #ifndef EMBEDDED_FINAL_PROJECT_MODE_MGR_H
 #define EMBEDDED_FINAL_PROJECT_MODE_MGR_H
@@ -14,9 +14,11 @@
 
 typedef uint8 machine_state;
 
-void InitSystemPeriodicity();
+machine_state GetMachineState(void);
 void SetMachineState(machine_state state);
-float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp, uint8 CalibratorRead);
-void CheckHeaterResponse();
+void InitSystem(void);
+float32 CalculateDutyCycle(int8 CurrentTemperature, int8 SetTemperature, uint8 CalibratorRead);
+void CheckHeaterResponse(void);
 
-#endif //EMBEDDED_FINAL_PROJECT_MODE_MGR_H
+
+#endif /*EMBEDDED_FINAL_PROJECT_MODE_MGR_H*/

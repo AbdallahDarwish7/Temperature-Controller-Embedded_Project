@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٢‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 
 #ifndef FINAL_PROJECT_SPI_H
 #define FINAL_PROJECT_SPI_H
@@ -37,7 +37,7 @@
 
 void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity);
 void SPI_SendByte(uint8 data);
-int8 SPI_RecieveByte(void);
+uint8 SPI_RecieveByte(void);
 
 
-#endif //FINAL_PROJECT_SPI_H
+#endif /*FINAL_PROJECT_SPI_H*/

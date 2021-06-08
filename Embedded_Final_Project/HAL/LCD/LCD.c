@@ -15,10 +15,11 @@
 #include "LCD.h"
 #include "LCD_Cfg.h"
 
+#include "Scheduler.h"
+uint8 data_global;
 uint8 CheckBit(uint8 Data, uint8 bitNum) {
 	uint8 result ;
-	uint8 mask = DIO_ConfigParam[LCD_ConfigParam.DataPortId][LCD_ConfigParam.DataPinsChannel[bitNum]].PortMask;
-	if (Data & mask){
+	if (Data & (1 << (4 + bitNum))){
 		result = 0xff;
 		} else {
 		result = 0x00;
@@ -74,14 +75,16 @@ void LCD_Disable() {
 
 void LCD_Command(uint8 cmnd)
 {
+	data_global = cmnd;
 	LCD_Write_Upper(cmnd) ;
 	LCD_RS_Command();	/* RS=0 command reg. */
 	LCD_Write_Operation();	/* RW=0 Write operation */
 	LCD_Enable();	/* Enable pulse */
 	_delay_us(1);
 	LCD_Disable();
-	_delay_us(200);
-	LCD_Write_Lower(cmnd) ;
+	_delay_us(100);
+	//Delay_ms(1, LCD_Write_Lower);
+	LCD_Write_Lower(cmnd);
 	LCD_RS_Command();	/* RS=0 command reg. */
 	LCD_Write_Operation();	/* RW=0 Write operation */
 	LCD_Enable();	/* Enable pulse */
@@ -92,13 +95,14 @@ void LCD_Command(uint8 cmnd)
 
 void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 {
+	data_global = char_data;
 	LCD_Write_Upper(char_data);
 	LCD_RS_Reg();	/* RS=0 command reg. */
 	LCD_Write_Operation();	/* RW=0 Write operation */
 	LCD_Enable();	/* Enable pulse */
 	_delay_us(1);
 	LCD_Disable();
-	_delay_us(200);			/* Data write delay */
+	_delay_us(100);			/* Data write delay */
 	LCD_Write_Lower(char_data);
 	LCD_RS_Reg();	/* RS=0 command reg. */
 	LCD_Write_Operation();	/* RW=0 Write operation */
@@ -108,18 +112,26 @@ void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 	_delay_us(2);
 }
 
-void LCD_Init (void)			/* LCD Initialize function */
-{
-	DIO_Init(2);
-	DIO_Init(3);
-	_delay_ms(20);			/* LCD Power ON delay always >15ms */
-	
+void LCD_Init_Delay(void) {
 	LCD_Command (0X02);
 	LCD_Command (0x28);		/* Initialization of 16X2 LCD in 8bit mode */
 	LCD_Command (0x0C);		/* Display ON Cursor OFF */
 	LCD_Command (0x06);		/* Auto Increment cursor */
 	LCD_Command (0x01);		/* clear display */
-	_delay_us(2);			/* Clear display command delay> 1.63 ms */
+	_delay_us(2);
+}
+
+void LCD_Init (void)			/* LCD Initialize function */
+{
+	DIO_Init(2);
+	DIO_Init(3);
+	Delay_ms(20,LCD_Init_Delay);		/* LCD Power ON delay always >15ms */
+	LCD_Command (0X02);
+	LCD_Command (0x28);		/* Initialization of 16X2 LCD in 8bit mode */
+	LCD_Command (0x0C);		/* Display ON Cursor OFF */
+	LCD_Command (0x06);		/* Auto Increment cursor */
+	LCD_Command (0x01);		/* clear display */
+	_delay_us(2);
 }
 
 
@@ -151,6 +163,13 @@ void LCD_NewLine()
 	LCD_Command (0xc0);		/* clear display */
 }
 
+void LCD_Shift_R(void){
+	LCD_Command(0x1c);
+}
+
+void LCD_Shift_L(void){
+	LCD_Command(0x18);
+}
 
 void LCD_Custom_Char (uint8 loc, uint8 *msg)
 {

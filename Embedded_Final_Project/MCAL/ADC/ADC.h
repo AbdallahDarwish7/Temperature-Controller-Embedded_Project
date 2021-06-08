@@ -2,7 +2,8 @@
 #define ADC_H_
 #include "typedefs.h"
 
-void Init_ADC();
-uint16 ADC_Read(uint8 channel);
 
+void Init_ADC(uint8 channel);
+
+uint16 ADC_Read(uint8 channel);
 #endif /* ADC_H_ */

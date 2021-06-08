@@ -9,16 +9,22 @@
 #ifndef KEYPAD_H_
 #define KEYPAD_H_
 #include "typedefs.h"
+typedef void (*ParamCallback)(uint8);
+void get_set_Temp_w(void);
 
 #define NO_VALUE 0xff
 
 uint8 pressed_Key(void);
 
-uint8 pressed_Key(void);
+void second_number(void);
 
-uint8 get_set_Temp(void);
+void enter(void);
 
-void initialize_KeyPad(void);
+void get_set_Temp(ParamCallback callback);
+
+uint8 get_Hash(void);
+
+void Initialize_KeyPad(void);
 
 void test_KeyPad_Lcd(void);
 

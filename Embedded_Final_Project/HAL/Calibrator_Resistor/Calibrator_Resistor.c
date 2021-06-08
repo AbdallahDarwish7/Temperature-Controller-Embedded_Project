@@ -1,5 +1,5 @@
 /**
- * Created by abdallah drwesh on 6/7/21.
+ * Created by abdallah drwesh
  */
 
 #include "Calibrator_Resistor.h"
@@ -8,10 +8,10 @@
 float calibratorRead = 20;
 
 void InitCalibrator(){
-    Init_ADC();
+    Init_ADC(CALIBRATOR_CHANNEL);
 }
 
 void UpdateCalibratorRead(){
-    calibratorRead = ADC_Read(CALIBRATOR_CHANNEL);
+    calibratorRead = (uint8)(ADC_Read(CALIBRATOR_CHANNEL) / 1024) * 5;
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Embedded_Final_Project.c
  *
@@ -9,7 +10,7 @@
 
 #include "Timer.h"
 #include "DIO.h"
-
+#include "typedefs.h"
 #include "Scheduler.h"
 #include "LCD_Manager.h"
 #include "Mode_MGR.h"
@@ -27,13 +28,13 @@
 void config();
 
 int main(void) {
-//    Init_ADC();
-config();
+    config();
     while (1) {
-//        SetMachineState(OPERATIONAL);
-//        UpdateCalibratorRead();
+        SetMachineState(OPERATIONAL);
+        UpdateCalibratorRead();
         write_CRT_Temp((uint8)ADC_Read(0));
     }
+
 }
 
 
@@ -41,5 +42,6 @@ void config(){
     Initialize_LCD();
     Init_ADC();
     display_Welcome_screen(0);
+
 }
 

@@ -3,19 +3,27 @@
  *
  * Created: 6/2/2021 1:05:05 PM
  *  Author: Mohamed Kamal
- */ 
+ */
 
 
 
-#include <avr/io.h>		/* Include AVR std. library file */
-#include <util/delay.h>		/* Include inbuilt defined Delay header file */
+#include <avr/io.h>        /* Include AVR std. library file */
+#include <util/delay.h>        /* Include inbuilt defined Delay header file */
 #include "DIO.h"
 #include "KeyPad.h"
 #include "KeyPad_Cfg.h"
+#include "LCD_Manager.h"
+
+
 
 uint8 Characters[9] = { 7, 8, 9, 4, 5, 6, 1, 2, 3};
+uint8 Temperature = 0;
+ParamCallback callback_g ;
+void get_set_Temp_w(void){
+	get_set_Temp(write_Set_Temp);
+}
 
-void initialize_KeyPad(void) {
+void Initialize_KeyPad(void) {
 	DIO_Init(2);
 	DIO_Init(3);
 	uint8 r;
@@ -23,9 +31,10 @@ void initialize_KeyPad(void) {
 	{
 		DIO_ChannelWrite(KeyPad_ConfigParam.RowsPortId,KeyPad_ConfigParam.RowsPinsChannels[r], 0xff);
 	}
+
 }
 
-uint8 pressed_Key(void){
+uint8 pressed_Key(void) {
 
 	uint8 c;
 	uint8 r;
@@ -49,25 +58,66 @@ uint8 pressed_Key(void){
 	return key;
 }
 
-uint8 get_set_Temp(void){
-	uint8 t = NO_VALUE;
+void enter(void){
+	uint8 key = pressed_Key();
+	if (key == 0)
+	{
+		write_Set_Temp(Temperature);
+		callback_g(Temperature);
+		Temperature = 0;
+		Delay_ms(300, get_set_Temp_w);
+	}else{
+		Delay_ms(200, enter);
+	}
+}
+
+void get_Second(void){
+	uint8 key = pressed_Key();
+	write_Set_Temp(Temperature);
+	if(key >2 && key != 0xff ){
+		Temperature = 10*Temperature +  Characters[key - 3];
+		Delay_ms(200,enter);
+	}else if (key !=0){
+		Delay_ms(200,get_Second);
+	}else{
+		write_Set_Temp(Temperature);
+		callback_g(Temperature);
+		Delay_ms(200, get_set_Temp_w);
+	}
+}
+
+void get_set_Temp(ParamCallback callback){
+	callback_g = callback;
 	uint8 key = pressed_Key();
 	if(key != 0xff){
+		
 		if(key>2) {
-			t = Characters[key - 3];
-			while(key != 0){
+
+			Temperature = Characters[key - 3];
+			uint8 second = 0;
+			while(1){
 				key = pressed_Key();
 				if(key == 0xff){
-					while(key != 0){
-						key = pressed_Key();
-						if(key >2 && key != 0xff){
-							t = 10*t +  Characters[key - 3];
-							_delay_ms(100);
-						}
-					}
+					write_Set_Temp(Temperature);
+					Delay_ms(300,get_Second);
+					break;
 				}
+				_delay_us(100);
 			}
+		}else{
+			Delay_ms(300, get_set_Temp_w);
 		}
+	}else{
+		Delay_ms(300, get_set_Temp_w);
 	}
-	return t;
+}
+
+uint8 get_Hash(void){
+	uint8 key;
+	key = pressed_Key();
+	uint8 result = 0xff ;
+	if(key == 2){
+		result = '#';
+	}
+	return result;
 }

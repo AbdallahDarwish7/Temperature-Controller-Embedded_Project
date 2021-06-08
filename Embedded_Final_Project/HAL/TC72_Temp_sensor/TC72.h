@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٢‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 #ifndef FINAL_PROJECT_TC72_H
 #define FINAL_PROJECT_TC72_H
 
@@ -29,9 +29,9 @@ typedef uint8 Mode;
  *                      Functions Declarations                                  *
  *******************************************************************************/
 
-void TC72_Init(Mode operationMode);
+void TC72_Init(Mode OperMode);
 int8 TC72_ReadTemperature(void);
-Mode GetTC72Mode();
+Mode GetTC72Mode(void);
 
 
-#endif //FINAL_PROJECT_TC72_H
+#endif /*FINAL_PROJECT_TC72_H*/
