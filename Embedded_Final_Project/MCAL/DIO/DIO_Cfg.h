@@ -13,5 +13,5 @@ typedef struct
 extern const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHANNELS];
 
 
-#endif // DIO_CFG_H_INCLUDED
+#endif /*DIO_CFG_H_INCLUDED*/
 

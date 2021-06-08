@@ -15,6 +15,10 @@
 #define NUM_OF_PORTS ((unsigned char)4)
 
 /*Registers definitions*/
+/*                ************** Justification *****************
+ *                  Deviate from rule 19.7 (advisory)
+ *                  This macro makes the code clearer and conciser
+ */
 #define PORT_REG(PORT_ID) (*((volatile uint8 *const)(PortBaseAddresses[PORT_ID] - PORT_REG_OFFSET)))
 #define DDR_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[PORT_ID] - DDR_REG_OFFSET)))
 #define PIN_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[PORT_ID] - PIN_REG_OFFSET)))
@@ -33,7 +37,7 @@ DIO_CheckType DIO_Init(uint8 PortId) {
     DIO_CheckType Result;
     /*verify Port Id*/
     if (PortId < NUM_OF_PORTS) {
-        for (Loop = 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
+        for (Loop =(uint8) 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
             /*init port direction for the masked pins*/
             DDR_REG(PortId) &= ~(DIO_ConfigParam[PortId][Loop].PortMask);
             DDR_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection;

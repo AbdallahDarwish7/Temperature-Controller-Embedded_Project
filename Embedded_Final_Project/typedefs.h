@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٢‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla16
+*/
 
 #ifndef EMBEDDED_FINAL_PROJECT_TYPEDEFS_H
 #define EMBEDDED_FINAL_PROJECT_TYPEDEFS_H
@@ -14,6 +14,7 @@ typedef signed char int8;
 typedef signed short int16;
 typedef signed int int32;
 typedef signed long long int64;
+typedef float float32;
 
 
-#endif //EMBEDDED_FINAL_PROJECT_TYPEDEFS_H
+#endif /*EMBEDDED_FINAL_PROJECT_TYPEDEFS_H*/

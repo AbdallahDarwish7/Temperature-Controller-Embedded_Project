@@ -9,46 +9,46 @@
 #include "Timer.h"
 #include "DIO.h"
 
-//#include "KeyPad.h"
-//#include "Scheduler.h"
-//#include <util/delay.h>
-//uint8 data0 = 0xff;
-//uint8 data1 = 0xff;
-//uint8 data2 = 0xff;
-//void ToggleBit0(void) {
-//    DIO_ChannelWrite(0, 0, data0);
-//    data0 ^= 0xff;
-//}
-//
-//void ToggleBit1(void) {
-//    DIO_ChannelWrite(0, 1, data1);
-//    data1 ^= 0xff;
-//}
-//void ToggleBit2(void) {
-//    DIO_ChannelWrite(0, 2, data2);
-//    data2 ^= 0xff;
-//}
-//int main(void) {
-//
-//    /* test lcd keypad */
-////    test_KeyPad_Lcd();
-////    /* test pwd */
-////    float Percentage = 20;
-////    DIO_ChannelDir(1, 3, 0xff);
-////    Timer_Init(0, TIMER_PWD_PHASE_CORRECT_MODE, TIMER_NON_INVERTED_COM);
-////    PWM_SetDutyCycle(0, Percentage, TIMER_PWD_PHASE_CORRECT_MODE, TIMER_NON_INVERTED_COM);
-////    Timer_Start(0, TIMER0_PRESCALER_8);
-//    DIO_ChannelDir(0, 0, 0xff);
-//    DIO_ChannelDir(0, 1, 0xff);
-//    DIO_ChannelDir(0, 2, 0xff);
-//    PeriodicDelay_ms(1000, ToggleBit0);
-////    PeriodicDelay_ms(2000, ToggleBit1);
-////    PeriodicDelay_ms(4000, ToggleBit2);
-////    StartPeriodicDelay_ms(ToggleBit0);
-////    _delay_ms(3000);
-////    StopPeriodicDelay_ms(ToggleBit0);
-//    while (1) {}
-//}
+#include "KeyPad.h"
+#include "Scheduler.h"
+#include <util/delay.h>
+uint8 data0 = 0xff;
+uint8 data1 = 0xff;
+uint8 data2 = 0xff;
+void ToggleBit0(void) {
+    DIO_ChannelWrite((uint8)0,(uint8) 0, data0);
+    data0 ^= (uint32)0xff;
+}
+
+void ToggleBit1(void) {
+    DIO_ChannelWrite((uint8)0,(uint8) 1, data1);
+    data1 ^= (uint32) 0xff;
+}
+void ToggleBit2(void) {
+    DIO_ChannelWrite((uint8)0,(uint8) 2, data2);
+    data2 ^=(uint32) 0xff;
+}
+/*int main(void) {
+
+     test lcd keypad
+    test_KeyPad_Lcd();
+     test pwd
+    float Percentage = 20;
+    DIO_ChannelDir(1, 3, 0xff);
+    Timer_Init(0, TIMER_PWD_PHASE_CORRECT_MODE, TIMER_NON_INVERTED_COM);
+    PWM_SetDutyCycle(0, Percentage, TIMER_PWD_PHASE_CORRECT_MODE, TIMER_NON_INVERTED_COM);
+    Timer_Start(0, TIMER0_PRESCALER_8);
+    DIO_ChannelDir(0, 0, 0xff);
+    DIO_ChannelDir(0, 1, 0xff);
+    DIO_ChannelDir(0, 2, 0xff);
+    PeriodicDelay_ms(1000, ToggleBit0);
+    PeriodicDelay_ms(2000, ToggleBit1);
+    PeriodicDelay_ms(4000, ToggleBit2);
+    StartPeriodicDelay_ms(ToggleBit0);
+    _delay_ms(3000);
+    StopPeriodicDelay_ms(ToggleBit0);
+    while (1) {}
+}*/
 
 #include "Temp_MGR.h"
 #include "avr/io.h"
@@ -84,13 +84,13 @@ int main(void) {
 	Initialize_LCD();
 	initialize_KeyPad();
 	
-	//display_Welcome_screen(3);
+	/*display_Welcome_screen(3);*/
 	idle_screen();
 	uint8 t;
 	while(1)		{
 		
 		t = get_set_Temp();
-		if(t != 0xff){
+		if(t !=( 0xff){
 			write_Set_Temp(t);
 		}
 	}

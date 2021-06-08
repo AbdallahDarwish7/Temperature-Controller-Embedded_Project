@@ -1,6 +1,6 @@
-//
-// Created by abdulla167 on ٦‏/٦‏/٢٠٢١.
-//
+/*
+* Created by abdulla167
+*/
 #include "Mode_MGR.h"
 #include "Temp_MGR.h"
 #include "PWM.h"
@@ -17,8 +17,8 @@ static void UpdateSystem(machine_state state);
 /*******************************************************************************
  *                      Functions Definitions                                  *
  *******************************************************************************/
-void InitSystem(){
-    PeriodicDelay_ms(200, UpdateCurrentTemp);
+void InitSystem(void){
+    PeriodicDelay_ms(200, &UpdateCurrentTemp);
 }
 
 void SetMachineState(machine_state state){
@@ -27,17 +27,17 @@ void SetMachineState(machine_state state){
     }
 }
 
-machine_state GetMachineState(){
+machine_state GetMachineState(void){
     return machineState;
 }
 
 static void UpdateSystem(machine_state state){
-    int8 DutyCycle;
+    float32 DutyCycle;
     switch (state) {
         case STANDBY:
         {
             if (machineState != STANDBY){
-                StopPeriodicDelay_ms(UpdateCurrentTemp);
+                StopPeriodicDelay_ms(&UpdateCurrentTemp);
                 Shutdown_TC72();
                 PWM_Stop();
                 machineState = STANDBY;
@@ -53,14 +53,14 @@ static void UpdateSystem(machine_state state){
                 machineState = ERROR;
                 UpdateSystem(machineState);
             } else if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
-                if (CheckHeaterResponseFlag == 0){
-                    CheckHeaterResponseFlag = 1;
-                    Delay_ms(180000, CheckHeaterResponse);
+                if (CheckHeaterResponseFlag ==(uint8) 0){
+                    CheckHeaterResponseFlag = (uint8)1;
+                    Delay_ms((uint32)180000, &CheckHeaterResponse);
                 }
             } else{
                 if (machineState != OPERATIONAL){
                     Activate_TC72();
-                    StartPeriodicDelay_ms(UpdateCurrentTemp);
+                    StartPeriodicDelay_ms(&UpdateCurrentTemp);
                     machineState = OPERATIONAL;
                 }
                 DutyCycle = CalculateDutyCycle(CurrentTemp, SetTemp);
@@ -78,31 +78,33 @@ static void UpdateSystem(machine_state state){
         }
         case ERROR:
         {
-            StopPeriodicDelay_ms(UpdateCurrentTemp);
+            StopPeriodicDelay_ms(&UpdateCurrentTemp);
             Shutdown_TC72();
             PWM_Stop();
             break;
         }
+        default :
+            break;
     }
 }
 
-void CheckHeaterResponse(){
-    CheckHeaterResponseFlag = 0;
+void CheckHeaterResponse(void){
+    CheckHeaterResponseFlag = (uint8)0;
     if ((SetTemp > CurrentTemp) && ((SetTemp - CurrentTemp) > 5)){
         machineState = ERROR;
         UpdateSystem(machineState);
     }
 }
 
-float CalculateDutyCycle(int8 CurrentTemp, int8 SetTemp){
-    float Vt = 0;
-    // Get Vr from callibrator resistor
-    float Vr = 0;
-    float DutyCycle = 0;
-    if (SetTemp > CurrentTemp){
-       Vt = ((SetTemp - CurrentTemp) / 100) * 10;
+float32 CalculateDutyCycle(int8 CurrentTemperature, int8 SetTemperature){
+    float32 Vt = 0;
+    /* Get Vr from callibrator resistor*/
+    float32 Vr = 0;
+    /*float32 DutyCycle = 0;*/
+    if (SetTemperature > CurrentTemperature){
+       Vt = ((((float32)SetTemperature - (float32)CurrentTemperature) / 100.0f) * 10.0f);
     }
-    DutyCycle = (((Vr * 2) / 10) * Vt) / 10;
-    return (int8)DutyCycle;
+    float32 Dutycycle = (((Vr * 2.0f) / 10.0f) * Vt) / 10.0f;
+    return Dutycycle;
 }
 
