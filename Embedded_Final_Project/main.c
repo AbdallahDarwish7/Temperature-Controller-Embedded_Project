@@ -6,6 +6,7 @@
  */
 
 
+
 #include "Timer.h"
 #include "DIO.h"
 
@@ -41,3 +42,4 @@ void config(){
     Init_ADC();
     display_Welcome_screen(0);
 }
+

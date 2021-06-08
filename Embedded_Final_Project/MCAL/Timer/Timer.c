@@ -66,9 +66,11 @@ uint16 Timer1Prescalers[NUM_TIMER1_PRESCALERS] = {1, 8, 64, 256, 1024};
 uint16 Timer1PrescalersRegValues[NUM_TIMER1_PRESCALERS] = {0x0100, 0x0200, 0x0300, 0x0400, 0x0500};
 
 uint8 Timer1Modes[NUM_TIMER1_MODES] = {TIMER_NORMAL_MODE, TIMER_CTC_MODE, TIMER_PWD_PHASE_CORRECT_MODE,
-                                       TIMER_PWD_FAST_MODE};
+                                       TIMER_PWD_FAST_MODE, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                                       0x0000, 0x0000, 0x0000,0x0000, 0x0000, 0x0000};
 
-uint16 Timer1ModesRegValues[NUM_TIMER1_MODES] = {0x0000, 0x0800, 0x0040, 0x0048};
+uint16 Timer1ModesRegValues[NUM_TIMER1_MODES] = {0x0000, 0x0800, 0x0040, 0x0048, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                                                 0x0000, 0x0000, 0x0000,0x0000, 0x0000, 0x0000};
 
 /* Timer 2 */
 uint16 Timer2Prescalers[NUM_TIMER2_PRESCALERS] = {1, 8, 32, 64, 128, 256, 1024};
@@ -94,171 +96,186 @@ uint8 *Timers1RegModesRegValuesPtr[NUM_TIMERS_1_REG] = {Timer0ModesRegValues, Ti
 uint16 *Timers2RegModesRegValuesPtr[NUM_TIMERS_2_REG] = {Timer1ModesRegValues};
 
 uint8 *Timers1RegComsPtr[NUM_TIMERS_1_REG] = {Timer0Coms, Timer2Coms};
-//uint16 *Timers2RegComsPtr[NUM_TIMERS_2_REG] = {Timer1Prescalers};
+/*uint16 *Timers2RegComsPtr[NUM_TIMERS_2_REG] = {Timer1Prescalers};*/
 
 uint8 *Timers1RegComsRegValuesPtr[NUM_TIMERS_1_REG] = {Timer0ComsRegValues, Timer2ComsRegValues};
-//uint16 *Timers2RegComsRegValuesPtr[NUM_TIMERS_2_REG] = {Timer1Prescalers};
+/*uint16 *Timers2RegComsRegValuesPtr[NUM_TIMERS_2_REG] = {Timer1Prescalers};*/
 
+
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *TCCRs1[NUM_TIMERS_1_REG] = {&TCCR0, &TCCR2};
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *TCCRs2[NUM_TIMERS_2_REG * 2U] = {&TCCR1A, &TCCR1B};
+/* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
 volatile uint8 *OCRs[NUM_TIMERS_1_REG] = {&OCR0, &OCR2};
 
 void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
     if (TimerId < NUM_TIMERS) {
+        uint8 Loop;
+        uint8 TimerIndex = 0;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
-            uint8 Loop;
-            uint8 TimerIndex = 0;
-            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_1_REG; Loop++) {
                 if(Timers1RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            uint8 *TimerModes = Timers1RegModesPtr[TimerIndex];
-            uint8 *TimerModesRegValues = Timers1RegModesRegValuesPtr[TimerIndex];
-            uint8 *TimerComs = Timers1RegComsPtr[TimerIndex];
-            uint8 *TimerComsRegValues = Timers1RegComsRegValuesPtr[TimerIndex];
-            uint8 ModesNum = Timers1RegModesNum[TimerIndex];
-            uint8 ComsNum = Timers1RegComNum[TimerIndex];
-            uint8 TimerModeRegValue = 0x00;
-            uint8 TimerComRegValue = 0x00;
-            for (Loop = 0; Loop < ModesNum; Loop++) {
-                if (TimerModes[Loop] == TimerMode) {
-                    TimerModeRegValue = TimerModesRegValues[Loop];
+            uint8 *Timer1RegModes = Timers1RegModesPtr[TimerIndex];
+            uint8 *Timer1RegModesRegValues = Timers1RegModesRegValuesPtr[TimerIndex];
+            uint8 *Timer1RegComs = Timers1RegComsPtr[TimerIndex];
+            uint8 *Timer1RegComsRegValues = Timers1RegComsRegValuesPtr[TimerIndex];
+            uint8 Modes1RegNum = Timers1RegModesNum[TimerIndex];
+            uint8 Coms1RegNum = Timers1RegComNum[TimerIndex];
+            uint8 Timer1RegModeRegValue = 0x00;
+            uint8 Timer1RegComRegValue = 0x00;
+            for (Loop = 0U; Loop < Modes1RegNum; Loop++) {
+                if (Timer1RegModes[Loop] == TimerMode) {
+                    Timer1RegModeRegValue = Timer1RegModesRegValues[Loop];
                 }
             }
             *(TCCRs1[TimerIndex]) &= Timers1RegModesMask[TimerIndex];
-            *(TCCRs1[TimerIndex]) |= TimerModeRegValue;
-            for (Loop = 0; Loop < ComsNum; Loop++) {
-                if (TimerComs[Loop] == TimerCom) {
-                    TimerComRegValue = TimerComsRegValues[Loop];
+            *(TCCRs1[TimerIndex]) |= Timer1RegModeRegValue;
+            for (Loop = 0U; Loop < Coms1RegNum; Loop++) {
+                if (Timer1RegComs[Loop] == TimerCom) {
+                    Timer1RegComRegValue = Timer1RegComsRegValues[Loop];
                 }
             }
             *(TCCRs1[TimerIndex]) &= Timers1RegComsMask[TimerIndex];
-            *(TCCRs1[TimerIndex]) |= TimerComRegValue;
+            *(TCCRs1[TimerIndex]) |= Timer1RegComRegValue;
 
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
-            uint8 Loop;
-            uint8 TimerIndex = 0;
-            for (Loop= 0; Loop < NUM_TIMERS_2_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if(Timers2RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            uint8 *TimerModes = Timers2RegModesPtr[TimerIndex];
-            uint16 *TimerModesRegValues = Timers2RegModesRegValuesPtr[TimerIndex];
-            uint8 ModesNum = Timers2RegModesNum[TimerIndex];
-            uint16 TimerModeRegValue = 0x0000;
-            for (Loop = 0; Loop < ModesNum; Loop++) {
-                if (TimerModes[Loop] == TimerMode) {
-                    TimerModeRegValue = TimerModesRegValues[Loop];
+            uint8 *Timer2RegModes = Timers2RegModesPtr[TimerIndex];
+            uint16 *Timer2RegModesRegValues = Timers2RegModesRegValuesPtr[TimerIndex];
+            uint8 Modes2RegNum = Timers2RegModesNum[TimerIndex];
+            uint16 Timer2RegModeRegValue = 0x0000;
+            for (Loop = 0U; Loop < Modes2RegNum; Loop++) {
+                if (Timer2RegModes[Loop] == TimerMode) {
+                    Timer2RegModeRegValue = Timer2RegModesRegValues[Loop];
                 }
             }
-            *(TCCRs2[TimerIndex]) &= (uint8)(Timers2RegModesMask[TimerIndex] & 0x00FF);
-            *(TCCRs2[TimerIndex + 1]) &= (uint8)(Timers2RegModesMask[TimerIndex] >> 8);
-            *(TCCRs2[TimerIndex]) |= (uint8)TimerModeRegValue;
-            *(TCCRs2[TimerIndex + 1]) |= (uint8)(TimerModeRegValue >> 8);
+            *(TCCRs2[TimerIndex]) = *(TCCRs2[TimerIndex]) & (uint8)(Timers2RegModesMask[TimerIndex] & 0x00FFU);
+            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) & (uint8)(Timers2RegModesMask[TimerIndex] >> 8U);
+            *(TCCRs2[TimerIndex]) = *(TCCRs2[TimerIndex]) | (uint8)Timer2RegModeRegValue;
+            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) | (uint8)(Timer2RegModeRegValue >> 8U);
             /* TODO: Implementation Timer1 COM Modes*/
+        } else {
+            /*Timer not in the defined types*/
         }
+    } else {
+        /*Timer id > num of timers*/
     }
 }
 
 void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
     if (TimerId < NUM_TIMERS) {
+        uint8 Loop;
+        uint8 TimerIndex = 0;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
-            uint8 Loop;
-            uint8 TimerIndex = 0;
-            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_1_REG; Loop++) {
                 if(Timers1RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            uint16 *TimerPrescalers = Timers1RegPrescalersPtr[TimerIndex];
-            uint8 *TimerPrescalerRegValues = Timers1RegPrescalersRegValuesPtr[TimerIndex];
-            uint8 PrescalerNum = Timers1RegPrescalersNum[TimerIndex];
-            uint8 TimerPrescalerRegValue = 0x00; // 0b11111000
-            for (Loop = 0; Loop < PrescalerNum; Loop++) {
-                if (TimerPrescalers[Loop] == TimerPreScaler) {
-                    TimerPrescalerRegValue = TimerPrescalerRegValues[Loop];
+            uint16 *Timer1RegPrescalers = Timers1RegPrescalersPtr[TimerIndex];
+            uint8 *Timer1RegPrescalerRegValues = Timers1RegPrescalersRegValuesPtr[TimerIndex];
+            uint8 Prescaler1RegNum = Timers1RegPrescalersNum[TimerIndex];
+            uint8 Timer1RegPrescalerRegValue = 0x00;
+            for (Loop = 0U; Loop < Prescaler1RegNum; Loop++) {
+                if (Timer1RegPrescalers[Loop] == TimerPreScaler) {
+                    Timer1RegPrescalerRegValue = Timer1RegPrescalerRegValues[Loop];
                 }
             }
             *(TCCRs1[TimerIndex]) &= Timers1RegPrescalerMask[TimerIndex];
-            *(TCCRs1[TimerIndex]) |= TimerPrescalerRegValue;
+            *(TCCRs1[TimerIndex]) |= Timer1RegPrescalerRegValue;
 
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_2_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if(Timers2RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            uint16 *TimerPrescalers = Timers2RegPrescalersPtr[TimerIndex];
-            uint16 *TimerPrescalerRegValues = Timers2RegPrescalersRegValuesPtr[TimerIndex];
-            uint8 PrescalerNum = Timers2RegPrescalersNum[TimerIndex];
-            uint16 TimerPrescalerRegValue = 0x00000; // 0b11111000
-            for (Loop = 0; Loop < PrescalerNum; Loop++) {
-                if (TimerPrescalers[Loop] == TimerPreScaler) {
-                    TimerPrescalerRegValue = TimerPrescalerRegValues[Loop];
+            uint16 *Timer2RegPrescalers = Timers2RegPrescalersPtr[TimerIndex];
+            uint16 *Timer2RegPrescalerRegValues = Timers2RegPrescalersRegValuesPtr[TimerIndex];
+            uint8 Prescaler2RegNum = Timers2RegPrescalersNum[TimerIndex];
+            uint16 Timer2RegPrescalerRegValue = 0x00000;
+            for (Loop = 0U; Loop < Prescaler2RegNum; Loop++) {
+                if (Timer2RegPrescalers[Loop] == TimerPreScaler) {
+                    Timer2RegPrescalerRegValue = Timer2RegPrescalerRegValues[Loop];
                 }
             }
             *(TCCRs2[TimerIndex]) &= (uint8)(Timers2RegPrescalerMask[TimerIndex]);
-            *(TCCRs2[TimerIndex + 1]) &= (uint8)(Timers2RegPrescalerMask[TimerIndex] >> 8);
-            *(TCCRs2[TimerIndex]) |= (uint8)TimerPrescalerRegValue;
-            *(TCCRs2[TimerIndex + 1]) |= (uint8)(TimerPrescalerRegValue >> 8);
+            *(TCCRs2[TimerIndex + 1U]) &= (uint8)(Timers2RegPrescalerMask[TimerIndex] >> 8U);
+            *(TCCRs2[TimerIndex]) |= (uint8)Timer2RegPrescalerRegValue;
+            *(TCCRs2[TimerIndex + 1U]) |= (uint8)(Timer2RegPrescalerRegValue >> 8U);
+        } else {
+            /*Timer not in the defined types*/
         }
+    } else {
+        /*Timer id > num of timers*/
     }
 }
 
 void Timer_Stop(uint8 TimerId) {
     if (TimerId < NUM_TIMERS) {
+        uint8 TimerIndex = 0;
+        uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_1_REG; Loop++) {
                 if(Timers1RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            *(TCCRs1[TimerIndex]) &= TIMERS1REG_STOP_MASK;
-            *(TCCRs1[TimerIndex]) |= 0x00;
+            *(TCCRs1[TimerIndex]) = *(TCCRs1[TimerIndex]) & TIMERS1REG_STOP_MASK;
+            *(TCCRs1[TimerIndex]) = *(TCCRs1[TimerIndex]) | 0x00U;
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_2_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if(Timers2RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            *(TCCRs2[TimerIndex]) &= TIMERS2REG_STOP_MASK;
-            *(TCCRs2[TimerIndex + 1]) &= TIMERS1REG_STOP_MASK >> 8;
-            *(TCCRs2[TimerIndex]) |= 0x00;
-            *(TCCRs2[TimerIndex + 1]) |= 0x00;
+            *(TCCRs2[TimerIndex]) = (uint8)(*(TCCRs2[TimerIndex]) & TIMERS2REG_STOP_MASK);
+            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) & TIMERS1REG_STOP_MASK >> 8U;
+            *(TCCRs2[TimerIndex]) =*(TCCRs2[TimerIndex]) | 0x00U;
+            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) | 0x00U;
+        } else {
+            /*Timer not in the defined types*/
         }
+    } else {
+        /*Timer id > num of timers*/
     }
 }
 
-void Timer_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 TimerCom) {
+void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint8 TimerCom) {
     if (TimerId < NUM_TIMERS) {
+        uint8 TimerIndex = 0;
+        uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_1_REG; Loop++) {
                 if(Timers1RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
                 }
             }
-            if(TimerMode == TIMER_PWD_FAST_MODE){
+            if(TimerMode == TIMER_PWD_FAST_MODE) {
+                uint8 regVal;
                 if(TimerCom == TIMER_NON_INVERTED_COM){
-                    *(OCRs[TimerIndex]) = (uint8)(((256 * Percentage) / 100) - 1);
-                } else if (TimerCom == TIMER_INVERTED_COM){
-                    *(OCRs[TimerIndex]) = 255 - (uint8)(((256 * Percentage) / 100) - 1);
+                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
+                    regVal = (uint8)(((256U * Percentage) / 100U) - 1U);
+                    *(OCRs[TimerIndex]) = regVal;
+                } else if (TimerCom == TIMER_INVERTED_COM) {
+                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
+                    regVal = 255U - (uint8)(((256 * Percentage) / 100) - 1);
+                    *(OCRs[TimerIndex]) = regVal;
                 }
             } else if(TIMER_PWD_PHASE_CORRECT_MODE){
                 if(TimerCom == TIMER_NON_INVERTED_COM){
@@ -267,17 +284,21 @@ void Timer_SetDutyCycle(uint8 TimerId, float Percentage, uint8 TimerMode, uint8 
                     *(OCRs[TimerIndex]) = 255 - (uint8)((255 * Percentage) / 100);
                 }
             }
+        } else {
+            /*Timer not in the defined types*/
         }
+    } else {
+        /*Timer id > num of timers*/
     }
 }
 
 uint8 Timer_Is_Running(uint8 TimerId){
     uint16 IsRunning = 0;
     if (TimerId < NUM_TIMERS) {
+        uint8 TimerIndex = 0;
+        uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_1_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_1_REG; Loop++) {
                 if(Timers1RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
@@ -286,9 +307,7 @@ uint8 Timer_Is_Running(uint8 TimerId){
             IsRunning = *(TCCRs1[TimerIndex]) & (~TIMERS1REG_STOP_MASK);
             IsRunning = IsRunning & 0x00FF;
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
-            uint8 TimerIndex = 0;
-            uint8 Loop;
-            for (Loop= 0; Loop < NUM_TIMERS_2_REG; Loop++) {
+            for (Loop= 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if(Timers2RegIds[Loop] == TimerId){
                     TimerIndex = Loop;
                     break;
@@ -297,7 +316,11 @@ uint8 Timer_Is_Running(uint8 TimerId){
             IsRunning = *(TCCRs2[TimerIndex]) & (~TIMERS2REG_STOP_MASK);
             IsRunning = IsRunning & 0x00FF;
             IsRunning = IsRunning + *(TCCRs2[TimerIndex + 1]) & (~(TIMERS2REG_STOP_MASK >> 8));
+        } else {
+            /*Timer not in the defined types*/
         }
+    } else{
+        /*Timer id > num of timers*/
     }
     if (IsRunning == 0U){
         return 0U;

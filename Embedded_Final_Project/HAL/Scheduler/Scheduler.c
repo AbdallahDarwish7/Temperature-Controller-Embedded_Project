@@ -17,8 +17,9 @@ VoidCallback OneShotCallbacks[NUM_ONE_SHOT_CALLBACKS];
 uint32 OneShotTimerOverflow[NUM_ONE_SHOT_CALLBACKS];
 uint32 OneShotCounts[NUM_ONE_SHOT_CALLBACKS];
 static uint8 TimerIdForOneShotDelay = 2;
+VoidCallback TempCallback;
 
-VoidCallback PeriodicCallbacks[NUM_ONE_SHOT_CALLBACKS];
+VoidCallback PeriodicCallbacks[NUM_ONE_SHOT_CALLBACKS] = {NULL, NULL, NULL};
 uint32 PeriodicTimerOverflow[NUM_ONE_SHOT_CALLBACKS];
 uint16 PeriodicCounts[NUM_ONE_SHOT_CALLBACKS];
 uint8 PeriodicState[NUM_ONE_SHOT_CALLBACKS];
@@ -59,8 +60,9 @@ ISR(TIMER2_COMP_vect) {
         if (OneShotCallbacks[Loop] != NULL) {
             OneShotCounts[Loop]--;
             if (OneShotCounts[Loop] == 0U) {
-                OneShotCallbacks[Loop]();
+                TempCallback = OneShotCallbacks[Loop];
                 OneShotCallbacks[Loop] = NULL;
+                TempCallback();
 //                OneShotCounts[Loop] = OneShotTimerOverflow[Loop];
             }
             isThereCallback = 1;
@@ -75,12 +77,6 @@ ISR(TIMER2_COMP_vect) {
 void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback) {
     uint8 timerIsRunning = Timer_Is_Running(TimerIdPeriodicDelay);
     uint8 Loop;
-    if (!timerIsRunning) {
-        for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
-            PeriodicCallbacks[Loop] = NULL;
-            PeriodicState[Loop] = PERIODIC_OFF;
-        }
-    }
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == NULL) {
             break;
@@ -89,7 +85,7 @@ void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback) {
     if (Loop < NUM_PERIODIC_CALLBACKS) {
         PeriodicCallbacks[Loop] = callback;
         PeriodicTimerOverflow[Loop] = Delay_ms / 100;
-        PeriodicCounts[Loop] = Delay_ms / 100;
+        PeriodicCounts[Loop] = PeriodicTimerOverflow[Loop];
     }
     // 100ms
     if (!timerIsRunning) {
@@ -98,25 +94,12 @@ void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback) {
     }
 }
 
-void StopPeriodicDelay_ms(VoidCallback callback){
-    cli();
+void StartPeriodicDelay_ms(VoidCallback callback) {
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
-        if (PeriodicCallbacks[Loop] == callback){
-            PeriodicState[Loop] = PERIODIC_OFF;
-            PeriodicCounts[Loop] = PeriodicTimerOverflow[Loop];
-            break;
-        }
-    }
-    sei();
-}
-
-void StartPeriodicDelay_ms(VoidCallback callback){
-    uint8 Loop;
-    for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
-        if (PeriodicCallbacks[Loop] == callback){
+        if (PeriodicCallbacks[Loop] == callback) {
             PeriodicState[Loop] = PERIODIC_ON;
-            if(!Timer_Is_Running(TimerIdPeriodicDelay)){
+            if (!Timer_Is_Running(TimerIdPeriodicDelay)) {
                 SET_BIT(TIMSK, OCIE1A);
                 sei();
                 Timer_Start(TimerIdPeriodicDelay, TIMER1_PRESCALER_1024);
@@ -126,13 +109,26 @@ void StartPeriodicDelay_ms(VoidCallback callback){
     }
 }
 
+void StopPeriodicDelay_ms(VoidCallback callback) {
+    cli();
+    uint8 Loop;
+    for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
+        if (PeriodicCallbacks[Loop] == callback) {
+            PeriodicState[Loop] = PERIODIC_OFF;
+            PeriodicCounts[Loop] = PeriodicTimerOverflow[Loop];
+            break;
+        }
+    }
+    sei();
+}
+
 ISR(TIMER1_COMPA_vect) {
     uint8 Loop;
     uint8 isThereCallback = 0;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] != NULL && PeriodicState[Loop] == PERIODIC_ON) {
             PeriodicCounts[Loop]--;
-            if (PeriodicCounts[Loop] == NULL) {
+            if (PeriodicCounts[Loop] == 0) {
                 PeriodicCallbacks[Loop]();
                 PeriodicCounts[Loop] = PeriodicTimerOverflow[Loop];
             }
