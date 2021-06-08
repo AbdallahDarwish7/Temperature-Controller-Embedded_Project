@@ -8,8 +8,8 @@
 
 #define NO_READ ((int8)-128)
 
-extern int8 CurrentTemp;
-extern int8 SetTemp;
+extern int8 currentTemp;
+extern int8 setTemp;
 
 /*******************************************************************************
  *                      Functions Declarations                                 *
