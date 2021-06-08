@@ -22,16 +22,20 @@ void display_Welcome_screen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
     LCD_WriteStringAt_xy(0, 0, "WELCOME");
-	display_Welcome_once();
-
+//	display_Welcome_once();
+    Delay_ms(100, Shift_Right);
 }
 
 void Shift_Right(void) {
 	LCD_Shift_R();
 	loop++;
 	if(loop > 9){
-		StopPeriodicDelay_ms(Shift_Right);
-		StartPeriodicDelay_ms(Shift_Left);
+	    LCD_Shift_L();
+        Delay_ms(100, Shift_Left);
+//		StopPeriodicDelay_ms(Shift_Right);
+//		StartPeriodicDelay_ms(Shift_Left);
+	} else{
+        Delay_ms(100, Shift_Right);
 	}
 }
 
@@ -39,16 +43,15 @@ void Shift_Left(void) {
 	LCD_Shift_L();
 	loop--;
 	if(loop < 1){
-		StopPeriodicDelay_ms(Shift_Left);
 		if(count > 0){
 			count--;
-			StartPeriodicDelay_ms(Shift_Right);
-			
+            LCD_Shift_R();
+            Delay_ms(100, Shift_Right);
 		}else{
-            DeletePeriodicDelay_ms(Shift_Left);
-            DeletePeriodicDelay_ms(Shift_Right);
 			idle_screen();
 		}
+	} else{
+        Delay_ms(100, Shift_Left);
 	}
 
 }

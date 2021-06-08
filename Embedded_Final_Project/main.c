@@ -28,7 +28,6 @@ int main(void) {
     config();
     _delay_ms(4000);
     while (1) {
-
         write_CRT_Temp(30);
     }
 }
