@@ -1,7 +1,7 @@
 #ifndef LCD_CFG_H_INCLUDED
 #define LCD_CFG_H_INCLUDED
 #include "typedefs.h"
-#define LCD_NUM_OF_DATA_PINS ((uint8)8)
+#define LCD_NUM_OF_DATA_PINS ((uint8)4)
 typedef struct
 {
 	uint8 ControlPortId;

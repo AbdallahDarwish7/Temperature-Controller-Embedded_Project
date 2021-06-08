@@ -12,9 +12,14 @@
 
 uint8 pressed_Key(void);
 
-uint8 pressed_Key(void);
 
-uint8 get_set_Temp(void);
+void unhold_Key(void);
+
+void second_number(void);
+
+void enter(void);
+
+void get_set_Temp(void);
 
 uint8 get_Hash(void);
 

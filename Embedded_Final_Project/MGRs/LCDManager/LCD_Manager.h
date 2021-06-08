@@ -8,6 +8,7 @@
 #ifndef LCD_MANAGER_H_
 #define LCD_MANAGER_H_
 #include "LCD_Manager_cfg.h"
+#include "typedefs.h"
 
 void Shift_Right(void);
 

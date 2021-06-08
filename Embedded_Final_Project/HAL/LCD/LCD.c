@@ -19,8 +19,7 @@
 uint8 data_global;
 uint8 CheckBit(uint8 Data, uint8 bitNum) {
 	uint8 result ;
-	uint8 mask = DIO_ConfigParam[LCD_ConfigParam.DataPortId][LCD_ConfigParam.DataPinsChannel[bitNum]].PortMask;
-	if (Data & mask){
+	if (Data & (1 << (4 + bitNum))){
 		result = 0xff;
 		} else {
 		result = 0x00;
@@ -83,7 +82,7 @@ void LCD_Command(uint8 cmnd)
 	LCD_Enable();	/* Enable pulse */
 	_delay_us(1);
 	LCD_Disable();
-	_delay_us(200);
+	_delay_us(100);
 	//Delay_ms(1, LCD_Write_Lower);
 	LCD_Write_Lower(cmnd);
 	LCD_RS_Command();	/* RS=0 command reg. */
@@ -94,15 +93,6 @@ void LCD_Command(uint8 cmnd)
 	_delay_us(2);
 }
 
-void lower_Command(void){
-	LCD_Write_Lower(data_global);
-	LCD_RS_Reg();	/* RS=0 command reg. */
-	LCD_Write_Operation();	/* RW=0 Write operation */
-	LCD_Enable();	/* Enable pulse */
-	_delay_us(1);
-	LCD_Disable();
-	_delay_us(2);
-}
 void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 {
 	data_global = char_data;
@@ -112,7 +102,7 @@ void LCD_Char (uint8 char_data)  /* LCD data0 write function */
 	LCD_Enable();	/* Enable pulse */
 	_delay_us(1);
 	LCD_Disable();
-	_delay_us(200);			/* Data write delay */
+	_delay_us(100);			/* Data write delay */
 	LCD_Write_Lower(char_data);
 	LCD_RS_Reg();	/* RS=0 command reg. */
 	LCD_Write_Operation();	/* RW=0 Write operation */
@@ -135,8 +125,7 @@ void LCD_Init (void)			/* LCD Initialize function */
 {
 	DIO_Init(2);
 	DIO_Init(3);
-	//Delay_ms(20,LCD_Init_Delay);		/* LCD Power ON delay always >15ms */
-	_delay_ms(20);
+	Delay_ms(20,LCD_Init_Delay);		/* LCD Power ON delay always >15ms */
 	LCD_Command (0X02);
 	LCD_Command (0x28);		/* Initialization of 16X2 LCD in 8bit mode */
 	LCD_Command (0x0C);		/* Display ON Cursor OFF */
