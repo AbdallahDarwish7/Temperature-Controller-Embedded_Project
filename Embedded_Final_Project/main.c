@@ -11,6 +11,9 @@
 #include "Calibrator_Resistor.h"
 #include "KeyPad.h"
 #include "Temp_MGR.h"
+#include "PWM.h"
+#include "Scheduler.h"
+#include "DIO.h"
 
 
 int main(void) {
@@ -18,19 +21,18 @@ int main(void) {
     _delay_ms(2000);
     uint8 oldCurrTemp = currentTemp;
     uint8 oldSetTemp = setTemp;
+    MachineStateType machineState;
     while (1) {
+        machineState = GetMachineState();
         if (machineState != ERROR){
             if (machineState != STANDBY){
                 if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)){
                     if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
-                        write_State(NORMAL);
                         SetMachineState(NORMAL);
                     } else{
-                        write_State(OPERATIONAL);
                         SetMachineState(OPERATIONAL);
                     }
                     if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
-                        write_State(ERROR);
                         SetMachineState(ERROR);
                     }
                     write_CRT_Temp(currentTemp);
@@ -39,11 +41,10 @@ int main(void) {
                 }
             }
             if (KeyPad_Get_Hash()){
+                machineState = GetMachineState();
                 if (machineState == STANDBY){
-                    write_State(OPERATIONAL);
                     SetMachineState(OPERATIONAL);
-                } else if ((machineState == NORMAL) || (machineState == OPERATIONAL)){
-                    write_State(STANDBY);
+                } else if ((machineState == NORMAL) || (GetMachineState() == OPERATIONAL)){
                     SetMachineState(STANDBY);
                 }
             }
@@ -60,4 +61,3 @@ void config(){
     SystemPeriodicity_Init();
     KeyPad_Init();
 }
-

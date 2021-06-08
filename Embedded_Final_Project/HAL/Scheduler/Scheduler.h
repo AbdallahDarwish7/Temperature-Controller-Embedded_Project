@@ -10,6 +10,8 @@ typedef void (*VoidCallback)(void);
 
 void Delay_ms(uint32 delay_ms, VoidCallback callback);
 
+void DeleteDelay_ms(VoidCallback callback);
+
 void PeriodicDelay_ms(int16 Delay_ms, VoidCallback callback);
 
 void StopPeriodicDelay_ms(VoidCallback callback);

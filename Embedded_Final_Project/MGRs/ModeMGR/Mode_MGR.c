@@ -6,15 +6,18 @@
 #include "PWM.h"
 #include "Scheduler.h"
 #include "Calibrator_Resistor.h"
+#include "Display_MGR.h"
 
-
-machine_state machineState = STANDBY;
-
-
-static void UpdateSystem(machine_state state);
 
 /*******************************************************************************
- *                      Functions Definitions                                  *
+ *                           Global Variables                                  *
+ *******************************************************************************/
+
+MachineStateType machineState = STANDBY;
+uint8 checkHeaterResponseFlag = 0;
+
+/*******************************************************************************
+ *                        Functions Definitions                                *
  *******************************************************************************/
 
 void SystemPeriodicity_Init(void){
@@ -23,62 +26,62 @@ void SystemPeriodicity_Init(void){
     PeriodicDelay_ms(100, &UpdateDutyCycle);
 }
 
-void SetMachineState(machine_state state){
+void SetMachineState(MachineStateType state){
      UpdateSystem(state);
 }
 
-machine_state GetMachineState(void){
+MachineStateType GetMachineState(void){
     return machineState;
 }
 
-static void UpdateSystem(machine_state state){
+void UpdateSystem(MachineStateType state){
     switch (state) {
         case NORMAL:
         {
+            if (checkHeaterResponseFlag == 1){
+                DeleteDelay_ms(&CheckHeaterResponse);
+            }
             if (machineState != NORMAL){
                 PWM_Stop();
                 machineState = NORMAL;
             }
+            write_State(machineState);
             break;
         }
         case STANDBY:
         {
+            if (checkHeaterResponseFlag == 1){
+                DeleteDelay_ms(&CheckHeaterResponse);
+            }
             if (machineState != STANDBY){
-                PWM_Stop();
-                StopPeriodicDelay_ms(&UpdateCurrentTemp);
-                StopPeriodicDelay_ms(&UpdateCalibratorRead);
-                StopPeriodicDelay_ms(&UpdateDutyCycle);
-                Deactivate_TC72();
+                DeactivateSystem();
                 machineState = STANDBY;
             }
+            write_State(machineState);
             break;
         }
         case OPERATIONAL:
         {
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
-                Activate_TC72();
-                PWM_Start();
-                StartPeriodicDelay_ms(&UpdateCurrentTemp);
-                StartPeriodicDelay_ms(&UpdateCalibratorRead);
-                StartPeriodicDelay_ms(&UpdateDutyCycle);
-                machineState = OPERATIONAL;
+               ActivateSystem();
+               machineState = OPERATIONAL;
             } else if (machineState == NORMAL){
                 PWM_Start();
                 machineState = OPERATIONAL;
             }
             Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
+            checkHeaterResponseFlag = 1;
+            write_State(machineState);
             break;
         }
         case ERROR:
         {
-            PWM_Stop();
-            StopPeriodicDelay_ms(&UpdateCurrentTemp);
-            StopPeriodicDelay_ms(&UpdateCalibratorRead);
-            StopPeriodicDelay_ms(&UpdateDutyCycle);
-            Deactivate_TC72();
-            currentTemp = NO_READ;
-            setTemp = NO_READ;
+            if (checkHeaterResponseFlag == 1){
+                DeleteDelay_ms(&CheckHeaterResponse);
+            }
+            DeactivateSystem();
             machineState = ERROR;
+            write_State(machineState);
             break;
         }
         default :
@@ -88,7 +91,24 @@ static void UpdateSystem(machine_state state){
     }
 }
 
+void ActivateSystem(void){
+    Activate_TC72();
+    PWM_Start();
+    StartPeriodicDelay_ms(&UpdateCurrentTemp);
+    StartPeriodicDelay_ms(&UpdateCalibratorRead);
+    StartPeriodicDelay_ms(&UpdateDutyCycle);
+}
+
+void DeactivateSystem(void){
+    Deactivate_TC72();
+    PWM_Stop();
+    StopPeriodicDelay_ms(&UpdateCurrentTemp);
+    StopPeriodicDelay_ms(&UpdateCalibratorRead);
+    StopPeriodicDelay_ms(&UpdateDutyCycle);
+}
+
 void CheckHeaterResponse(void){
+    checkHeaterResponseFlag = 0;
     if ((setTemp > currentTemp) && ((setTemp - currentTemp) > 5)){
         machineState = ERROR;
         UpdateSystem(machineState);
@@ -103,4 +123,3 @@ void UpdateDutyCycle(void){
     float32 DutyCycle = ((((calibratorRead * 2.0f) / 10.0f) * Vt) / 10.0f) * 100;
     PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
 }
-

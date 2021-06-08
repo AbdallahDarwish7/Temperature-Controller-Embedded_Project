@@ -7,21 +7,35 @@
 
 #include <typedefs.h>
 
+
+
+/*******************************************************************************
+ *                             Definitions                                     *
+ *******************************************************************************/
+
 #define STANDBY ((uint8)0)
 #define OPERATIONAL ((uint8)1)
 #define NORMAL  ((uint8)2)
 #define ERROR   ((uint8)3)
+#define MAX_TIME_OF_RESPONSE 10000
 
-#define MAX_TIME_OF_RESPONSE 180000
+/*******************************************************************************
+ *                                Typedefs                                     *
+ *******************************************************************************/
 
-typedef uint8 machine_state;
+typedef uint8 MachineStateType;
 
-extern machine_state machineState;
+/*******************************************************************************
+ *                           Functions Declarations                            *
+ *******************************************************************************/
 
-machine_state GetMachineState(void);
-void SetMachineState(machine_state state);
+MachineStateType GetMachineState(void);
+void SetMachineState(MachineStateType state);
+void UpdateSystem(MachineStateType state);
 void SystemPeriodicity_Init(void);
 void UpdateDutyCycle(void);
 void CheckHeaterResponse(void);
+void ActivateSystem(void);
+void DeactivateSystem(void);
 
 #endif /*EMBEDDED_FINAL_PROJECT_MODE_MGR_H*/
