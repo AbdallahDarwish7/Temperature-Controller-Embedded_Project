@@ -10,6 +10,11 @@
 #include "LCD_Manager_cfg.h"
 #include "typedefs.h"
 
+void Shift_Right(void);
+
+void Shift_Left(void);
+
+
 void display_Welcome_screen(uint8 times);
 
 void display_Welcome_once(void);

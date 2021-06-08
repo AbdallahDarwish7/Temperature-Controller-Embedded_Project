@@ -40,7 +40,7 @@ void Delay_ms(uint32 delay_ms, VoidCallback callback) {
     }
     if (Loop < NUM_ONE_SHOT_CALLBACKS) {
         OneShotCallbacks[Loop] = callback;
-        OneShotTimerOverflow[Loop] = delay_ms / 25;
+        OneShotTimerOverflow[Loop] =  delay_ms/ 25;
         OneShotCounts[Loop] = delay_ms / 25;
     }
     // 25ms
