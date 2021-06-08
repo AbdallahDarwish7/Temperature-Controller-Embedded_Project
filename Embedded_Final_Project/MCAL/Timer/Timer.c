@@ -235,7 +235,6 @@ void Timer_Stop(uint8 TimerId) {
                 }
             }
             *(TCCRs1[TimerIndex]) = *(TCCRs1[TimerIndex]) & TIMERS1REG_STOP_MASK;
-            *(TCCRs1[TimerIndex]) = *(TCCRs1[TimerIndex]) | 0x00U;
         } else if (TimersRegMode[TimerId] == TIMER_2_REG) {
             for (Loop = 0U; Loop < NUM_TIMERS_2_REG; Loop++) {
                 if (Timers2RegIds[Loop] == TimerId) {
@@ -244,9 +243,7 @@ void Timer_Stop(uint8 TimerId) {
                 }
             }
             *(TCCRs2[TimerIndex]) = (uint8) (*(TCCRs2[TimerIndex]) & (uint8) TIMERS2REG_STOP_MASK);
-            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) & TIMERS1REG_STOP_MASK >> 8U;
-            *(TCCRs2[TimerIndex]) = *(TCCRs2[TimerIndex]) | 0x00U;
-            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) | 0x00U;
+            *(TCCRs2[TimerIndex + 1U]) = *(TCCRs2[TimerIndex + 1U]) & TIMERS2REG_STOP_MASK >> 8U;
         } else {
             /*Timer not in the defined types*/
         }

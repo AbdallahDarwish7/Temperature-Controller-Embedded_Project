@@ -11,24 +11,26 @@
 #include "Calibrator_Resistor.h"
 #include "KeyPad.h"
 #include "Temp_MGR.h"
+#include "PWM.h"
+#include "Scheduler.h"
+#include "DIO.h"
 
+uint8 data0 = 0xff;
+uint8 data1 = 0xff;
+uint8 data2 = 0xff;
+void ToggleBit0(void) {
+    DIO_ChannelWrite(0, 0, data0);
+    data0 ^= 0xff;
+}
 
-//uint8 data0 = 0xff;
-//uint8 data1 = 0xff;
-//uint8 data2 = 0xff;
-//void ToggleBit0(void) {
-//    DIO_ChannelWrite(0, 0, data0);
-//    data0 ^= 0xff;
-//}
-//
-//void ToggleBit1(void) {
-//    DIO_ChannelWrite(0, 1, data1);
-//    data1 ^= 0xff;
-//}
-//void ToggleBit2(void) {
-//    DIO_ChannelWrite(0, 2, data2);
-//    data2 ^= 0xff;
-//}
+void ToggleBit1(void) {
+    DIO_ChannelWrite(0, 1, data1);
+    data1 ^= 0xff;
+}
+void ToggleBit2(void) {
+    DIO_ChannelWrite(0, 2, data2);
+    data2 ^= 0xff;
+}
 
 void callback(){
     SetMachineState(OPERATIONAL);
@@ -44,43 +46,59 @@ int main(void) {
 //    StartPeriodicDelay_ms(ToggleBit0);
 //    StartPeriodicDelay_ms(ToggleBit1);
 //    StartPeriodicDelay_ms(ToggleBit2);
-//    _delay_ms(8000);
-//    StopPeriodicDelay_ms(ToggleBit2);
+//    _delay_ms(4000);
+//    StopPeriodicDelay_ms(ToggleBit0);
 //    StopPeriodicDelay_ms(ToggleBit1);
-    config();
-    _delay_ms(1500);
-    uint8 oldCurrTemp = currentTemp;
-    uint8 oldSetTemp = setTemp;
+//    StopPeriodicDelay_ms(ToggleBit2);
+//    _delay_ms(4000);
+//    StartPeriodicDelay_ms(ToggleBit0);
+//    StartPeriodicDelay_ms(ToggleBit1);
+//    StartPeriodicDelay_ms(ToggleBit2);
+
+//    config();
+//    _delay_ms(1500);
+//    uint8 oldCurrTemp = currentTemp;
+//    uint8 oldSetTemp = setTemp;
+//    PWM_SetDutyCycle(50, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
+//    PeriodicDelay_ms(4000, PWM_Start);
+//    PeriodicDelay_ms(4000, PWM_Stop);
+//    StartPeriodicDelay_ms(PWM_Start);
+//    _delay_ms(4000);
+//    PWM_Stop();
+//    _delay_ms(4000);
+//    PWM_Start();
     while (1) {
-        if (machineState != ERROR){
-            if (machineState != STANDBY){
-                if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)){
-                    if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
-                        write_State(NORMAL);
-                        SetMachineState(NORMAL);
-                    } else{
-                        write_State(OPERATIONAL);
-                        SetMachineState(OPERATIONAL);
-                    }
-                    if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
-                        write_State(ERROR);
-                        SetMachineState(ERROR);
-                    }
-                    write_CRT_Temp(currentTemp);
-                    oldSetTemp = setTemp;
-                    oldCurrTemp = currentTemp;
-                }
-            }
-            if (KeyPad_Get_Hash()){
-                if (machineState == STANDBY){
-                    write_State(OPERATIONAL);
-                    SetMachineState(OPERATIONAL);
-                } else {
-                    write_State(STANDBY);
-                    SetMachineState(STANDBY);
-                }
-            }
-        }
+//        if (machineState != ERROR){
+//            if (machineState != STANDBY){
+//                if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)){
+//                    if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
+//                        write_State(NORMAL);
+//                        SetMachineState(NORMAL);
+//                    } else{
+//                        write_State(OPERATIONAL);
+//                        SetMachineState(OPERATIONAL);
+//                    }
+//                    if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
+//                        write_State(ERROR);
+//                        SetMachineState(ERROR);
+//                    }
+//                    write_CRT_Temp(currentTemp);
+//                    oldSetTemp = setTemp;
+//                    oldCurrTemp = currentTemp;
+//                }
+//            }
+//            if (KeyPad_Get_Hash()){
+//                if (machineState == STANDBY){
+//                    write_State(OPERATIONAL);
+//                    SetMachineState(OPERATIONAL);
+//                } else {
+//                    write_State(STANDBY);
+//                    SetMachineState(STANDBY);
+//                }
+//            }
+//            _delay_ms(100);
+//        }
+
     }
 }
 

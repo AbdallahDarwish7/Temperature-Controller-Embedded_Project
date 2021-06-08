@@ -46,8 +46,6 @@ uint8 KeyPad_GetKey(void) {
         DIO_ChannelDir(KeyPad_ConfigParam.ColsPortId, KeyPad_ConfigParam.ColsPinsChannels[column], 0x00);
 
     }
-    _delay_ms(100);
-
     return key;
 }
 
