@@ -266,22 +266,28 @@ void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint
                     break;
                 }
             }
+            uint8 regVal;
             if(TimerMode == TIMER_PWD_FAST_MODE) {
-                uint8 regVal;
                 if(TimerCom == TIMER_NON_INVERTED_COM){
-                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
+                    /* JUSTIFICATION: MicroController Registers can hold only unsigned char or char values */
                     regVal = (uint8)(((256U * Percentage) / 100U) - 1U);
                     *(OCRs[TimerIndex]) = regVal;
                 } else if (TimerCom == TIMER_INVERTED_COM) {
-                    /* JUSTIFICATION: Micro Controller Registers can hold only unsigned char or char values */
-                    regVal = 255U - (uint8)(((256 * Percentage) / 100) - 1);
+                    /* JUSTIFICATION: MicroController Registers can hold only unsigned char or char values */
+                    regVal = 255U - (uint8)(((256U * Percentage) / 100) - 1U);
                     *(OCRs[TimerIndex]) = regVal;
                 }
             } else if(TIMER_PWD_PHASE_CORRECT_MODE){
                 if(TimerCom == TIMER_NON_INVERTED_COM){
-                    *(OCRs[TimerIndex]) = (uint8)((255 * Percentage) / 100);
+                    /* JUSTIFICATION: MicroController Registers can hold only unsigned char or char values */
+                    regVal = (uint8)((255U * Percentage) / 100U);
+                    *(OCRs[TimerIndex]) = regVal;
                 } else if (TimerCom == TIMER_INVERTED_COM){
-                    *(OCRs[TimerIndex]) = 255 - (uint8)((255 * Percentage) / 100);
+                    /* JUSTIFICATION: MicroController Registers can hold only unsigned char or char values */
+                    regVal = 255U - (uint8)((255U * Percentage) / 100U);
+                    *(OCRs[TimerIndex]) = regVal;
+                } else {
+                    /*No Default  Output Modes*/
                 }
             }
         } else {

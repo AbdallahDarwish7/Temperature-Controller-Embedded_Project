@@ -40,16 +40,16 @@ void Delay_ms(uint32 delay_ms, VoidCallback callback) {
     }
     if (Loop < NUM_ONE_SHOT_CALLBACKS) {
         OneShotCallbacks[Loop] = callback;
-        OneShotTimerOverflow[Loop] = 10 * delay_ms;
-        OneShotCounts[Loop] = 10 * delay_ms;
+        OneShotTimerOverflow[Loop] = delay_ms / 25;
+        OneShotCounts[Loop] = delay_ms / 25;
     }
-    // 100us
+    // 25ms
     if (!timerIsRunning) {
         Timer_Init(TimerIdForOneShotDelay, TIMER_CTC_MODE, TIMER_DISCONCTED_COM);
-        OCR2 = 99;
+        OCR2 = 194;
         SET_BIT(TIMSK, OCIE2);
         sei();
-        Timer_Start(TimerIdForOneShotDelay, TIMER2_PRESCALER_8);
+        Timer_Start(TimerIdForOneShotDelay, TIMER2_PRESCALER_1024);
     }
 }
 
