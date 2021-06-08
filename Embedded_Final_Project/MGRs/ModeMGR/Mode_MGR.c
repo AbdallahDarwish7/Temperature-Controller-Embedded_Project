@@ -26,9 +26,7 @@ void SystemPeriodicity_Init(void){
 }
 
 void SetMachineState(machine_state state){
-    if (machineState != ERROR){
-        UpdateSystem(state);
-    }
+     UpdateSystem(state);
 }
 
 machine_state GetMachineState(void){
@@ -42,44 +40,49 @@ static void UpdateSystem(machine_state state){
         {
             if (machineState != NORMAL){
                 PWM_Stop();
+                machineState = NORMAL;
             }
             break;
         }
         case STANDBY:
         {
             if (machineState != STANDBY){
+                machineState = STANDBY;
+                PWM_Stop();
                 StopPeriodicDelay_ms(&UpdateCurrentTemp);
                 StopPeriodicDelay_ms(&UpdateCalibratorRead);
                 StopPeriodicDelay_ms(&UpdateDutyCycle);
                 Deactivate_TC72();
-                PWM_Stop();
                 currentTemp = NO_READ;
                 setTemp = NO_READ;
-                machineState = STANDBY;
             }
             break;
         }
         case OPERATIONAL:
         {
-            if (machineState != OPERATIONAL) {
+            if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                 Activate_TC72();
                 PWM_Start();
                 StartPeriodicDelay_ms(&UpdateCurrentTemp);
                 StartPeriodicDelay_ms(&UpdateCalibratorRead);
                 StartPeriodicDelay_ms(&UpdateDutyCycle);
                 machineState = OPERATIONAL;
+            } else if (machineState == NORMAL){
+                PWM_Start();
+                machineState = OPERATIONAL;
             }
             break;
         }
         case ERROR:
         {
+            PWM_Stop();
             StopPeriodicDelay_ms(&UpdateCurrentTemp);
             StopPeriodicDelay_ms(&UpdateCalibratorRead);
             StopPeriodicDelay_ms(&UpdateDutyCycle);
             Deactivate_TC72();
-            PWM_Stop();
             currentTemp = NO_READ;
             setTemp = NO_READ;
+            machineState = ERROR;
             break;
         }
         default :
@@ -101,8 +104,10 @@ void UpdateDutyCycle(void){
     float32 Vt = 0;
     if (setTemp > currentTemp){
        Vt = ((((float32)setTemp - (float32)currentTemp) / 100.0f) * 10.0f);
+    } else{
+        Vt = ((((float32)currentTemp - (float32)setTemp ) / 100.0f) * 10.0f);
     }
-    float32 DutyCycle = (((calibratorRead * 2.0f) / 10.0f) * Vt) / 10.0f;
+    float32 DutyCycle = ((((calibratorRead * 2.0f) / 10.0f) * Vt) / 10.0f) * 100;
     PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
 }
 

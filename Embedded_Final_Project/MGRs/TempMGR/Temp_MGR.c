@@ -10,8 +10,8 @@
  *                          Global Variables                                   *
  *******************************************************************************/
 
-int8 currentTemp = NO_READ;
-int8 setTemp = 25;
+uint8 currentTemp = NO_READ;
+uint8 setTemp = 25;
 
 /*******************************************************************************
  *                        Functions Definitions                                *

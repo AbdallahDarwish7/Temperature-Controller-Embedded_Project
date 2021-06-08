@@ -43,8 +43,8 @@ void Shift_Left(void) {
 	LCD_Shift_L();
 	loop--;
 	if(loop < 1){
+        count--;
 		if(count > 0){
-			count--;
             LCD_Shift_R();
             Delay_ms(100, Shift_Right);
 		}else{
@@ -71,7 +71,7 @@ void idle_screen(void){
     LCD_WriteStringAt_xy(1, 0, "STATE:STANDBY");
 }
 
-void write_State(STATES_ConfigParamType state){
+void write_State(uint8 state){
     LCD_WriteStringAt_xy(1, 6, "          ");
     LCD_WriteStringAt_xy(1, 6, States[state]);
 }

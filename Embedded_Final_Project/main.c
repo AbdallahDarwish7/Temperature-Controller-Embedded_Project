@@ -16,27 +16,39 @@
 
 int main(void) {
     config();
-    _delay_ms(4000);
-    SetMachineState(OPERATIONAL);
+    _delay_ms(1500);
+    uint8 oldCurrTemp = currentTemp;
+    uint8 oldSetTemp = setTemp;
     while (1) {
-//        if (machineState != ERROR){
-//            if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
-//                SetMachineState(NORMAL);
-//            } else{
-//                SetMachineState(OPERATIONAL);
-//            }
-//            if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
-//                SetMachineState(ERROR);
-//            }
-//            if (KeyPad_Get_Hash()){
-//                if (machineState == STANDBY){
-//                    SetMachineState(OPERATIONAL);
-//                } else if (machineState == OPERATIONAL || machineState == NORMAL){
-//                    SetMachineState(STANDBY);
-//                }
-//            }
-//        }
-        write_CRT_Temp(currentTemp);
+        if (machineState != ERROR){
+            if (machineState != STANDBY){
+                if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)){
+                    if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
+                        write_State(NORMAL);
+                        SetMachineState(NORMAL);
+                    } else{
+                        write_State(OPERATIONAL);
+                        SetMachineState(OPERATIONAL);
+                    }
+                    if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
+                        write_State(ERROR);
+                        SetMachineState(ERROR);
+                    }
+                    write_CRT_Temp(currentTemp);
+                    oldSetTemp = setTemp;
+                    oldCurrTemp = currentTemp;
+                }
+            }
+            if (KeyPad_Get_Hash()){
+                if (machineState == STANDBY){
+                    write_State(OPERATIONAL);
+                    SetMachineState(OPERATIONAL);
+                } else {
+                    write_State(STANDBY);
+                    SetMachineState(STANDBY);
+                }
+            }
+        }
     }
 }
 

@@ -20,7 +20,7 @@ void display_Welcome_once(void);
 
 void idle_screen(void);
 
-void write_State(STATES_ConfigParamType state);
+void write_State(uint8 state);
 
 void write_CRT_Temp(uint8 crt_temp);
 
