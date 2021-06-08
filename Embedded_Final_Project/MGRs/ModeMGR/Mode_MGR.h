@@ -12,6 +12,8 @@
 #define NORMAL  ((uint8)2)
 #define ERROR   ((uint8)3)
 
+#define MAX_TIME_OF_RESPONSE 180000
+
 typedef uint8 machine_state;
 
 extern machine_state machineState;

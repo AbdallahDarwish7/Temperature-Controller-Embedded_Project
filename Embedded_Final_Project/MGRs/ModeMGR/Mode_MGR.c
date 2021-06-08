@@ -10,8 +10,6 @@
 
 machine_state machineState = STANDBY;
 
-uint8 CheckHeaterResponseFlag = 0;
-
 
 static void UpdateSystem(machine_state state);
 
@@ -34,7 +32,6 @@ machine_state GetMachineState(void){
 }
 
 static void UpdateSystem(machine_state state){
-    float32 DutyCycle;
     switch (state) {
         case NORMAL:
         {
@@ -47,14 +44,12 @@ static void UpdateSystem(machine_state state){
         case STANDBY:
         {
             if (machineState != STANDBY){
-                machineState = STANDBY;
                 PWM_Stop();
                 StopPeriodicDelay_ms(&UpdateCurrentTemp);
                 StopPeriodicDelay_ms(&UpdateCalibratorRead);
                 StopPeriodicDelay_ms(&UpdateDutyCycle);
                 Deactivate_TC72();
-                currentTemp = NO_READ;
-                setTemp = NO_READ;
+                machineState = STANDBY;
             }
             break;
         }
@@ -71,6 +66,7 @@ static void UpdateSystem(machine_state state){
                 PWM_Start();
                 machineState = OPERATIONAL;
             }
+            Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             break;
         }
         case ERROR:
@@ -93,7 +89,6 @@ static void UpdateSystem(machine_state state){
 }
 
 void CheckHeaterResponse(void){
-    CheckHeaterResponseFlag = (uint8)0;
     if ((setTemp > currentTemp) && ((setTemp - currentTemp) > 5)){
         machineState = ERROR;
         UpdateSystem(machineState);
@@ -104,8 +99,6 @@ void UpdateDutyCycle(void){
     float32 Vt = 0;
     if (setTemp > currentTemp){
        Vt = ((((float32)setTemp - (float32)currentTemp) / 100.0f) * 10.0f);
-    } else{
-        Vt = ((((float32)currentTemp - (float32)setTemp ) / 100.0f) * 10.0f);
     }
     float32 DutyCycle = ((((calibratorRead * 2.0f) / 10.0f) * Vt) / 10.0f) * 100;
     PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);

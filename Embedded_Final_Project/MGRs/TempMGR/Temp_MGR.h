@@ -20,5 +20,6 @@ void UpdateCurrentTemp(void);
 void UpdateSetTemp(int8 InputTemp);
 void Deactivate_TC72();
 void Activate_TC72(void);
+void TempMGR_Init();
 
 #endif /*EMBEDDED_FINAL_PROJECT_TEMP_MGR_H*/

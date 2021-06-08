@@ -13,10 +13,9 @@
 #include "Temp_MGR.h"
 
 
-
 int main(void) {
     config();
-    _delay_ms(1500);
+    _delay_ms(2000);
     uint8 oldCurrTemp = currentTemp;
     uint8 oldSetTemp = setTemp;
     while (1) {
@@ -43,11 +42,12 @@ int main(void) {
                 if (machineState == STANDBY){
                     write_State(OPERATIONAL);
                     SetMachineState(OPERATIONAL);
-                } else {
+                } else if ((machineState == NORMAL) || (machineState == OPERATIONAL)){
                     write_State(STANDBY);
                     SetMachineState(STANDBY);
                 }
             }
+            _delay_ms(200);
         }
     }
 }
@@ -55,6 +55,7 @@ int main(void) {
 void config(){
     Activate_LCD();
     display_Welcome_screen(1);
+    TempMGR_Init();
     InitCalibrator();
     SystemPeriodicity_Init();
     KeyPad_Init();

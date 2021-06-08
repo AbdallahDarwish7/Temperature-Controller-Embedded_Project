@@ -39,18 +39,26 @@ void UpdateInputTemp(int8 InputTemp){
     setTemp = InputTemp;
 }
 
+void TempMGR_Init(){
+    TC72_Init(SHUTDOWN_MODE);
+}
+
 
 /******************** Shutdown_TC72 ***********************
  * Config the TC72 sensor to the idle mode
  */
 void Deactivate_TC72(){
-    TC72_Init(SHUTDOWN_MODE);
+    if (GetTC72Mode() != SHUTDOWN_MODE){
+        TC72_Mode(SHUTDOWN_MODE);
+    }
 }
 
 /******************** Shutdown_TC72 ***********************
  * Config the TC72 sensor to the continuous mode
  */
 void Activate_TC72(void){
-    TC72_Init(CONTINUOUS_MODE);
+    if (GetTC72Mode() != CONTINUOUS_MODE){
+        TC72_Mode(CONTINUOUS_MODE);
+    }
 }
 

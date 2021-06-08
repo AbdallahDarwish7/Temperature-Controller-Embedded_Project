@@ -12,7 +12,7 @@
  *******************************************************************************/
 typedef uint8 Mode;
 
-#define CONTINUOUS_MODE ((uint8)0x00)
+#define CONTINUOUS_MODE ((uint8)0x10)
 #define ONE_SHOT_MODE ((uint8)0x05)
 #define SHUTDOWN_MODE ((uint8)0x01)
 
@@ -29,9 +29,11 @@ typedef uint8 Mode;
  *                      Functions Declarations                                  *
  *******************************************************************************/
 
+
 void TC72_Init(Mode OperMode);
 uint8 TC72_ReadTemperature(void);
 Mode GetTC72Mode(void);
-
+void TC72_Shutdown();
+void TC72_Mode(Mode OperMode);
 
 #endif /*FINAL_PROJECT_TC72_H*/

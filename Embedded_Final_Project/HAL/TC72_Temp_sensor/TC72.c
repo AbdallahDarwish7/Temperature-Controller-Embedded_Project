@@ -2,10 +2,9 @@
 * Created by abdulla167
 */
 
-#include <util/delay.h>
 #include "TC72.h"
 
-Mode TC72_mode;
+Mode TC72_mode = SHUTDOWN_MODE;
 
 /*******************************************************************************
  *                      Functions Definitions                                  *
@@ -20,6 +19,15 @@ Mode TC72_mode;
 void TC72_Init(Mode OperMode){
     /* INITIALIZE OUR DEVICE AS MASTER */
     SPI_InitMaster(MSB, LEADING_EDGE);
+    /* SELECT MODE OF TC72 */
+    TC72_Mode(OperMode);
+}
+
+/********************** TC72_Mode **********************
+ * [Description] :
+ * @param OperMode
+ */
+void TC72_Mode(Mode OperMode){
     /* ACTIVATE SLAVE TC72 */
     DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0xff);
     /* SEND REGISTER CONTROL ADDRESS ON DATA LINE TO WRITE ON IT */
@@ -45,7 +53,6 @@ uint8 TC72_ReadTemperature(void){
     SPI_SendByte(dummy);
     /* DEACTIVATE SLAVE TC72 */
     DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0x00);
-    _delay_ms(1);
     /* READ SENSOR DATA FROM SPI DATA REGISTER */
     MSBValue = SPI_RecieveByte();
     return MSBValue;
