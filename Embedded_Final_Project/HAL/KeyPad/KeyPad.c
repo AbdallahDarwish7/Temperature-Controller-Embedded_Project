@@ -105,9 +105,9 @@ void get_set_Temp(ParamCallback callback) {
 uint8 KeyPad_Get_Hash(void) {
     uint8 key;
     key = KeyPad_GetKey();
-    uint8 result = 0xff;
+    uint8 result = 0;
     if (key == 2) {
-        result = '#';
+        result = 1;
     }
     return result;
 }

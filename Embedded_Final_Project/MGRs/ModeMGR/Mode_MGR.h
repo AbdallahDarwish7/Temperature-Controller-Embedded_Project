@@ -14,10 +14,12 @@
 
 typedef uint8 machine_state;
 
+extern machine_state machineState;
+
 machine_state GetMachineState(void);
 void SetMachineState(machine_state state);
 void SystemPeriodicity_Init(void);
-float32 CalculateDutyCycle(int8 CurrentTemperature, int8 SetTemperature, uint8 CalibratorRead);
+void UpdateDutyCycle(void);
 void CheckHeaterResponse(void);
 
 #endif /*EMBEDDED_FINAL_PROJECT_MODE_MGR_H*/
