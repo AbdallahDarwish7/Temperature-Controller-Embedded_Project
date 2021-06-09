@@ -228,15 +228,6 @@
     <Compile Include="MGRs\DisplayMGR\Display_MGR.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MGRs\LCDManager\LCD_Manager.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="MGRs\LCDManager\LCD_Manager.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="MGRs\LCDManager\LCD_Manager_cfg.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="MGRs\ModeMGR\Mode_MGR.c">
       <SubType>compile</SubType>
     </Compile>
@@ -275,15 +266,10 @@
     <Folder Include="MGRs\DisplayMGR\" />
     <Folder Include="MGRs\DisplayMGR\" />
     <Folder Include="MGRs\DisplayMGR\" />
-    <Folder Include="MGRs\LCDManager\" />
     <Folder Include="MGRs\ModeMGR\" />
     <Folder Include="MGRs\TempMGR\" />
-    <Folder Include="PWD_Test_protus\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore">
-      <SubType>compile</SubType>
-    </None>
     <None Include="CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
@@ -332,16 +318,10 @@
     <None Include="MGRs\DisplayMGR\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
-    <None Include="MGRs\LCDManager\CMakeLists.txt">
-      <SubType>compile</SubType>
-    </None>
     <None Include="MGRs\ModeMGR\CMakeLists.txt">
       <SubType>compile</SubType>
     </None>
     <None Include="MGRs\TempMGR\CMakeLists.txt">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="PWD_Test_protus\New Project.pdsprj.ABDALLAH-DRWESH.abdallah.workspace">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
