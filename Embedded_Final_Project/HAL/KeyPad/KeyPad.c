@@ -17,6 +17,7 @@ uint8 Characters[9] = {7, 8, 9, 4, 5, 6, 1, 2, 3};
 uint8 Temperature = 0;
 ParamCallback callback_g;
 
+
 void get_set_Temp_wrapper(void) {
     get_set_Temp(write_Set_Temp);
 }
@@ -80,7 +81,6 @@ void get_set_Temp(ParamCallback callback) {
     callback_g = callback;
     uint8 key = KeyPad_GetKey();
     if (key != 0xff) {
-
         if (key > 2) {
             Temperature = Characters[key - 3];
             uint8 second = 0;

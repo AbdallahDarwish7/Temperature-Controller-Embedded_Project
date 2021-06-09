@@ -35,7 +35,7 @@ void UpdateCurrentTemp(void){
  * Save temperature value that we get from the user
  * @param InputTemp : Input temperature of the user
  */
-void UpdateInputTemp(int8 InputTemp){
+void UpdateInputTemp(uint8 InputTemp){
     setTemp = InputTemp;
 }
 

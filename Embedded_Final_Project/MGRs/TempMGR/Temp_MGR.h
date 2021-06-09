@@ -15,9 +15,8 @@ extern uint8 setTemp;
  *                      Functions Declarations                                 *
  *******************************************************************************/
 
-void UpdateInputTemp(int8 InputTemp);
 void UpdateCurrentTemp(void);
-void UpdateSetTemp(int8 InputTemp);
+void UpdateInputTemp(uint8 InputTemp);
 void Deactivate_TC72();
 void Activate_TC72(void);
 void TempMGR_Init();
