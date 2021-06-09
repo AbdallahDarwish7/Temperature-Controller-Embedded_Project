@@ -57,6 +57,7 @@ void UpdateSystem(MachineStateType state){
                 DeactivateSystem();
             }
             machineState = STANDBY;
+            idle_screen();
             write_State(STANDBY);
             break;
         }
@@ -81,6 +82,7 @@ void UpdateSystem(MachineStateType state){
             }
             DeactivateSystem();
             machineState = ERROR;
+            idle_screen();
             write_State(ERROR);
             break;
         }
