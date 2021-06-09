@@ -5,6 +5,6 @@
 #ifndef EMBEDDED_FINAL_PROJECT_MAIN_H
 #define EMBEDDED_FINAL_PROJECT_MAIN_H
 
-void config();
+void SystemConfig();
 void AppFunc();
 #endif //EMBEDDED_FINAL_PROJECT_MAIN_H

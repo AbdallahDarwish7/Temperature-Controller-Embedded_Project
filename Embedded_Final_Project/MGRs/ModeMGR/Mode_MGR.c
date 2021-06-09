@@ -28,7 +28,7 @@ uint8 checkHeaterResponseFlag = 0;
 /******************** Initializing System Periodicity ***********************
  * Function:  SystemPeriodicity_Config
  * --------------------
- * used to passing the periodic functions to the timer array to be called when needed by appropriate delay :
+ * used to passing the periodic functions to the timer array to be called when needed by appropriate DelayFlag :
  *                 
  */
 void SystemPeriodicity_Config(void){
@@ -166,7 +166,7 @@ void ActivateSystem(void){
  * used to deactivate system components:
  *		Deactivating TC72 Temperature Sensor
  *		Deactivating PWM "pulse width modulation"
- *		Stop periodic delay of the Functions (UpdateCurrentTemp,
+ *		Stop periodic DelayFlag of the Functions (UpdateCurrentTemp,
  *														UpdateCalibratorRead, UpdateDutyCycle)
  */
 void DeactivateSystem(void){
