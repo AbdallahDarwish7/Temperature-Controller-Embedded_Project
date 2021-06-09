@@ -59,7 +59,6 @@ void DeleteDelay_ms(VoidCallback callback) {
     for (Loop = 0; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {
         if (OneShotCallbacks[Loop] == callback) {
             OneShotCallbacks[Loop] = NULL;
-            break;
         }
     }
     sei();
@@ -157,7 +156,6 @@ void DeletePeriodicDelay_ms(VoidCallback callback) {
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == callback) {
             PeriodicCallbacks[Loop] = NULL;
-            break;
         }
     }
 }

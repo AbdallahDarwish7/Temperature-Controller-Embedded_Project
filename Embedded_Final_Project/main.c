@@ -26,10 +26,8 @@ int main(void) {
     oldCurrTemp = currentTemp;
     oldSetTemp = setTemp;
     StartGetSetTemp();
-//    StopGetSetTemp();
-//    StartGetSetTemp();
-//    _delay_ms(4000);
-//    StopGetSetTemp();
+    StopGetSetTemp();
+    StartGetSetTemp();
     while (1);
 }
 

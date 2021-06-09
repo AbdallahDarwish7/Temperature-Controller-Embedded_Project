@@ -64,6 +64,9 @@ void KeyPad_Enter(void) {
 
 void StopGetSetTemp(){
     GetSetTempRecFlag = 0;
+    DeleteDelay_ms(GetFirstInput);
+    DeleteDelay_ms(GetSecondInput);
+    DeleteDelay_ms(KeyPad_Enter);
 }
 
 void StartGetSetTemp(){
