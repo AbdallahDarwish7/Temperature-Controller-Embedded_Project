@@ -19,7 +19,7 @@ ParamCallback callback_g;
 
 
 void get_set_Temp_wrapper(void) {
-    get_set_Temp(write_Set_Temp);
+    get_set_Temp(callback_g);
 }
 
 void KeyPad_Init(void) {
@@ -67,6 +67,7 @@ void get_Second(void) {
     write_Set_Temp(Temperature);
     if (key > 2 && key != 0xff) {
         Temperature = 10 * Temperature + Characters[key - 3];
+        write_Set_Temp(Temperature);
         Delay_ms(200, KeyPad_Enter);
     } else if (key != 0) {
         Delay_ms(200, get_Second);

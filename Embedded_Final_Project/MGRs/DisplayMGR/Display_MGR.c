@@ -83,7 +83,7 @@ void write_Set_Temp(uint8 set_temp) {
     LCD_WriteStringAt_xy(0, 4, "  ");
 	uint8 first = set_temp / 10;
 	uint8 second = set_temp % 10;
-	char temp[2] = {numbers[first], numbers[second]};
+	char temp[3] = {numbers[first], numbers[second], '\0'};
     LCD_WriteStringAt_xy(0, 4, temp);
     LCD_WriteStringAt_xy(0, 10, "CRT");
 }

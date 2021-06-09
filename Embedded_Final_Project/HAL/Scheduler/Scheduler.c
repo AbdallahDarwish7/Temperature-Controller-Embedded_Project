@@ -53,7 +53,7 @@ void Delay_ms(uint32 delay_ms, VoidCallback callback) {
     }
 }
 
-void DeleteDelay_ms(VoidCallback callback){
+void DeleteDelay_ms(VoidCallback callback) {
     cli();
     uint8 Loop;
     for (Loop = 0; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {
@@ -152,7 +152,7 @@ ISR(TIMER1_COMPA_vect) {
     }
 }
 
-void DeletePeriodicDelay_ms(VoidCallback callback){
+void DeletePeriodicDelay_ms(VoidCallback callback) {
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == callback) {

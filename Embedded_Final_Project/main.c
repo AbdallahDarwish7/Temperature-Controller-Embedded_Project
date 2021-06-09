@@ -11,7 +11,8 @@
 #include "KeyPad.h"
 #include "Temp_MGR.h"
 #include "Scheduler.h"
-
+#include "util/delay.h"
+#include "DIO.h"
 uint8 oldCurrTemp;
 uint8 oldSetTemp;
 MachineStateType machineState;

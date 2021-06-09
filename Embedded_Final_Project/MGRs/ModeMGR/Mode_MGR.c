@@ -66,7 +66,7 @@ void UpdateSystem(MachineStateType state){
             write_State(OPERATIONAL);
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                ActivateSystem();
-               Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
+                Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             } else if (machineState == NORMAL){
                 PWM_Start();
                 Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
