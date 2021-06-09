@@ -7,53 +7,59 @@
 #include "main.h"
 #include "Display_MGR.h"
 #include "Mode_MGR.h"
-#include "util/delay.h"
 #include "Calibrator_Resistor.h"
 #include "KeyPad.h"
 #include "Temp_MGR.h"
-#include "PWM.h"
 #include "Scheduler.h"
-#include "DIO.h"
+
+uint8 oldCurrTemp;
+uint8 oldSetTemp;
+MachineStateType machineState;
 
 
 int main(void) {
     config();
-    _delay_ms(2000);
-    uint8 oldCurrTemp = currentTemp;
-    uint8 oldSetTemp = setTemp;
-    MachineStateType machineState;
-    while (1) {
-        machineState = GetMachineState();
-        if (machineState != ERROR){
-            if (machineState != STANDBY){
-                if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)){
-                    if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) || ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))){
-                        SetMachineState(NORMAL);
-                    } else{
-                        SetMachineState(OPERATIONAL);
-                    }
-                    if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)){
-                        SetMachineState(ERROR);
-                    }
-                    write_CRT_Temp(currentTemp);
-                    oldSetTemp = setTemp;
-                    oldCurrTemp = currentTemp;
-                }
-            }
-            if (KeyPad_Get_Hash()){
-                machineState = GetMachineState();
-                if (machineState == STANDBY){
+    oldCurrTemp = currentTemp;
+    oldSetTemp = setTemp;
+    Delay_ms(2000, AppFunc);
+    while (1);
+}
+
+void AppFunc() {
+    machineState = GetMachineState();
+    if (machineState != ERROR) {
+        if (machineState != STANDBY) {
+            if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)) {
+                if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) ||
+                    ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))) {
+                    SetMachineState(NORMAL);
+                } else {
                     SetMachineState(OPERATIONAL);
-                } else if ((machineState == NORMAL) || (GetMachineState() == OPERATIONAL)){
-                    SetMachineState(STANDBY);
                 }
+                if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)) {
+                    SetMachineState(ERROR);
+                }
+                write_CRT_Temp(currentTemp);
+                get_set_Temp(UpdateInputTemp);
+                write_Set_Temp(setTemp);
+                oldSetTemp = setTemp;
+                oldCurrTemp = currentTemp;
             }
-            _delay_ms(200);
         }
+        if (KeyPad_Get_Hash()) {
+            machineState = GetMachineState();
+            if (machineState == STANDBY) {
+                SetMachineState(OPERATIONAL);
+            } else if ((machineState == NORMAL) || (machineState == OPERATIONAL)) {
+                SetMachineState(STANDBY);
+            }
+        }
+        Delay_ms(200, &AppFunc);
+
     }
 }
 
-void config(){
+void config() {
     Activate_LCD();
     display_Welcome_screen(1);
     TempMGR_Init();

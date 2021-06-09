@@ -43,9 +43,9 @@ void UpdateSystem(MachineStateType state){
             }
             if (machineState != NORMAL){
                 PWM_Stop();
-                machineState = NORMAL;
             }
-            write_State(machineState);
+            machineState = NORMAL;
+            write_State(NORMAL);
             break;
         }
         case STANDBY:
@@ -55,23 +55,23 @@ void UpdateSystem(MachineStateType state){
             }
             if (machineState != STANDBY){
                 DeactivateSystem();
-                machineState = STANDBY;
             }
-            write_State(machineState);
+            machineState = STANDBY;
+            write_State(STANDBY);
             break;
         }
         case OPERATIONAL:
         {
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                ActivateSystem();
-               machineState = OPERATIONAL;
+               Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             } else if (machineState == NORMAL){
                 PWM_Start();
-                machineState = OPERATIONAL;
+                Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             }
-            Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             checkHeaterResponseFlag = 1;
-            write_State(machineState);
+            machineState = OPERATIONAL;
+            write_State(OPERATIONAL);
             break;
         }
         case ERROR:
@@ -81,7 +81,7 @@ void UpdateSystem(MachineStateType state){
             }
             DeactivateSystem();
             machineState = ERROR;
-            write_State(machineState);
+            write_State(ERROR);
             break;
         }
         default :
