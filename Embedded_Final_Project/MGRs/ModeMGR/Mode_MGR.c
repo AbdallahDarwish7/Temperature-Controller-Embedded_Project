@@ -1,13 +1,17 @@
 /*
 * Created by abdulla167
 */
+
+/*******************************************************************************
+ *                              Includes                                       *
+ *******************************************************************************/
+
 #include "Mode_MGR.h"
 #include "Temp_MGR.h"
 #include "PWM.h"
 #include "Scheduler.h"
 #include "Calibrator_Resistor.h"
 #include "Display_MGR.h"
-
 
 /*******************************************************************************
  *                           Global Variables                                  *
@@ -162,8 +166,7 @@ void ActivateSystem(void){
  *		Deactivating PWM "pulse width modulation"
  *		Stop periodic delay of the Functions (UpdateCurrentTemp,
  *														UpdateCalibratorRead, UpdateDutyCycle)
- */         
- 
+ */
 void DeactivateSystem(void){
     Deactivate_TC72();
     PWM_Stop();
@@ -176,7 +179,7 @@ void DeactivateSystem(void){
 /******************** Checking response of heater ***********************
  * Function:  CheckHeaterResponse 
  * --------------------
- * used to check if Set temperature > Current temperature and (Set temperature – Current temperature) > 5 
+ * used to check if Set temperature > Current temperature and (Set temperature ï¿½ Current temperature) > 5 
  *		for more than 3 minutes, system shall enter Error state.:
  *		Update System with the new Error State
  *
@@ -195,7 +198,7 @@ void CheckHeaterResponse(void){
  * --------------------
  * used to calculate the duty cycle in operational state by Calculating Vt and get Vr (from Calibration resistor) :
  *		get Vt According to these conditions:
- *					if (setTemp > currentTemp) : Vt = ((Set temperature – Current Temperature) / 100) * 10 
+ *					if (setTemp > currentTemp) : Vt = ((Set temperature ï¿½ Current Temperature) / 100) * 10 
  *					else : Vt = 0
  *
  *		calculate DutyCycle = (((Vr * 2)/10) * Vt) / 10.
