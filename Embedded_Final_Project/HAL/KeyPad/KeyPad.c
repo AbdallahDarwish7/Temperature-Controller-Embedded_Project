@@ -80,7 +80,7 @@ void StartGetSetTemp(void){
 }
 static void GetSecondInput(void) {
     uint8 key2 = KeyPad_GetKey();
-    if ((key2 > (uint8)20) && (key2 != (uint8)0xff)) {
+    if ((key2 > (uint8)2) && (key2 != (uint8)0xff)) {
         Temperature =((uint8) 10 * Temperature) + Characters[key2 - (uint8)3];
         WriteSetTemp(Temperature);
         Delay_ms((uint8)200, &KeyPad_Enter);
