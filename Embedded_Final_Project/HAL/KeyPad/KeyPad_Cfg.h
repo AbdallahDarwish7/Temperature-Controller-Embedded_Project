@@ -12,6 +12,6 @@ typedef struct
 	uint8 RowsPinsChannels[KeyPad_NUM_OF_RAW_PINS];
 }KeyPad_ConfigParamType;
 extern const KeyPad_ConfigParamType KeyPad_ConfigParam;
-#endif // KeyPad_CFG_H_INCLUDED
+#endif /* KeyPad_CFG_H_INCLUDED */
 
 
