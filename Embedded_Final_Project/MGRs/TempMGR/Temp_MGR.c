@@ -1,10 +1,14 @@
 /*
 * Created by abdulla167
 */
+
+/*******************************************************************************
+ *                              Includes                                       *
+ *******************************************************************************/
+
 #include "typedefs.h"
 #include "TC72.h"
 #include "Temp_MGR.h"
-
 
 /*******************************************************************************
  *                          Global Variables                                   *
@@ -18,9 +22,13 @@ uint8 setTemp = 25;
  *******************************************************************************/
 
 
-/******************** GetCurrentTemp *********************
- * Used to get The temperature of the TC72 sensor
- * @return currentTemp : Temperature value
+/******************** Updating Temperature values ***********************
+ * Function:  UpdateCurrentTemp 
+ * --------------------
+ * used to update the value of current temperature from TC72 sensor according to Sensor mode:
+ *		SHUTDOWN_MODE : No temperature to be read
+ *		At any other mode: read temperature from sensor and update CurrentTemp "Global Variable"
+ *
  */
 void UpdateCurrentTemp(void){
     Mode TC72_Mode = GetTC72Mode();
@@ -31,21 +39,36 @@ void UpdateCurrentTemp(void){
     }
 }
 
-/******************** SetInputTemp ***********************
- * Save temperature value that we get from the user
- * @param InputTemp : Input temperature of the user
+
+/******************** Updating Temperature values ***********************
+ * Function:  UpdateInputTemp 
+ * --------------------
+ * used to update the value of Set temperature from Keypad:
+ *
+ * InputTemp: The value of temperature written on the keypad
+ *
  */
 void UpdateInputTemp(uint8 InputTemp){
     setTemp = InputTemp;
 }
 
+
+/******************** Temperature Manager Initiation ***********************
+ * Function:  TempMGR_Init 
+ * --------------------
+ * used to initiate TC72 sensor after power on and no temperature reading "SHUTDOWN_MODE".
+ *
+ */
 void TempMGR_Init(){
     TC72_Init(SHUTDOWN_MODE);
 }
 
 
-/******************** Shutdown_TC72 ***********************
- * Config the TC72 sensor to the idle mode
+/******************** Temperature Manager Deactivate TC72 ***********************
+ * Function:  Deactivate_TC72 
+ * --------------------
+ * used to deactivate TC72 sensor by applying "SHUTDOWN_MODE".
+ *
  */
 void Deactivate_TC72(){
     if (GetTC72Mode() != SHUTDOWN_MODE){
@@ -53,8 +76,12 @@ void Deactivate_TC72(){
     }
 }
 
-/******************** Shutdown_TC72 ***********************
- * Config the TC72 sensor to the continuous mode
+
+/******************** Temperature Manager Deactivate TC72 ***********************
+ * Function:  Deactivate_TC72 
+ * --------------------
+ * used to Config the TC72 sensor to the continuous mode.
+ *
  */
 void Activate_TC72(void){
     if (GetTC72Mode() != CONTINUOUS_MODE){
