@@ -12,9 +12,13 @@ Mode TC72_mode = SHUTDOWN_MODE;
 
 
 
-/********************** TC72_Init **********************
- * [Description] :
- * @param OperationMode
+/******************** Initiate TC72 ***********************
+ * Function:  TC72_Init 
+ * --------------------
+ * used to initialize TC72 device as master:
+ *
+ *  OperMode: Mode of TC72 Operation.
+ * 
  */
 void TC72_Init(Mode OperMode){
     /* INITIALIZE OUR DEVICE AS MASTER */
@@ -23,9 +27,14 @@ void TC72_Init(Mode OperMode){
     TC72_Mode(OperMode);
 }
 
-/********************** TC72_Mode **********************
- * [Description] :
- * @param OperMode
+
+/******************** Changing TC72 Mode ***********************
+ * Function:  TC72_Mode 
+ * --------------------
+ * used to initialize TC72 device as slave:
+ *
+ *  OperMode: Mode of TC72 Operation.
+ * 
  */
 void TC72_Mode(Mode OperMode){
     /* ACTIVATE SLAVE TC72 */
@@ -39,9 +48,12 @@ void TC72_Mode(Mode OperMode){
     DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0x00);
 }
 
-/********************** TC72_ReadTemperature **********************
- * [Description] :
- * @return
+
+/******************** Reading TC72 Temperature ***********************
+ * Function:  TC72_ReadTemperature 
+ * --------------------
+ * used to initialize TC72 device as slave:
+ * 
  */
 uint8 TC72_ReadTemperature(void){
     uint8 dummy = 0x00;
@@ -58,6 +70,13 @@ uint8 TC72_ReadTemperature(void){
     return MSBValue;
 }
 
+
+/******************** Reading TC72 Mode ***********************
+ * Function:  GetTC72Mode 
+ * --------------------
+ * used to initialize TC72 device as slave:
+ *
+ */
 Mode GetTC72Mode(void){
     return TC72_mode;
 }

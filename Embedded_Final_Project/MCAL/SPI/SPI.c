@@ -11,10 +11,23 @@
  *******************************************************************************/
 
 
-/********************** SPI_InitMaster **********************
- * [Description] :
- * @param StartBit
- * @param ClkPolarity
+/******************** Initializing SPI as Master ***********************
+ * Function:  SPI_InitMaster 
+ * --------------------
+ * used to initialize SPI in Master mode by:
+ *		configuring SS, MOSI & SCK pins as OUTPUT pins and MISO pin as INPUT pin.
+ *		configuring MSTR pin to 1 (Master mode).
+ *		configuring Clock Frequency pins (SPR0, SPR1 & SPE). 
+ *		configuring Data sending order (LSB || MSB). 
+ *
+ *  StartBit: first bit of data that will be sent.
+ *
+ *  ClkPolarity: is used to shift the sampling phase on Leading(first) clock edge or Trailing(second) clock edge.
+ *
+ *  returns: Type that indicates the function is executed successfully 
+ *           or there's error occurred during execution
+ *           returns DIO_OK on Success 
+ *           returns DIO_NOK on Error 
  */
 void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
 {
@@ -46,12 +59,16 @@ void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
     }else{
         CLEAR_BIT (SPCR , CPHA);
     }
-
 }
 
-/********************** SPI_SendByte **********************
- * [Description] :
- * @param data :
+
+/******************** Sending byte by SPI ***********************
+ * Function:  SPI_SendByte 
+ * --------------------
+ * used to send data via SPI by using SPDR(SPI Data Register):
+ *
+ *  data: data that will be sent by SPI.
+ *
  */
 void SPI_SendByte(uint8 data)
 {
@@ -59,9 +76,14 @@ void SPI_SendByte(uint8 data)
     while(BIT_IS_CLEAR(SPSR,SPIF)){} /*wait until SPI interrupt flag=1 (data0 is sent correctly)*/
 }
 
-/**********************  SPI_RecieveByte **********************
- * [Description] :
- * @return THE DATA WHICH HAVE BEEN READ FROM THE SLAVE
+
+/******************** Recieving byte by SPI ***********************
+ * Function:  SPI_RecieveByte 
+ * --------------------
+ * used to send data via SPI by using SPDR(SPI Data Register):
+ *
+ *  returns: Data that is Received by SPI
+ *           returns SPDR "Data Register" that contains received data
  */
 uint8 SPI_RecieveByte(void)
 {
