@@ -12,7 +12,7 @@
 #include "Scheduler.h"
 #include "Calibrator_Resistor.h"
 #include "Display_MGR.h"
-
+#include "KeyPad.h"
 /*******************************************************************************
  *                           Global Variables                                  *
  *******************************************************************************/

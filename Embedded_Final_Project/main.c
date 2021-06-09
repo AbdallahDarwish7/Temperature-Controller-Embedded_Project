@@ -11,7 +11,7 @@
 #include "KeyPad.h"
 #include "Temp_MGR.h"
 #include "Scheduler.h"
-#include "util/delay.h"
+#include "DIO.h"
 
 uint8 oldCurrTemp;
 uint8 oldSetTemp;
@@ -20,13 +20,12 @@ MachineStateType machineState;
 
 int main(void) {
     config();
-    _delay_ms(2000);
+    DIO_ChannelDir(0, 1, 0xff);
+    Delay_ms(2000, &AppFunc);
     oldCurrTemp = currentTemp;
     oldSetTemp = setTemp;
-//    Delay_ms(2000, AppFunc);
     get_set_Temp(UpdateInputTemp);
-    while (1){
-    };
+    while (1);
 }
 
 void AppFunc() {
@@ -35,6 +34,7 @@ void AppFunc() {
         if (machineState != STANDBY) {
             if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)) {
                 write_CRT_Temp(currentTemp);
+                write_Set_Temp(setTemp);
                 oldSetTemp = setTemp;
                 oldCurrTemp = currentTemp;
                 if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) ||

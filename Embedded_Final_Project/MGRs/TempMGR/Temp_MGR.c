@@ -14,7 +14,7 @@
  *                          Global Variables                                   *
  *******************************************************************************/
 
-uint8 currentTemp = NO_READ;
+uint8 currentTemp = 25;
 uint8 setTemp = 25;
 
 /*******************************************************************************
@@ -50,6 +50,11 @@ void UpdateCurrentTemp(void){
  */
 void UpdateInputTemp(uint8 InputTemp){
     setTemp = InputTemp;
+    if (setTemp == 26){
+        DIO_ChannelWrite(0,1, 0xff);
+    } else{
+        DIO_ChannelWrite(0,1, 0x00);
+    }
 }
 
 

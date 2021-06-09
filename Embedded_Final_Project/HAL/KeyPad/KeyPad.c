@@ -84,7 +84,6 @@ void get_set_Temp(ParamCallback callback) {
     if (key != 0xff) {
         if (key > 2) {
             Temperature = Characters[key - 3];
-            uint8 second = 0;
             while (1) {
                 key = KeyPad_GetKey();
                 if (key == 0xff) {
