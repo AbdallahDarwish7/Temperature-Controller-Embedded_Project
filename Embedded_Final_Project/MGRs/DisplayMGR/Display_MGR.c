@@ -79,7 +79,7 @@ void write_CRT_Temp(uint8 crt_temp){
     LCD_WriteStringAt_xy(0, 14, temp);
 }
 
-void write_Set_Temp(uint8 set_temp) {
+void WriteSetTemp(uint8 set_temp) {
     LCD_WriteStringAt_xy(0, 4, "  ");
 	uint8 first = set_temp / 10;
 	uint8 second = set_temp % 10;

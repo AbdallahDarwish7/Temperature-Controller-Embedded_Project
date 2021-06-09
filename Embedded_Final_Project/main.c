@@ -4,6 +4,7 @@
  * Created: 6/2/2021 3:01:44 PM
  * Author : AbdallahDrwesh
  */
+#include <util/delay.h>
 #include "main.h"
 #include "Display_MGR.h"
 #include "Mode_MGR.h"
@@ -24,7 +25,11 @@ int main(void) {
     Delay_ms(2000, &AppFunc);
     oldCurrTemp = currentTemp;
     oldSetTemp = setTemp;
-    get_set_Temp(UpdateInputTemp);
+    StartGetSetTemp();
+//    StopGetSetTemp();
+//    StartGetSetTemp();
+//    _delay_ms(4000);
+//    StopGetSetTemp();
     while (1);
 }
 
@@ -34,7 +39,7 @@ void AppFunc() {
         if (machineState != STANDBY) {
             if ((currentTemp != oldCurrTemp) || (setTemp != oldSetTemp)) {
                 write_CRT_Temp(currentTemp);
-                write_Set_Temp(setTemp);
+                WriteSetTemp(setTemp);
                 oldSetTemp = setTemp;
                 oldCurrTemp = currentTemp;
                 if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) ||
@@ -65,6 +70,7 @@ void config() {
     display_Welcome_screen(1);
     TempMGR_Init();
     InitCalibrator();
-    SystemPeriodicity_Init();
+    SystemPeriodicity_Config();
     KeyPad_Init();
+    GetSetTempConfig(UpdateInputTemp);
 }

@@ -34,7 +34,7 @@ typedef uint8 MachineStateType;
 MachineStateType GetMachineState(void);
 void SetMachineState(MachineStateType state);
 void UpdateSystem(MachineStateType state);
-void SystemPeriodicity_Init(void);
+void SystemPeriodicity_Config(void);
 void UpdateDutyCycle(void);
 void CheckHeaterResponse(void);
 void ActivateSystem(void);

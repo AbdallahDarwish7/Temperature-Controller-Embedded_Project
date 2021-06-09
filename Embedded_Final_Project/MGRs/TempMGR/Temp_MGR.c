@@ -6,6 +6,7 @@
  *                              Includes                                       *
  *******************************************************************************/
 
+#include "KeyPad.h"
 #include "typedefs.h"
 #include "TC72.h"
 #include "Temp_MGR.h"
@@ -38,7 +39,6 @@ void UpdateCurrentTemp(void){
         currentTemp = TC72_ReadTemperature();
     }
 }
-
 
 /******************** Updating Temperature values ***********************
  * Function:  UpdateInputTemp 

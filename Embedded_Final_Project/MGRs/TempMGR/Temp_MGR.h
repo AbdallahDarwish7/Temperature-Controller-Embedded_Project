@@ -23,6 +23,7 @@ extern uint8 setTemp;
  *                         Functions Declarations                              *
  *******************************************************************************/
 
+void GetSetTempWrapper(void);
 void UpdateCurrentTemp(void);
 void UpdateInputTemp(uint8 InputTemp);
 void Deactivate_TC72();

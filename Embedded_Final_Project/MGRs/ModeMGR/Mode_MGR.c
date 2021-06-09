@@ -26,12 +26,12 @@ uint8 checkHeaterResponseFlag = 0;
 
 
 /******************** Initializing System Periodicity ***********************
- * Function:  SystemPeriodicity_Init 
+ * Function:  SystemPeriodicity_Config
  * --------------------
  * used to passing the periodic functions to the timer array to be called when needed by appropriate delay :
  *                 
  */
-void SystemPeriodicity_Init(void){
+void SystemPeriodicity_Config(void){
     PeriodicDelay_ms(200, &UpdateCurrentTemp);
     PeriodicDelay_ms(500, &UpdateCalibratorRead);
     PeriodicDelay_ms(100, &UpdateDutyCycle);

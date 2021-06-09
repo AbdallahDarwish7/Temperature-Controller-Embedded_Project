@@ -13,13 +13,15 @@ typedef void (*ParamCallback)(uint8);
 
 #define NO_VALUE ((uint8)0xff)
 
-void get_set_Temp_wrapper(void);
-
 uint8 KeyPad_GetKey(void);
 
 void KeyPad_Enter(void);
 
-void get_set_Temp(ParamCallback callback);
+void GetSetTempConfig(ParamCallback callback);
+
+void StopGetSetTemp();
+
+void StartGetSetTemp();
 
 uint8 KeyPad_Get_Hash(void);
 

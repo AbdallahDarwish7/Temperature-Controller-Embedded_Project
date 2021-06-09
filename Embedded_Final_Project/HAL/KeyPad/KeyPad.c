@@ -12,15 +12,13 @@
 #include "Display_MGR.h"
 #include "Scheduler.h"
 
+static void GetFirstInput();
+static void GetSecondInput();
 
 uint8 Characters[9] = {7, 8, 9, 4, 5, 6, 1, 2, 3};
 uint8 Temperature = 0;
-ParamCallback callback_g;
-
-
-void get_set_Temp_wrapper(void) {
-    get_set_Temp(callback_g);
-}
+ParamCallback GlobalCallback;
+uint8 GetSetTempRecFlag = 0;
 
 void KeyPad_Init(void) {
     DIO_Init(2);
@@ -53,33 +51,42 @@ uint8 KeyPad_GetKey(void) {
 void KeyPad_Enter(void) {
     uint8 key = KeyPad_GetKey();
     if (key == 0) {
-        write_Set_Temp(Temperature);
-        callback_g(Temperature);
+        WriteSetTemp(Temperature);
+        GlobalCallback(Temperature);
         Temperature = 0;
-        Delay_ms(300, get_set_Temp_wrapper);
+        if(GetSetTempRecFlag){
+            Delay_ms(200, GetFirstInput);
+        }
     } else {
         Delay_ms(200, KeyPad_Enter);
     }
 }
 
-void get_Second(void) {
+void StopGetSetTemp(){
+    GetSetTempRecFlag = 0;
+}
+
+void StartGetSetTemp(){
+    if(GetSetTempRecFlag == 0){
+        GetSetTempRecFlag = 1;
+        GetFirstInput();
+    }
+}
+void GetSecondInput(void) {
     uint8 key = KeyPad_GetKey();
-    write_Set_Temp(Temperature);
     if (key > 2 && key != 0xff) {
         Temperature = 10 * Temperature + Characters[key - 3];
-        write_Set_Temp(Temperature);
+        WriteSetTemp(Temperature);
         Delay_ms(200, KeyPad_Enter);
     } else if (key != 0) {
-        Delay_ms(200, get_Second);
+        Delay_ms(200, GetSecondInput);
     } else {
-        write_Set_Temp(Temperature);
-        callback_g(Temperature);
-        Delay_ms(200, get_set_Temp_wrapper);
+        WriteSetTemp(Temperature);
+        Delay_ms(200, GetFirstInput);
     }
 }
 
-void get_set_Temp(ParamCallback callback) {
-    callback_g = callback;
+static void GetFirstInput() {
     uint8 key = KeyPad_GetKey();
     if (key != 0xff) {
         if (key > 2) {
@@ -87,18 +94,26 @@ void get_set_Temp(ParamCallback callback) {
             while (1) {
                 key = KeyPad_GetKey();
                 if (key == 0xff) {
-                    write_Set_Temp(Temperature);
-                    Delay_ms(300, get_Second);
+                    WriteSetTemp(Temperature);
+                    Delay_ms(200, GetSecondInput);
                     break;
                 }
                 _delay_us(100);
             }
         } else {
-            Delay_ms(300, get_set_Temp_wrapper);
+            if(GetSetTempRecFlag){
+                Delay_ms(200, GetFirstInput);
+            }
         }
     } else {
-        Delay_ms(300, get_set_Temp_wrapper);
+        if(GetSetTempRecFlag){
+            Delay_ms(200, GetFirstInput);
+        }
     }
+}
+
+void GetSetTempConfig(ParamCallback callback) {
+    GlobalCallback = callback;
 }
 
 uint8 KeyPad_Get_Hash(void) {
