@@ -44,7 +44,7 @@ void UpdateCurrentTemp(void){
  * InputTemp: The value of temperature written on the keypad
  *
  */
-void UpdateInputTemp(int8 InputTemp){
+void UpdateInputTemp(uint8 InputTemp){
     setTemp = InputTemp;
 }
 

@@ -6,5 +6,5 @@
 #define EMBEDDED_FINAL_PROJECT_MAIN_H
 
 void config();
-
+void AppFunc();
 #endif //EMBEDDED_FINAL_PROJECT_MAIN_H

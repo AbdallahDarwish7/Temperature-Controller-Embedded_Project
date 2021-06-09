@@ -5,7 +5,6 @@
  *  Author: river
  */ 
 #include "Display_MGR.h"
-#include "LCD_Manager_cfg.h"
 #include "Scheduler.h"
 #include "LCD.h"
 #include "typedefs.h"
@@ -22,7 +21,6 @@ void display_Welcome_screen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
     LCD_WriteStringAt_xy(0, 0, "WELCOME");
-//	display_Welcome_once();
     Delay_ms(100, Shift_Right);
 }
 
@@ -32,8 +30,6 @@ void Shift_Right(void) {
 	if(loop > 9){
 	    LCD_Shift_L();
         Delay_ms(100, Shift_Left);
-//		StopPeriodicDelay_ms(Shift_Right);
-//		StartPeriodicDelay_ms(Shift_Left);
 	} else{
         Delay_ms(100, Shift_Right);
 	}
@@ -63,7 +59,6 @@ void display_Welcome_once(void){
 }
 
 void idle_screen(void){
-	
 	LCD_Clear();
     LCD_WriteChar(' ');
     LCD_WriteStringAt_xy(0, 0, "SET:25");
@@ -80,7 +75,6 @@ void write_CRT_Temp(uint8 crt_temp){
     LCD_WriteStringAt_xy(0, 14, "  ");
 	uint8 first = crt_temp / 10;
 	uint8 second = crt_temp % 10;
-	
 	char temp[2] = {numbers[first], numbers[second]};
     LCD_WriteStringAt_xy(0, 14, temp);
 }
@@ -89,7 +83,6 @@ void write_Set_Temp(uint8 set_temp) {
     LCD_WriteStringAt_xy(0, 4, "  ");
 	uint8 first = set_temp / 10;
 	uint8 second = set_temp % 10;
-	
 	char temp[2] = {numbers[first], numbers[second]};
     LCD_WriteStringAt_xy(0, 4, temp);
     LCD_WriteStringAt_xy(0, 10, "CRT");
