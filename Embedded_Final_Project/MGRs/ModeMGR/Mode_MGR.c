@@ -50,6 +50,7 @@ void UpdateSystem(MachineStateType state){
         }
         case STANDBY:
         {
+            write_State(STANDBY);
             if (checkHeaterResponseFlag == 1){
                 DeleteDelay_ms(&CheckHeaterResponse);
             }
@@ -57,11 +58,11 @@ void UpdateSystem(MachineStateType state){
                 DeactivateSystem();
                 machineState = STANDBY;
             }
-            write_State(machineState);
             break;
         }
         case OPERATIONAL:
         {
+            write_State(OPERATIONAL);
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                ActivateSystem();
                machineState = OPERATIONAL;
@@ -71,7 +72,6 @@ void UpdateSystem(MachineStateType state){
             }
             Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
             checkHeaterResponseFlag = 1;
-            write_State(machineState);
             break;
         }
         case ERROR:

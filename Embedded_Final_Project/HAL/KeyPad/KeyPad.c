@@ -90,7 +90,6 @@ void get_set_Temp(ParamCallback callback) {
                     write_Set_Temp(Temperature);
                     Delay_ms(300, get_Second);
                     break;
-
                 }
                 _delay_us(100);
             }

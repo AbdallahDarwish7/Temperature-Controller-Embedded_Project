@@ -75,7 +75,6 @@ ISR(TIMER2_COMP_vect) {
                 TempCallback = OneShotCallbacks[Loop];
                 OneShotCallbacks[Loop] = NULL;
                 TempCallback();
-//                OneShotCounts[Loop] = OneShotTimerOverflow[Loop];
             }
             isThereCallback = 1;
         }

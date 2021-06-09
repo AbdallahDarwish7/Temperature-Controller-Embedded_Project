@@ -5,7 +5,6 @@
  *  Author: river
  */ 
 #include "Display_MGR.h"
-#include "LCD_Manager_cfg.h"
 #include "Scheduler.h"
 #include "LCD.h"
 #include "typedefs.h"

@@ -12,8 +12,6 @@
 #include "KeyPad.h"
 #include "Temp_MGR.h"
 #include "PWM.h"
-#include "Scheduler.h"
-#include "DIO.h"
 
 
 int main(void) {
@@ -44,7 +42,9 @@ int main(void) {
                 machineState = GetMachineState();
                 if (machineState == STANDBY){
                     SetMachineState(OPERATIONAL);
-                } else if ((machineState == NORMAL) || (GetMachineState() == OPERATIONAL)){
+                } else if (machineState == NORMAL) {
+                    SetMachineState(STANDBY);
+                } else if (machineState == OPERATIONAL){
                     SetMachineState(STANDBY);
                 }
             }

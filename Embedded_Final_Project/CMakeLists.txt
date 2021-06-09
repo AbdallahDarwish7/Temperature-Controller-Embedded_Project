@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.17)
 SET(CMAKE_SYSTEM_NAME Generic)
-#SET(AVRBIN /home/abdallah/avr8-gnu-toolchain/bin)          # change compiler path
-SET(AVRBIN /home/abdulla167/avr8-gnu-toolchain/bin)          # change compiler path
+SET(AVRBIN /home/abdallah/avr8-gnu-toolchain/bin)          # change compiler path
+#SET(AVRBIN /home/abdulla167/avr8-gnu-toolchain/bin)          # change compiler path
 
 SET(AVROBJCOPY avr-objcopy)
 SET(AVRSIZE avr-size)
@@ -33,8 +33,8 @@ SET(CMAKE_C_FLAGS "-Os -mmcu=${DEVICE} -DF_CPU=${F_CPU}UL -std=gnu99 -Wl,--gc-se
 SET(CMAKE_CXX_FLAGS "-Os -mmcu=${DEVICE} -DF_CPU=${F_CPU}UL -Wl,--gc-sections")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-#set(CMAKE_PREFIX_PATH /home/abdallah/avr8-gnu-toolchain/avr)                  # change compiler path
-set(CMAKE_PREFIX_PATH /home/abdulla167/avr8-gnu-toolchain/avr)                  # change compiler path
+set(CMAKE_PREFIX_PATH /home/abdallah/avr8-gnu-toolchain/avr)                  # change compiler path
+#set(CMAKE_PREFIX_PATH /home/abdulla167/avr8-gnu-toolchain/avr)                  # change compiler path
 
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
@@ -43,8 +43,8 @@ set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES
         "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_PROJECT_NAME}.eep"
         )
 
-#include_directories(/home/abdallah/avr8-gnu-toolchain/avr/include)           # change compiler path
-include_directories(/home/abdulla167/avr8-gnu-toolchain/avr/include)           # change compiler path
+include_directories(/home/abdallah/avr8-gnu-toolchain/avr/include)           # change compiler path
+#include_directories(/home/abdulla167/avr8-gnu-toolchain/avr/include)           # change compiler path
 
 
 
