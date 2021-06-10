@@ -13,6 +13,7 @@
 #include "Calibrator_Resistor.h"
 #include "Display_MGR.h"
 #include "KeyPad.h"
+
 /*******************************************************************************
  *                           Global Variables                                  *
  *******************************************************************************/
@@ -160,8 +161,8 @@ void ActivateSystem(void){
     StartPeriodicDelay_ms(&UpdateCurrentTemp);
     StartPeriodicDelay_ms(&UpdateCalibratorRead);
     StartPeriodicDelay_ms(&UpdateDutyCycle);
+    StartGetSetTemp();
 }
-
 
 /******************** Deactivating System ***********************
  * Function:  DeactivateSystem 
@@ -178,8 +179,8 @@ void DeactivateSystem(void){
     StopPeriodicDelay_ms(&UpdateCurrentTemp);
     StopPeriodicDelay_ms(&UpdateCalibratorRead);
     StopPeriodicDelay_ms(&UpdateDutyCycle);
+    StopGetSetTemp();
 }
-
 
 /******************** Checking response of heater ***********************
  * Function:  CheckHeaterResponse 
@@ -196,7 +197,6 @@ void CheckHeaterResponse(void){
         UpdateSystem(machineState);
     }
 }
-
 
 /******************** Writing Port Data ***********************
  * Function:  UpdateDutyCycle 
