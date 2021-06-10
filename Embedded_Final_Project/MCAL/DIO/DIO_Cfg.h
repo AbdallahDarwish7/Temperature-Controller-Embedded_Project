@@ -2,7 +2,7 @@
 #define DIO_CFG_H_INCLUDED
 #define DIO_NUM_OF_PORT_CHANNELS ((unsigned char)8)
 #define DIO_NUM_OF_PORTS ((unsigned char)4)
-
+#include "typedefs.h"
 
 typedef struct
 {

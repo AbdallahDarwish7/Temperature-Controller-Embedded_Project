@@ -31,7 +31,7 @@ typedef uint8 Mode;
  *******************************************************************************/
 
 void TC72_Init(Mode OperMode);
-int8 TC72_ReadTemperature(void);
+uint8 TC72_ReadTemperature(void);
 Mode GetTC72Mode(void);
 void TC72_Mode(Mode OperMode);
 

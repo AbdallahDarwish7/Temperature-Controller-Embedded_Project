@@ -32,7 +32,7 @@
  *                  local variable for the same meaning
  *---------------------------------------------------------------------------
  *                  :
- *
+ */
 /*******************************************************************************
  *                        Registers definitions                                *
  *******************************************************************************/
@@ -51,8 +51,8 @@ const unsigned char PortBaseAddresses[NUM_OF_PORTS] =
                 PORTC_BASE_ADDRESS,
                 PORTD_BASE_ADDRESS
         };
-		
-		
+
+
 /******************** Initializing Digital I/O ***********************
  * Function:  DIO_Init 
  * --------------------
@@ -72,7 +72,7 @@ DIO_CheckType DIO_Init(uint8 PortId) {
     if (PortId < NUM_OF_PORTS) {
         for (Loop =(uint8) 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
             /* Init port direction for the masked pins*/
-            DDR_REG(PortId) = DDR_REG(PortId) & ((uint8)(~(DIO_ConfigParam[PortId][Loop].PortMask)));
+            DDR_REG(PortId) = DDR_REG(PortId) & ((uint8)~(DIO_ConfigParam[PortId][Loop].PortMask));
             DDR_REG(PortId) = DDR_REG(PortId) | (DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection);
             /* Init pull up resistor in case of input direction only*/
             PORT_REG(PortId) = PORT_REG(PortId) & ((uint8)(~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection));
@@ -140,8 +140,8 @@ DIO_CheckType DIO_ChannelWrite(uint8 PortId, uint8 ChannelId, uint8 Data) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
-            PORT_REG(PortId) = PORT_REG(PortId) & ((uint8)(~((uint8)((uint8)1 << ChannelId))));
-            PORT_REG(PortId) = PORT_REG(PortId) | (((uint8)((uint8)1 << ChannelId) & Data));
+            PORT_REG(PortId) = PORT_REG(PortId) & ((uint8)(~((uint8)(1U << ChannelId))));
+            PORT_REG(PortId) = PORT_REG(PortId) | (((uint8)(1U << ChannelId) & Data));
             Result = DIO_OK;
         } else{
             Result = DIO_NOK;
