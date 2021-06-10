@@ -85,7 +85,7 @@ void UpdateSystem(MachineStateType state){
     switch (state) {
         case NORMAL:
         {
-            if (checkHeaterResponseFlag == 1){
+            if (checkHeaterResponseFlag == (uint8)1){
                 DeleteDelay_ms(&CheckHeaterResponse);
             }
             if (machineState != NORMAL){
@@ -98,7 +98,7 @@ void UpdateSystem(MachineStateType state){
         case STANDBY:
         {
             write_State(STANDBY);
-            if (checkHeaterResponseFlag == 1){
+            if (checkHeaterResponseFlag == (uint8)1){
                 DeleteDelay_ms(&CheckHeaterResponse);
             }
             if (machineState != STANDBY){
@@ -114,19 +114,22 @@ void UpdateSystem(MachineStateType state){
             write_State(OPERATIONAL);
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                ActivateSystem();
-                Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
+                Delay_ms(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
             } else if (machineState == NORMAL){
                 PWM_Start();
-                Delay_ms(MAX_TIME_OF_RESPONSE, CheckHeaterResponse);
+                Delay_ms(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
             }
-            checkHeaterResponseFlag = 1;
+            else{
+                /* Empty else clause according to miscra rule 14.10 that All if ... else if constructs shall be terminated with an else clause*/
+            }
+            checkHeaterResponseFlag = (uint8)1;
             machineState = OPERATIONAL;
             write_State(OPERATIONAL);
             break;
         }
         case ERROR:
         {
-            if (checkHeaterResponseFlag == 1){
+            if (checkHeaterResponseFlag == (uint8)1){
                 DeleteDelay_ms(&CheckHeaterResponse);
             }
             DeactivateSystem();
@@ -188,8 +191,8 @@ void DeactivateSystem(void){
  *
  */
 void CheckHeaterResponse(void){
-    checkHeaterResponseFlag = 0;
-    if ((setTemp > currentTemp) && ((setTemp - currentTemp) > 5)){
+    checkHeaterResponseFlag = (uint8)0;
+    if ((setTemp > currentTemp) && ((setTemp - currentTemp) > (uint8)5)){
         machineState = ERROR;
         UpdateSystem(machineState);
     }
@@ -212,6 +215,6 @@ void UpdateDutyCycle(void){
     if (setTemp > currentTemp){
        Vt = ((((float32)setTemp - (float32)currentTemp) / 100.0f) * 10.0f);
     }
-    float32 DutyCycle = ((((calibratorRead * 2.0f) / 10.0f) * Vt) / 10.0f) * 100;
+    float32 DutyCycle = ((((calibratorRead * (float32)2.0) / (float32)10.0) * Vt) / (float32)10.0) * (float32)100.0;
     PWM_SetDutyCycle(DutyCycle, PWM_PHASE_CORRECT_MODE, PWM_NON_INVERTED_OC);
 }

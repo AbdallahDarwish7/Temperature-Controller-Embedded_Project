@@ -32,11 +32,11 @@ uint8 setTemp = 25;
  *
  */
 void UpdateCurrentTemp(void){
-    Mode TC72_Mode = GetTC72Mode();
-    if (TC72_Mode == SHUTDOWN_MODE){
+    Mode TC72Mode = GetTC72Mode();
+    if (TC72Mode == SHUTDOWN_MODE){
         currentTemp = NO_READ;
     } else{
-        currentTemp = TC72_ReadTemperature();
+        currentTemp = (uint8)TC72_ReadTemperature();
     }
 }
 
@@ -50,11 +50,6 @@ void UpdateCurrentTemp(void){
  */
 void UpdateInputTemp(uint8 InputTemp){
     setTemp = InputTemp;
-    if (setTemp == 26){
-        DIO_ChannelWrite(0,1, 0xff);
-    } else{
-        DIO_ChannelWrite(0,1, 0x00);
-    }
 }
 
 
@@ -64,7 +59,7 @@ void UpdateInputTemp(uint8 InputTemp){
  * used to initiate TC72 sensor after power on and no temperature reading "SHUTDOWN_MODE".
  *
  */
-void TempMGR_Init(){
+void TempMGR_Init(void){
     TC72_Init(SHUTDOWN_MODE);
 }
 
@@ -75,7 +70,7 @@ void TempMGR_Init(){
  * used to deactivate TC72 sensor by applying "SHUTDOWN_MODE".
  *
  */
-void Deactivate_TC72(){
+void Deactivate_TC72(void){
     if (GetTC72Mode() != SHUTDOWN_MODE){
         TC72_Mode(SHUTDOWN_MODE);
     }

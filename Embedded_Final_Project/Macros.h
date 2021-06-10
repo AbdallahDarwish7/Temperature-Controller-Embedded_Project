@@ -8,6 +8,8 @@
 /*                ************** Justification *****************
  *                  Deviate from rule 19.7 (advisory)
  *                  This macro makes the code clearer and conciser
+ *                  Deviate from rule 11.3
+ *                  may be unavoidable when addressing memory mapped registers or other hardware specific features
  */
 
 #define BIT_IS_SET(PORT, BIT_NUM)    (((PORT) & (BIT_NUM)))

@@ -21,14 +21,14 @@
  *                         Variables Declaration                               *
  *******************************************************************************/
 
-extern float calibratorRead;
+extern float32 calibratorRead;
 
 /*******************************************************************************
  *                         Functions Declaration                               *
  *******************************************************************************/
 
-void InitCalibrator();
-void UpdateCalibratorRead();
+void InitCalibrator(void);
+void UpdateCalibratorRead(void);
 
-#endif //EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H
+#endif /*EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H*/
 

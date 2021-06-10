@@ -65,7 +65,7 @@ void TC72_Mode(Mode OperMode){
  */
 uint8 TC72_ReadTemperature(void){
     uint8 dummy = 0x00;
-    int8  MSBValue;
+    uint8  MSBValue;
     /* ACTIVATE SLAVE TC72 */
     DIO_ChannelWrite(SPI_PORT_NUM, SS_PIN_NUM, (uint8)0xff);
     /* SEND MSB DATA REGISTER ADDRESS TO GET THE DATA */

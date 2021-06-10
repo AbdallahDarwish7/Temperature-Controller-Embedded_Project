@@ -4,204 +4,204 @@ const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHAN
                 {
                         /* CHANNEL 0 */
                         {
-                                0x01,
-                                0xff,
-                                0x00
+                                (uint8)0x01,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 1 */
                         {
-                                0x02,
-                                0X00,
-                                0x00
+                                (uint8)0x02,
+                                (uint8)0X00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 2 */
                         {
-                                0x04,
-                                0xff,
-                                0x00
+                                (uint8)0x04,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 3 */
                         {
-                                0x08,
-                                0xff,
-                                0x00
+                                (uint8)0x08,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 4 */
                         {
-                                0x10,
-                                0xff,
-                                0x00
+                                (uint8)0x10,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 5 */
                         {
-                                0x20,
-                                0xff,
-                                0x00
+                                (uint8)0x20,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 6 */
                         {
-                                0x40,
-                                0xff,
-                                0x00
+                                (uint8)0x40,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 7 */
                         {
-                                0x80,
-                                0xff,
-                                0x00
+                                (uint8)0x80,
+                                (uint8)0xff,
+                                (uint8)0x00
                         }
                 },
                 /* CHANNELS OF PORT B*/
                 {
                         /* CHANNEL 0 */
                         {
-                                0x01,
-                                0x00,
-                                0x00
+                                (uint8)0x01,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 1 */
                         {
-                                0x02,
-                                0X00,
-                                0x00
+                                (uint8)0x02,
+                                (uint8)0X00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 2 */
                         {
-                                0x04,
-                                0x00,
-                                0x00
+                                (uint8)0x04,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 3 */
                         {
-                                0x08,
-                                0xff,
-                                0x00
+                                (uint8)0x08,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 4 */
                         {
-                                0x10,
-                                0xff,
-                                0x00
+                                (uint8)0x10,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 5 */
                         {
-                                0x20,
-                                0xff,
-                                0x00
+                                (uint8)0x20,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 6 */
                         {
-                                0x40,
-                                0x00,
-                                0x00
+                                (uint8)0x40,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 7 */
                         {
-                                0x80,
-                                0xff,
-                                0x00
+                                (uint8)0x80,
+                                (uint8)0xff,
+                                (uint8)0x00
                         }
                 },
                 /* CHANNELS OF PORT C*/
                 {
                         /* CHANNEL 0 */
                         {
-                                0x01,
-                                0xff,
-                                0x00
+                                (uint8)0x01,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 1 */
                         {
-                                0x02,
-                                0Xff,
-                                0x00
+                                (uint8)0x02,
+                                (uint8)0Xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 2 */
                         {
-                                0x04,
-                                0xff,
-                                0x00
+                                (uint8)0x04,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 3 */
                         {
-                                0x08,
-                                0xff,
-                                0x00
+                                (uint8)0x08,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 4 */
                         {
-                                0x10,
-                                0xff,
-                                0x00
+                                (uint8)0x10,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 5 */
                         {
-                                0x20,
-                                0xff,
-                                0x00
+                                (uint8)0x20,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 6 */
                         {
-                                0x40,
-                                0xff,
-                                0x00
+                                (uint8)0x40,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 7 */
                         {
-                                0x80,
-                                0xff,
-                                0x00
+                                (uint8)0x80,
+                                (uint8)0xff,
+                                (uint8)0x00
                         }
                 },
                 /* CHANNELS OF PORT D*/
                 {
                         /* CHANNEL 0 */
                         {
-                                0x01,
-                                0xff,
-                                0x00
+                                (uint8)0x01,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 1 */
                         {
-                                0x02,
-                                0Xff,
-                                0x00
+                                (uint8)0x02,
+                                (uint8)0Xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 2 */
                         {
-                                0x04,
-                                0xff,
-                                0x00
+                                (uint8)0x04,
+                                (uint8)0xff,
+                                (uint8)0x00
                         },
                         /* CHANNEL 3 */
                         {
-                                0x08,
-                                0x00,
-                                0x00
+                                (uint8)0x08,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 4 */
                         {
-                                0x10,
-                                0x00,
-                                0x00
+                                (uint8)0x10,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 5 */
                         {
-                                0x20,
-                                0x00,
-                                0x00
+                                (uint8)0x20,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 6 */
                         {
-                                0x40,
-                                0x00,
-                                0x00
+                                (uint8)0x40,
+                                (uint8)0x00,
+                                (uint8)0x00
                         },
                         /* CHANNEL 7 */
                         {
-                                0x80,
-                                0xff,
-                                0x00
+                                (uint8)0x80,
+                                (uint8)0xff,
+                                (uint8)0x00
                         }
                 }
         };

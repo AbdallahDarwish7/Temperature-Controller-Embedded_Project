@@ -52,8 +52,9 @@ uint8 KeyPad_GetKey(void)
 }
 
 void KeyPad_Enter(void) {
-    uint8 key1 = KeyPad_GetKey();
-    if (key1 == (uint8)0) {
+    /* JUSTIFICATION: local variable for the same meaning */
+    uint8 key = KeyPad_GetKey();
+    if (key == (uint8)0) {
         WriteSetTemp(Temperature);
         GlobalCallback(Temperature);
         Temperature =(uint8)0;
@@ -79,12 +80,13 @@ void StartGetSetTemp(void){
     }
 }
 static void GetSecondInput(void) {
-    uint8 key2 = KeyPad_GetKey();
-    if ((key2 > (uint8)2) && (key2 != (uint8)0xff)) {
-        Temperature =((uint8) 10 * Temperature) + Characters[key2 - (uint8)3];
+    /* JUSTIFICATION: local variable for the same meaning */
+    uint8 key = KeyPad_GetKey();
+    if ((key > (uint8)2) && (key != (uint8)0xff)) {
+        Temperature =((uint8) 10 * Temperature) + Characters[key - (uint8)3];
         WriteSetTemp(Temperature);
         Delay_ms((uint32)200, &KeyPad_Enter);
-    } else if (key2 !=(uint8) 0) {
+    } else if (key != (uint8) 0) {
         Delay_ms((uint32)200, &GetSecondInput);
     } else {
         WriteSetTemp(Temperature);
@@ -93,15 +95,14 @@ static void GetSecondInput(void) {
 }
 
 static void GetFirstInput(void) {
-
-    uint8 key3 = KeyPad_GetKey();
-    if (key3 != (uint8)0xff) {
-        if (key3 > (uint8)2) {
-
-            Temperature = Characters[(key3 - (uint8)3)];
+    /* JUSTIFICATION: local variable for the same meaning */
+    uint8 key = KeyPad_GetKey();
+    if (key != (uint8)0xff) {
+        if (key > (uint8)2) {
+            Temperature = Characters[key - (uint8)3];
             while (1) {
-                key3 = KeyPad_GetKey();
-                if (key3 == (uint8)0xff) {
+                key = KeyPad_GetKey();
+                if (key == (uint8)0xff) {
                     WriteSetTemp(Temperature);
                     Delay_ms((uint32)200, &GetSecondInput);
                     break;
@@ -125,9 +126,10 @@ void GetSetTempConfig(ParamCallback callback) {
 }
 
 uint8 KeyPad_Get_Hash(void) {
-    uint8 key4= KeyPad_GetKey();
+    /* JUSTIFICATION: local variables for the same meaning */
+    uint8 key= KeyPad_GetKey();
     uint8 result = 0;
-    if (key4 == (uint8)2) {
+    if (key == (uint8)2) {
         result = (uint8)1;
     }
     return result;
