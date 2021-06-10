@@ -25,6 +25,6 @@ void write_CRT_Temp(uint8 crt_temp);
 
 void WriteSetTemp(uint8 set_temp);
 
-void Activate_LCD();
+void Activate_LCD(void);
 
 #endif /* LCD_MANAGER_H_ */
