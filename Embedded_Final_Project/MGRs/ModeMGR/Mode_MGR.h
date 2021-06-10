@@ -38,6 +38,7 @@ void UpdateSystem(MachineStateType state);
 void SystemPeriodicity_Config(void);
 void UpdateDutyCycle(void);
 void CheckHeaterResponse(void);
+uint8 IsReadyKeyPressed();
 void ActivateSystem(void);
 void DeactivateSystem(void);
 

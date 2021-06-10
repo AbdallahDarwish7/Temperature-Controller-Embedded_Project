@@ -8,8 +8,6 @@
 #include "Scheduler.h"
 #include "LCD.h"
 #include "typedefs.h"
-#include "KeyPad.h"
-#include "Scheduler.h"
 
 
 uint8* States[4] = {(uint8*)"STANDBY", (uint8*)"OPERATION", (uint8*)"NORMAL", (uint8*)"ERROR"};
@@ -17,7 +15,7 @@ uint8 numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};
 uint8 loop = (uint8)0;
 uint8 count ;
 
-void display_Welcome_screen(uint8 times) {
+void DisplayWelcomeScreen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
     LCD_WriteStringAt_xy((uint8)0, (uint8)0, (uint8*)"WELCOME");
@@ -52,17 +50,11 @@ void Shift_Left(void) {
 
 }
 
-void display_Welcome_once(void){
-	PeriodicDelay_ms((int16)100,&Shift_Right);
-	PeriodicDelay_ms((int16)100, &Shift_Left);
-	StartPeriodicDelay_ms(&Shift_Right);
-}
-
 void idle_screen(void){
 	LCD_Clear();
     LCD_WriteChar(' ');
     LCD_WriteStringAt_xy((uint8)0, (uint8)0, (uint8*)"SET:25");
-    LCD_WriteStringAt_xy((uint8)0, (uint8)10, (uint8*)"CRT:YY");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)10, (uint8*)"CRT:XX");
     LCD_WriteStringAt_xy((uint8)1, (uint8)0, (uint8*)"STATE:STANDBY");
 }
 

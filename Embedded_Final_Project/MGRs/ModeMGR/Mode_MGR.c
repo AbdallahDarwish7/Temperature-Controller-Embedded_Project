@@ -152,8 +152,7 @@ void UpdateSystem(MachineStateType state){
  * used to activate system components:
  *		Activating TC72 Temperature Sensor
  *		Activating PWM "pulse width modulation"
- *		Starting periodic Callback of Functions (UpdateCurrentTemp, 
- *														UpdateCalibratorRead, UpdateDutyCycle)  
+ *		Starting periodic Callback of Functions (UpdateCurrentTemp, UpdateCalibratorRead, UpdateDutyCycle)
  */
 void ActivateSystem(void){
     Activate_TC72();
@@ -170,8 +169,7 @@ void ActivateSystem(void){
  * used to deactivate system components:
  *		Deactivating TC72 Temperature Sensor
  *		Deactivating PWM "pulse width modulation"
- *		Stop periodic DelayFlag of the Functions (UpdateCurrentTemp,
- *														UpdateCalibratorRead, UpdateDutyCycle)
+ *		Stop periodic DelayFlag of the Functions (UpdateCurrentTemp, UpdateCalibratorRead, UpdateDutyCycle)
  */
 void DeactivateSystem(void){
     Deactivate_TC72();
@@ -198,6 +196,9 @@ void CheckHeaterResponse(void){
     }
 }
 
+uint8 IsReadyKeyPressed(){
+    return KeyPad_Get_Hash();
+}
 /******************** Writing Port Data ***********************
  * Function:  UpdateDutyCycle 
  * --------------------

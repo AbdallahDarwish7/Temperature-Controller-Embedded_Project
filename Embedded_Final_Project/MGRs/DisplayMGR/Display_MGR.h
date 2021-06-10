@@ -13,9 +13,9 @@ void Shift_Right(void);
 
 void Shift_Left(void);
 
-void display_Welcome_screen(uint8 times);
+void DisplayWelcomeScreen(uint8 times);
 
-void display_Welcome_once(void);
+
 
 void idle_screen(void);
 

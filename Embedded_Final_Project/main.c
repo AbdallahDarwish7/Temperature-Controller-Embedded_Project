@@ -9,7 +9,6 @@
 #include "Display_MGR.h"
 #include "Mode_MGR.h"
 #include "Calibrator_Resistor.h"
-#include "KeyPad.h"
 #include "Temp_MGR.h"
 #include "Scheduler.h"
 
@@ -21,7 +20,7 @@ void callback(){
 
 int main(void) {
     SystemConfig();
-    Delay_ms(2000U, callback);
+    Delay_ms(6000U, callback);
     uint8 oldCurrTemp = currentTemp;
     uint8 oldSetTemp = setTemp;
     MachineStateType machineState;
@@ -47,7 +46,7 @@ int main(void) {
                         }
                     }
                 }
-                if (KeyPad_Get_Hash()) {
+                if (IsReadyKeyPressed()) {
                     machineState = GetMachineState();
                     if (machineState == STANDBY) {
                         SetMachineState(OPERATIONAL);
@@ -63,11 +62,8 @@ int main(void) {
 
 void SystemConfig() {
     Activate_LCD();
-    display_Welcome_screen(1);
+    DisplayWelcomeScreen(3);
     TempMGR_Init();
     InitCalibrator();
     SystemPeriodicity_Config();
-    KeyPad_Init();
-    GetSetTempConfig(UpdateInputTemp);
-	ActivateSystem();
 }
