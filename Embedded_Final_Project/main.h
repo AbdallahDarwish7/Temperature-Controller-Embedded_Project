@@ -1,10 +1,7 @@
-//
-// Created by abdulla167 on ٨‏/٦‏/٢٠٢١.
-//
-
 #ifndef EMBEDDED_FINAL_PROJECT_MAIN_H
 #define EMBEDDED_FINAL_PROJECT_MAIN_H
-
-void SystemConfig();
-void AppFunc();
-#endif //EMBEDDED_FINAL_PROJECT_MAIN_H
+#include "typedefs.h"
+int32 main(void);
+void SystemConfig(void);
+void callback(void);
+#endif /*EMBEDDED_FINAL_PROJECT_MAIN_H*/

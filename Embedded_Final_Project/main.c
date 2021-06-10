@@ -11,16 +11,11 @@
 #include "Calibrator_Resistor.h"
 #include "Temp_MGR.h"
 #include "Scheduler.h"
-
+#include "typedefs.h"
 uint8 DelayFlag = 0U;
-void callback(){
-    DelayFlag = 1U;
-    Delay_ms(200U, callback);
-}
-
-int main(void) {
+int32 main(void) {
     SystemConfig();
-    Delay_ms(6000U, callback);
+    Delay_ms(6000U, &callback);
     uint8 oldCurrTemp = currentTemp;
     uint8 oldSetTemp = setTemp;
     MachineStateType machineState;
@@ -35,16 +30,20 @@ int main(void) {
                         WriteSetTemp(setTemp);
                         oldSetTemp = setTemp;
                         oldCurrTemp = currentTemp;
-                        if (((currentTemp > setTemp) && ((currentTemp - setTemp) <= 5)) ||
-                            ((setTemp > currentTemp) && ((setTemp - currentTemp) <= 5))) {
+                        if ((uint8)((currentTemp > setTemp) && (uint8)((uint8)(currentTemp - setTemp) <= 5U)) ||
+                            ((setTemp > currentTemp) && (uint8)((uint8)(setTemp - currentTemp) <= 5U))) {
                             SetMachineState(NORMAL);
                         } else {
                             SetMachineState(OPERATIONAL);
                         }
-                        if ((currentTemp > setTemp) && ((currentTemp - setTemp) > 10)) {
+                        if ((currentTemp > setTemp) && ((uint8)(currentTemp - setTemp) > 10U)) {
                             SetMachineState(ERROR);
+                        } else {
+
                         }
                     }
+                } else {
+
                 }
                 if (IsReadyKeyPressed()) {
                     machineState = GetMachineState();
@@ -52,18 +51,29 @@ int main(void) {
                         SetMachineState(OPERATIONAL);
                     } else if ((machineState == NORMAL) || (machineState == OPERATIONAL)) {
                         SetMachineState(STANDBY);
+                    }else {
+
                     }
+                }else{
+
                 }
+            } else{
+
             }
         }
         _delay_us(1U);
     }
 }
 
-void SystemConfig() {
+void SystemConfig(void) {
     Activate_LCD();
-    DisplayWelcomeScreen(3);
+    DisplayWelcomeScreen(3U);
     TempMGR_Init();
     InitCalibrator();
     SystemPeriodicity_Config();
+}
+
+void callback(void){
+    DelayFlag = 1U;
+    Delay_ms(200U, &callback);
 }
