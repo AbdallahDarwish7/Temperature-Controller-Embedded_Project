@@ -29,7 +29,6 @@ int main(void) {
     MachineStateType machineState;
     oldCurrTemp = currentTemp;
     oldSetTemp = setTemp;
-    StartGetSetTemp();
     while (1){
         if(DelayFlag == 1){
             DelayFlag = 0;
