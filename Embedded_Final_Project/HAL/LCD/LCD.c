@@ -36,11 +36,12 @@ void LCD_Write_Upper(uint8 char_data) {
 
 void LCD_Write_Lower(uint8 char_data) {
     char_data = char_data << 4;
-    uint8 loop1;
-    uint8 data1;
-    for (loop1 = (uint8) 0; loop1 < LCD_NUM_OF_DATA_PINS; loop1++) {
-        data1 = CheckBit(char_data, loop1);
-        DIO_ChannelWrite(LCD_ConfigParam.DataPortId, LCD_ConfigParam.DataPinsChannel[loop1], data1);
+    /* JUSTIFICATION: local variables for the same meaning */
+    uint8 loop;
+    uint8 data;
+    for (loop = (uint8) 0; loop < LCD_NUM_OF_DATA_PINS; loop++) {
+        data = CheckBit(char_data, loop);
+        DIO_ChannelWrite(LCD_ConfigParam.DataPortId, LCD_ConfigParam.DataPinsChannel[loop], data);
     }
 }
 
@@ -131,10 +132,11 @@ void LCD_Init(void)            /* LCD Initialize function */
 
 void LCD_WriteString(const uint8 str[])        /* Send string to LCD function */
 {
-    uint16 loop2;
-    for (loop2 = (uint16)0; str[loop2] != (uint8)'\0'; loop2++)        /* Send each char of string till the NULL */
+    /* JUSTIFICATION: local variable for the same meaning */
+    uint16 loop;
+    for (loop = (uint16)0; str[loop] != (uint8)'\0'; loop++)        /* Send each char of string till the NULL */
     {
-        LCD_WriteChar((uint8) str[loop2]);
+        LCD_WriteChar((uint8) str[loop]);
     }
 }
 
@@ -170,12 +172,13 @@ void LCD_Shift_L(void) {
 }
 
 void LCD_Custom_Char(uint8 loc, const uint8 msg[]) {
-    uint8 loop3;
+    /* JUSTIFICATION: local variable for the same meaning */
+    uint8 loop;
     if (loc < (uint8)8) {
         LCD_WriteCommand((uint8)0x40 + (loc * (uint8)8));    /* Command 0x40 and onwards forces the device to point CGRAM address */
-        for (loop3 = (uint8)0; loop3 < (uint8)8; loop3++)    /* Write 8 byte for generation of 1 character */
+        for (loop = (uint8)0; loop < (uint8)8; loop++)    /* Write 8 byte for generation of 1 character */
         {
-            LCD_WriteChar(msg[loop3]);
+            LCD_WriteChar(msg[loop]);
         }
     }
 }

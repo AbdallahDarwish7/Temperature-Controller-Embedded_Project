@@ -19,7 +19,8 @@
 #define OPERATIONAL ((uint8)1)
 #define NORMAL  ((uint8)2)
 #define ERROR   ((uint8)3)
-#define MAX_TIME_OF_RESPONSE 10000
+#define MAX_TIME_OF_RESPONSE ((uint32)1800000)
+
 
 /*******************************************************************************
  *                                Typedefs                                     *
