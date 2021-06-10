@@ -4,16 +4,31 @@
 
 #ifndef EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H
 #define EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H
+
+/*******************************************************************************
+ *                              Includes                                       *
+ *******************************************************************************/
+
 #include "typedefs.h"
 
-
+/*******************************************************************************
+ *                               Defines                                        *
+ *******************************************************************************/
 
 #define CALIBRATOR_CHANNEL ((uint8)0)
 
-extern float calibratorRead;
+/*******************************************************************************
+ *                         Variables Declaration                               *
+ *******************************************************************************/
 
-void InitCalibrator();
-void UpdateCalibratorRead();
+extern float32 calibratorRead;
 
-#endif //EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H
+/*******************************************************************************
+ *                         Functions Declaration                               *
+ *******************************************************************************/
+
+void InitCalibrator(void);
+void UpdateCalibratorRead(void);
+
+#endif /*EMBEDDED_FINAL_PROJECT_CALIBRATOR_RESISTOR_H*/
 

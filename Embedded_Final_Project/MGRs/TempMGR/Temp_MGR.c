@@ -1,16 +1,21 @@
 /*
 * Created by abdulla167
 */
+
+/*******************************************************************************
+ *                              Includes                                       *
+ *******************************************************************************/
+
+#include "KeyPad.h"
 #include "typedefs.h"
 #include "TC72.h"
 #include "Temp_MGR.h"
-
 
 /*******************************************************************************
  *                          Global Variables                                   *
  *******************************************************************************/
 
-uint8 currentTemp = NO_READ;
+uint8 currentTemp = 25;
 uint8 setTemp = 25;
 
 /*******************************************************************************
@@ -27,14 +32,13 @@ uint8 setTemp = 25;
  *
  */
 void UpdateCurrentTemp(void){
-    Mode TC72_Mode = GetTC72Mode();
-    if (TC72_Mode == SHUTDOWN_MODE){
+    Mode TC72Mode = GetTC72Mode();
+    if (TC72Mode == SHUTDOWN_MODE){
         currentTemp = NO_READ;
     } else{
-        currentTemp = TC72_ReadTemperature();
+        currentTemp = (uint8)TC72_ReadTemperature();
     }
 }
-
 
 /******************** Updating Temperature values ***********************
  * Function:  UpdateInputTemp 
@@ -55,7 +59,7 @@ void UpdateInputTemp(uint8 InputTemp){
  * used to initiate TC72 sensor after power on and no temperature reading "SHUTDOWN_MODE".
  *
  */
-void TempMGR_Init(){
+void TempMGR_Init(void){
     TC72_Init(SHUTDOWN_MODE);
 }
 
@@ -66,7 +70,7 @@ void TempMGR_Init(){
  * used to deactivate TC72 sensor by applying "SHUTDOWN_MODE".
  *
  */
-void Deactivate_TC72(){
+void Deactivate_TC72(void){
     if (GetTC72Mode() != SHUTDOWN_MODE){
         TC72_Mode(SHUTDOWN_MODE);
     }

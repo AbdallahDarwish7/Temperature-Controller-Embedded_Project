@@ -6,9 +6,9 @@
 
 typedef struct
 {
-    unsigned char PortMask;
-    unsigned char PortDirection;
-    unsigned char IsPullupResistorUsed;
+    uint8 PortMask;
+    uint8 PortDirection;
+    uint8 IsPullupResistorUsed;
 }DIO_ConfigParamType;
 extern const DIO_ConfigParamType DIO_ConfigParam[DIO_NUM_OF_PORTS][DIO_NUM_OF_PORT_CHANNELS];
 

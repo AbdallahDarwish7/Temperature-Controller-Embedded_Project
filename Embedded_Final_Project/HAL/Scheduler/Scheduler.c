@@ -7,7 +7,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define NUM_ONE_SHOT_CALLBACKS 5U
+#define NUM_ONE_SHOT_CALLBACKS 8U
 #define NUM_PERIODIC_CALLBACKS 3U
 
 #define PERIODIC_ON 1U
@@ -53,13 +53,12 @@ void Delay_ms(uint32 delay_ms, VoidCallback callback) {
     }
 }
 
-void DeleteDelay_ms(VoidCallback callback){
+void DeleteDelay_ms(VoidCallback callback) {
     cli();
     uint8 Loop;
     for (Loop = 0; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {
         if (OneShotCallbacks[Loop] == callback) {
             OneShotCallbacks[Loop] = NULL;
-            break;
         }
     }
     sei();
@@ -75,7 +74,6 @@ ISR(TIMER2_COMP_vect) {
                 TempCallback = OneShotCallbacks[Loop];
                 OneShotCallbacks[Loop] = NULL;
                 TempCallback();
-//                OneShotCounts[Loop] = OneShotTimerOverflow[Loop];
             }
             isThereCallback = 1;
         }
@@ -153,12 +151,11 @@ ISR(TIMER1_COMPA_vect) {
     }
 }
 
-void DeletePeriodicDelay_ms(VoidCallback callback){
+void DeletePeriodicDelay_ms(VoidCallback callback) {
     uint8 Loop;
     for (Loop = 0; Loop < NUM_PERIODIC_CALLBACKS; Loop++) {
         if (PeriodicCallbacks[Loop] == callback) {
             PeriodicCallbacks[Loop] = NULL;
-            break;
         }
     }
 }

@@ -39,6 +39,10 @@ void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
     DIO_ChannelDir(SPI_PORT_NUM, MISO_PIN_NUM, (uint8)0x00);
     /* SET SCK PIN AS OUTPUT PIN */
     DIO_ChannelDir(SPI_PORT_NUM, SCK_PIN_NUM, (uint8)0xff);
+
+    /*                ************** Justification *****************
+     *                  Deviate from rule 11.3: may be unavoidable when addressing memory mapped registers or other hardware specific features
+     */
     /* ENABLE MSTR BIT TO MAKE DEVICE THE MASTER */
     SET_BIT(SPCR, MSTR);
     /* SET CLOCK FREQUENCY = */
@@ -73,7 +77,7 @@ void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity)
 void SPI_SendByte(uint8 data)
 {
     SPDR =data; /*send data0 by SPI*/
-    while(BIT_IS_CLEAR(SPSR,SPIF)){} /*wait until SPI interrupt flag=1 (data0 is sent correctly)*/
+    while(BIT_IS_CLEAR(SPSR,SPIF) == 1u){} /*wait until SPI interrupt flag=1 (data0 is sent correctly)*/
 }
 
 

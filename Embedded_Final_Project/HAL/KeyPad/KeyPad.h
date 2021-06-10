@@ -9,17 +9,19 @@
 #ifndef KEYPAD_H_
 #define KEYPAD_H_
 #include "typedefs.h"
-typedef void (*ParamCallback)(uint8);
+typedef void (*ParamCallback)(uint8 pram);
 
 #define NO_VALUE ((uint8)0xff)
-
-void get_set_Temp_wrapper(void);
 
 uint8 KeyPad_GetKey(void);
 
 void KeyPad_Enter(void);
 
-void get_set_Temp(ParamCallback callback);
+void GetSetTempConfig(ParamCallback callback);
+
+void StopGetSetTemp(void);
+
+void StartGetSetTemp(void);
 
 uint8 KeyPad_Get_Hash(void);
 

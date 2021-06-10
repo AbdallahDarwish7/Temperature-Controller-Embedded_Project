@@ -24,13 +24,21 @@
  *---------------------------------------------------------------------------             
  *                  Deviate from rule 19.7 (advisory)
  *                  This macro makes the code clearer and conciser
- *******************************************************************************/
+ *---------------------------------------------------------------------------
+ *                  Deviate from rule 11.3:
+ *                  may be unavoidable when addressing memory mapped registers or other hardware specific features
+ *---------------------------------------------------------------------------
+ *                  Deviate from rule 5.7:
+ *                  local variable for the same meaning
+ *---------------------------------------------------------------------------
+ *                  :
+ *
 /*******************************************************************************
  *                        Registers definitions                                *
  *******************************************************************************/
-#define PORT_REG(PORT_ID) (*((volatile uint8 *const)(PortBaseAddresses[PORT_ID] - PORT_REG_OFFSET)))
-#define DDR_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[PORT_ID] - DDR_REG_OFFSET)))
-#define PIN_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[PORT_ID] - PIN_REG_OFFSET)))
+#define PORT_REG(PORT_ID) (*((volatile uint8 *const)(PortBaseAddresses[(PORT_ID)] - PORT_REG_OFFSET)))
+#define DDR_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[(PORT_ID)] - DDR_REG_OFFSET)))
+#define PIN_REG(PORT_ID) (*((volatile  uint8 *const)(PortBaseAddresses[(PORT_ID)] - PIN_REG_OFFSET)))
 
 
 /*******************************************************************************
@@ -64,12 +72,12 @@ DIO_CheckType DIO_Init(uint8 PortId) {
     if (PortId < NUM_OF_PORTS) {
         for (Loop =(uint8) 0; Loop < DIO_NUM_OF_PORT_CHANNELS; ++Loop) {
             /* Init port direction for the masked pins*/
-            DDR_REG(PortId) &= ~(DIO_ConfigParam[PortId][Loop].PortMask);
-            DDR_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection;
+            DDR_REG(PortId) = DDR_REG(PortId) & ((uint8)(~(DIO_ConfigParam[PortId][Loop].PortMask)));
+            DDR_REG(PortId) = DDR_REG(PortId) | (DIO_ConfigParam[PortId][Loop].PortMask & DIO_ConfigParam[PortId][Loop].PortDirection);
             /* Init pull up resistor in case of input direction only*/
-            PORT_REG(PortId) &= (~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection);
-            PORT_REG(PortId) |= DIO_ConfigParam[PortId][Loop].PortMask &
-                                ((~DIO_ConfigParam[PortId][Loop].PortDirection) & DIO_ConfigParam[PortId][Loop].IsPullupResistorUsed);
+            PORT_REG(PortId) = PORT_REG(PortId) & ((uint8)(~(DIO_ConfigParam[PortId][Loop].PortMask)) | (DIO_ConfigParam[PortId][Loop].PortDirection));
+            PORT_REG(PortId) =PORT_REG(PortId) | (DIO_ConfigParam[PortId][Loop].PortMask &
+                                ((uint8)(~DIO_ConfigParam[PortId][Loop].PortDirection) & DIO_ConfigParam[PortId][Loop].IsPullupResistorUsed));
         }
         Result = DIO_OK;
     } else {
@@ -98,8 +106,8 @@ DIO_CheckType DIO_ChannelDir(uint8 PortId, uint8 ChannelId, uint8 Direction) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
-            DDR_REG(PortId) &= ~(1 << ChannelId);
-            DDR_REG(PortId) |= ((1 << ChannelId) & Direction);
+            DDR_REG(PortId) = DDR_REG(PortId) & ((uint8)(~((uint8)((uint8)1 << ChannelId))));
+            DDR_REG(PortId) = DDR_REG(PortId) | ((uint8)((uint8)((uint8)1 << ChannelId) & Direction));
             Result = DIO_OK;
         } else{
             Result = DIO_NOK;
@@ -132,8 +140,8 @@ DIO_CheckType DIO_ChannelWrite(uint8 PortId, uint8 ChannelId, uint8 Data) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
-            PORT_REG(PortId) &= ~(1 << ChannelId);
-            PORT_REG(PortId) |= (1 << ChannelId) & Data;
+            PORT_REG(PortId) = PORT_REG(PortId) & ((uint8)(~((uint8)((uint8)1 << ChannelId))));
+            PORT_REG(PortId) = PORT_REG(PortId) | (((uint8)((uint8)1 << ChannelId) & Data));
             Result = DIO_OK;
         } else{
             Result = DIO_NOK;
@@ -165,7 +173,7 @@ DIO_CheckType DIO_ChannelRead(uint8 PortId, uint8 ChannelId, uint8 *DataPtr) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
-            if ((1 << ChannelId) & PIN_REG(PortId)) {
+            if (((uint8)((uint8)1 << ChannelId) & PIN_REG(PortId))) {
                 *DataPtr = (uint8)0xff;
             } else {
                 *DataPtr = (uint8)0x00;
@@ -250,7 +258,7 @@ DIO_CheckType DIO_PortWrite(uint8 PortId, uint8 Data) {
 DIO_CheckType DIO_PortRead(uint8 PortId, uint8 *DataPtr) {
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
-        *DataPtr = PIN_REG(PortId);
+        *DataPtr = (uint8)PIN_REG(PortId);
         Result = DIO_OK;
     } else {
         Result = DIO_NOK;

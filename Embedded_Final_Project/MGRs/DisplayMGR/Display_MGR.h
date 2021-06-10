@@ -23,8 +23,8 @@ void write_State(uint8 state);
 
 void write_CRT_Temp(uint8 crt_temp);
 
-void write_Set_Temp(uint8 set_temp);
+void WriteSetTemp(uint8 set_temp);
 
-void Activate_LCD();
+void Activate_LCD(void);
 
 #endif /* LCD_MANAGER_H_ */

@@ -109,10 +109,10 @@
             <Value>../MCAL/PWM</Value>
             <Value>../HAL/Scheduler</Value>
             <Value>../HAL/Calibrator_Resistor</Value>
-            <Value>../MGRs/LCDManager</Value>
             <Value>../MGRs/ModeMGR</Value>
             <Value>../MGRs/TempMGR</Value>
             <Value>../MGRs/KeyPadMGR</Value>
+            <Value>../MGRs/DisplayMGR</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -245,9 +245,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Debug\" />
-    <Folder Include="Debug\Manager\" />
-    <Folder Include="Debug\Manager\LCDManager\" />
     <Folder Include="HAL\Calibrator_Resistor\" />
     <Folder Include="HAL\Calibrator_Resistor\" />
     <Folder Include="HAL\LCD" />
