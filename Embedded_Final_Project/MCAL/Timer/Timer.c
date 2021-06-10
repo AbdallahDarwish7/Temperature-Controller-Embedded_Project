@@ -129,6 +129,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
             uint8 Timer1RegModeRegValue = 0x00;
             uint8 Timer1RegComRegValue = 0x00;
             for (Loop = 0U; Loop < Modes1RegNum; Loop++) {
+                /* JUSTIFICATION: Modes1RegNum get the right length of array and not out of boundary indexing*/
                 if (Timer1RegModes[Loop] == TimerMode) {
                     Timer1RegModeRegValue = Timer1RegModesRegValues[Loop];
                 }
@@ -136,6 +137,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
             *(TCCRs1[TimerIndex]) &= Timers1RegModesMask[TimerIndex];
             *(TCCRs1[TimerIndex]) |= Timer1RegModeRegValue;
             for (Loop = 0U; Loop < Coms1RegNum; Loop++) {
+                /* JUSTIFICATION: Coms1RegNum get the right length of array and not out of boundary indexing*/
                 if (Timer1RegComs[Loop] == TimerCom) {
                     Timer1RegComRegValue = Timer1RegComsRegValues[Loop];
                 }
@@ -155,6 +157,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
             uint8 Modes2RegNum = Timers2RegModesNum[TimerIndex];
             uint16 Timer2RegModeRegValue = 0x0000;
             for (Loop = 0U; Loop < Modes2RegNum; Loop++) {
+                /* JUSTIFICATION: Modes2RegNum get the right length of array and not out of boundary indexing*/
                 if (Timer2RegModes[Loop] == TimerMode) {
                     Timer2RegModeRegValue = Timer2RegModesRegValues[Loop];
                 }
@@ -174,6 +177,7 @@ void Timer_Init(uint8 TimerId, uint8 TimerMode, uint8 TimerCom) {
 
 void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
     if (TimerId < NUM_TIMERS) {
+        /* JUSTIFICATION: local variables for the same meaning */
         uint8 Loop;
         uint8 TimerIndex = 0;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
@@ -188,6 +192,7 @@ void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
             uint8 Prescaler1RegNum = Timers1RegPrescalersNum[TimerIndex];
             uint8 Timer1RegPrescalerRegValue = 0x00;
             for (Loop = 0U; Loop < Prescaler1RegNum; Loop++) {
+                /* JUSTIFICATION: Prescaler1RegNum get the right length of array and not out of boundary indexing*/
                 if (Timer1RegPrescalers[Loop] == TimerPreScaler) {
                     Timer1RegPrescalerRegValue = Timer1RegPrescalerRegValues[Loop];
                 }
@@ -207,6 +212,7 @@ void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
             uint8 Prescaler2RegNum = Timers2RegPrescalersNum[TimerIndex];
             uint16 Timer2RegPrescalerRegValue = 0x00000;
             for (Loop = 0U; Loop < Prescaler2RegNum; Loop++) {
+                /* JUSTIFICATION: Prescaler2RegNum get the right length of array and not out of boundary indexing*/
                 if (Timer2RegPrescalers[Loop] == TimerPreScaler) {
                     Timer2RegPrescalerRegValue = Timer2RegPrescalerRegValues[Loop];
                 }
@@ -225,6 +231,7 @@ void Timer_Start(uint8 TimerId, uint16 TimerPreScaler) {
 
 void Timer_Stop(uint8 TimerId) {
     if (TimerId < NUM_TIMERS) {
+        /* JUSTIFICATION: local variables for the same meaning */
         uint8 TimerIndex = 0;
         uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
@@ -254,6 +261,7 @@ void Timer_Stop(uint8 TimerId) {
 
 void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint8 TimerCom) {
     if (TimerId < NUM_TIMERS) {
+        /* JUSTIFICATION: local variables for the same meaning */
         uint8 TimerIndex = 0;
         uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
@@ -302,6 +310,7 @@ void Timer_SetDutyCycle(uint8 TimerId, float32 Percentage, uint8 TimerMode, uint
 uint8 Timer_Is_Running(uint8 TimerId) {
     uint8 IsRunning = 0;
     if (TimerId < NUM_TIMERS) {
+        /* JUSTIFICATION: local variables for the same meaning */
         uint8 TimerIndex = 0;
         uint8 Loop;
         if (TimersRegMode[TimerId] == TIMER_1_REG) {
@@ -319,9 +328,9 @@ uint8 Timer_Is_Running(uint8 TimerId) {
                     break;
                 }
             }
-//            IsRunning = *(TCCRs2[TimerIndex]) & (uint8)(~(uint8)TIMERS2REG_STOP_MASK);
-//            IsRunning = IsRunning + (*(TCCRs2[TimerIndex + 1U]) & (uint8)(~(uint8)(TIMERS2REG_STOP_MASK >> 8U)));
-            IsRunning = *(TCCRs2[TimerIndex + 1U]) & 0x07;
+           /* IsRunning = *(TCCRs2[TimerIndex]) & (uint8)(~(uint8)TIMERS2REG_STOP_MASK);
+            IsRunning = IsRunning + (*(TCCRs2[TimerIndex + 1U]) & (uint8)(~(uint8)(TIMERS2REG_STOP_MASK >> 8U)));*/
+            IsRunning = *(TCCRs2[TimerIndex + 1U]) & 0x07U;
         } else {
             /*Timer not in the defined types*/
         }
