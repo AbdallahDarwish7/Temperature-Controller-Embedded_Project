@@ -12,26 +12,22 @@
 #include "KeyPad.h"
 #include "Temp_MGR.h"
 #include "Scheduler.h"
-#include "DIO.h"
 
-uint8 DelayFlag = 0;
+uint8 DelayFlag = 0U;
 void callback(){
-    DelayFlag = 1;
-    Delay_ms(200, callback);
+    DelayFlag = 1U;
+    Delay_ms(200U, callback);
 }
 
 int main(void) {
     SystemConfig();
-    Delay_ms(2000, callback);
-    DIO_ChannelDir(0, 1, 0xff);
-    uint8 oldCurrTemp;
-    uint8 oldSetTemp;
+    Delay_ms(2000U, callback);
+    uint8 oldCurrTemp = currentTemp;
+    uint8 oldSetTemp = setTemp;
     MachineStateType machineState;
-    oldCurrTemp = currentTemp;
-    oldSetTemp = setTemp;
     while (1){
-        if(DelayFlag == 1){
-            DelayFlag = 0;
+        if(DelayFlag == 1U){
+            DelayFlag = 0U;
             machineState = GetMachineState();
             if (machineState != ERROR) {
                 if (machineState != STANDBY) {
@@ -61,7 +57,7 @@ int main(void) {
                 }
             }
         }
-        _delay_us(1);
+        _delay_us(1U);
     }
 }
 

@@ -33,9 +33,9 @@ uint8 checkHeaterResponseFlag = 0;
  *                 
  */
 void SystemPeriodicity_Config(void){
-    PeriodicDelay_ms(200, &UpdateCurrentTemp);
-    PeriodicDelay_ms(500, &UpdateCalibratorRead);
-    PeriodicDelay_ms(100, &UpdateDutyCycle);
+    PeriodicDelay_ms(200U, &UpdateCurrentTemp);
+    PeriodicDelay_ms(500U, &UpdateCalibratorRead);
+    PeriodicDelay_ms(100U, &UpdateDutyCycle);
 }
 
 

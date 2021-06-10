@@ -66,7 +66,7 @@ void DeleteDelay_ms(VoidCallback callback) {
 }
 
 ISR(TIMER2_COMP_vect) {
-    /* JUSTIFICATION: local variable for the same meaning */
+    /* JUSTIFICATION: local variables for the same meaning */
     uint8 Loop;
     uint8 isThereCallback = 0;
     for (Loop = 0U; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {

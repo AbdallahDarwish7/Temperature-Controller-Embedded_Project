@@ -103,6 +103,7 @@ DIO_CheckType DIO_Init(uint8 PortId) {
  *           returns DIO_NOK on Error 
  */
 DIO_CheckType DIO_ChannelDir(uint8 PortId, uint8 ChannelId, uint8 Direction) {
+    /* JUSTIFICATION: local variable for the same meaning */
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
@@ -170,6 +171,7 @@ DIO_CheckType DIO_ChannelWrite(uint8 PortId, uint8 ChannelId, uint8 Data) {
  *           returns DIO_NOK on Error 
  */
 DIO_CheckType DIO_ChannelRead(uint8 PortId, uint8 ChannelId, uint8 *DataPtr) {
+    /* JUSTIFICATION: local variable for the same meaning */
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         if (ChannelId < DIO_NUM_OF_PORT_CHANNELS){
@@ -204,6 +206,7 @@ DIO_CheckType DIO_ChannelRead(uint8 PortId, uint8 ChannelId, uint8 *DataPtr) {
  *           returns DIO_NOK on Error 
  */
 DIO_CheckType DIO_PortDir(uint8 PortId, uint8 Direction) {
+    /* JUSTIFICATION: local variable for the same meaning */
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         DDR_REG(PortId) = Direction;
@@ -256,6 +259,7 @@ DIO_CheckType DIO_PortWrite(uint8 PortId, uint8 Data) {
  *           returns DIO_NOK on Error 
  */
 DIO_CheckType DIO_PortRead(uint8 PortId, uint8 *DataPtr) {
+    /* JUSTIFICATION: local variable for the same meaning */
     DIO_CheckType Result;
     if (PortId < DIO_NUM_OF_PORTS) {
         *DataPtr = (uint8)PIN_REG(PortId);
