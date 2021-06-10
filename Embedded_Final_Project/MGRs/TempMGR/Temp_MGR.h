@@ -35,8 +35,6 @@ void StopGetSetTemp(void);
 
 void StartGetSetTemp(void);
 
-void GetSetTempWrapper(void);
-
 void UpdateCurrentTemp(void);
 
 void UpdateInputTemp(uint8 InputTemp);
