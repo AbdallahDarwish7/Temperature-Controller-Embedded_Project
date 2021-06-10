@@ -13,6 +13,6 @@ typedef struct
 }LCD_ConfigParamType;
 extern const LCD_ConfigParamType LCD_ConfigParam;
 
-#endif // LCD_CFG_H_INCLUDED
+#endif /* LCD_CFG_H_INCLUDED */
 
 

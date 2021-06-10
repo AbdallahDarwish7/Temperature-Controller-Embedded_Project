@@ -59,10 +59,10 @@ void KeyPad_Enter(void) {
         GlobalCallback(Temperature);
         Temperature =(uint8)0;
         if(GetSetTempRecFlag){
-            Delay_ms((uint8)200, &GetFirstInput);
+            Delay_ms((uint32)200, &GetFirstInput);
         }
     } else {
-        Delay_ms((uint8)200, &KeyPad_Enter);
+        Delay_ms((uint32)200, &KeyPad_Enter);
     }
 }
 
@@ -85,12 +85,12 @@ static void GetSecondInput(void) {
     if ((key > (uint8)2) && (key != (uint8)0xff)) {
         Temperature =((uint8) 10 * Temperature) + Characters[key - (uint8)3];
         WriteSetTemp(Temperature);
-        Delay_ms((uint8)200, &KeyPad_Enter);
+        Delay_ms((uint32)200, &KeyPad_Enter);
     } else if (key != (uint8) 0) {
-        Delay_ms((uint8)200, &GetSecondInput);
+        Delay_ms((uint32)200, &GetSecondInput);
     } else {
         WriteSetTemp(Temperature);
-        Delay_ms((uint8)200, &GetFirstInput);
+        Delay_ms((uint32)200, &GetFirstInput);
     }
 }
 
@@ -104,19 +104,19 @@ static void GetFirstInput(void) {
                 key = KeyPad_GetKey();
                 if (key == (uint8)0xff) {
                     WriteSetTemp(Temperature);
-                    Delay_ms((uint8)200, &GetSecondInput);
+                    Delay_ms((uint32)200, &GetSecondInput);
                     break;
                 }
-                _delay_us((uint8)100);
+                _delay_us((float32)100);
             }
         } else {
             if(GetSetTempRecFlag){
-                Delay_ms((uint8)200, &GetFirstInput);
+                Delay_ms((uint32)200, &GetFirstInput);
             }
         }
     } else {
         if(GetSetTempRecFlag){
-            Delay_ms((uint8)200, &GetFirstInput);
+            Delay_ms((uint32)200, &GetFirstInput);
         }
     }
 }
