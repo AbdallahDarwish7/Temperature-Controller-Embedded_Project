@@ -73,4 +73,5 @@ void SystemConfig() {
     SystemPeriodicity_Config();
     KeyPad_Init();
     GetSetTempConfig(UpdateInputTemp);
+	ActivateSystem();
 }

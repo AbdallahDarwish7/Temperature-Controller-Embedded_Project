@@ -96,7 +96,7 @@ void LCD_WriteChar(uint8 char_data)  /* LCD data0 write function */
     LCD_Enable();    /* Enable pulse */
     _delay_us((float32)1);
     LCD_Disable();
-    _delay_us((float32)100);            /* Data write delay */
+    _delay_us((float32)100);            /* Data write DelayFlag */
     LCD_Write_Lower(char_data);
     LCD_RS_Reg();    /* RS=0 command reg. */
     LCD_Write_Operation();    /* RW=0 Write operation */
@@ -119,7 +119,7 @@ void LCD_Init(void)            /* LCD Initialize function */
 {
     DIO_Init((uint8)2);
     DIO_Init((uint8)3);
-    Delay_ms((uint8)20, &LCD_Init_Delay);        /* LCD Power ON delay always >15ms */
+    Delay_ms((uint8)20, &LCD_Init_Delay);        /* LCD Power ON DelayFlag always >15ms */
     LCD_WriteCommand((uint8)0X02);
     LCD_WriteCommand((uint8)0x28);        /* Initialization of 16X2 LCD in 8bit mode */
     LCD_WriteCommand((uint8)0x0C);        /* Display ON Cursor OFF */

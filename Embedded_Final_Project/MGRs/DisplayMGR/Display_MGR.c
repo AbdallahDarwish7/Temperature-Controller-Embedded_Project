@@ -12,7 +12,7 @@
 #include "Scheduler.h"
 
 
-uint8* States[4] = {"STANDBY", "OPERATION", "NORMAL", "ERROR"};
+uint8* States[4] = {(uint8*)"STANDBY", (uint8*)"OPERATION", (uint8*)"NORMAL", (uint8*)"ERROR"};
 uint8 numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};
 uint8 loop = (uint8)0;
 uint8 count ;
@@ -20,7 +20,7 @@ uint8 count ;
 void display_Welcome_screen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
-    LCD_WriteStringAt_xy((uint8)0, (uint8)0, "WELCOME");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)0, (uint8*)"WELCOME");
     Delay_ms((uint32)100, &Shift_Right);
 }
 
@@ -61,18 +61,18 @@ void display_Welcome_once(void){
 void idle_screen(void){
 	LCD_Clear();
     LCD_WriteChar(' ');
-    LCD_WriteStringAt_xy((uint8)0, (uint8)0, "SET:25");
-    LCD_WriteStringAt_xy((uint8)0, (uint8)10, "CRT:YY");
-    LCD_WriteStringAt_xy((uint8)1, (uint8)0, "STATE:STANDBY");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)0, (uint8*)"SET:25");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)10, (uint8*)"CRT:YY");
+    LCD_WriteStringAt_xy((uint8)1, (uint8)0, (uint8*)"STATE:STANDBY");
 }
 
 void write_State(uint8 state){
-    LCD_WriteStringAt_xy((uint8)1, (uint8)6, "          ");
+    LCD_WriteStringAt_xy((uint8)1, (uint8)6, (uint8*)"          ");
     LCD_WriteStringAt_xy((uint8)1, (uint8)6, States[state]);
 }
 
 void write_CRT_Temp(uint8 crt_temp){
-    LCD_WriteStringAt_xy((uint8)0, (uint8)14, "  ");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)14, (uint8*)"  ");
 	uint8 first = (uint8)(crt_temp / (uint8)10);
 	uint8 second = (uint8)(crt_temp % (uint8)10);
 	uint8 temp[3] = {numbers[first], numbers[second], '\0'};
@@ -80,7 +80,7 @@ void write_CRT_Temp(uint8 crt_temp){
 }
 
 void WriteSetTemp(uint8 set_temp) {
-    LCD_WriteStringAt_xy((uint8)0, (uint8)4, "  ");
+    LCD_WriteStringAt_xy((uint8)0, (uint8)4, (uint8*)"  ");
 	uint8 firstset = (uint8)(set_temp / (uint8)10);
 	uint8 secondset = (uint8)(set_temp % (uint8)10);
 	uint8 tempset[3] = {numbers[firstset], numbers[secondset], '\0'};
