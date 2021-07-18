@@ -8,11 +8,11 @@
 
 typedef void (*VoidCallback)(void);
 
-void Delay_ms(uint32 delay_ms, VoidCallback callback);
+void StartSoftwareAlarm(uint32 delay_ms, VoidCallback callback);
 
-void DeleteDelay_ms(VoidCallback callback);
+void DeleteSoftwareAlarm(VoidCallback callback);
 
-void PeriodicDelay_ms(uint32 delay_ms, VoidCallback callback);
+void ConfigPeriodicDelay_ms(uint32 delay_ms, VoidCallback callback);
 
 void StopPeriodicDelay_ms(VoidCallback callback);
 

@@ -9,7 +9,8 @@
 #ifndef LCD_H_
 #define LCD_H_
 #include "typedefs.h"
-
+#include "Scheduler.h"
+extern VoidCallback  LCD_Callback;
 uint8 CheckBit(uint8 Data, uint8 bitNum);
 
 void LCD_Write_Upper(uint8 char_data);
@@ -47,7 +48,5 @@ void LCD_Shift_R(void);
 void LCD_Shift_L(void);
 
 void LCD_Custom_Char(uint8 loc,  const uint8 msg[]);
-
-void test_LCD(void);
 
 #endif /* LCD_H_ */

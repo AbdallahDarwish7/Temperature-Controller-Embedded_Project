@@ -9,9 +9,11 @@
 #include "DIO.h"
 #include "LCD.h"
 #include "LCD_Cfg.h"
-#include "Scheduler.h"
 #include <util/delay.h>
-uint8 data_global;
+#include "Macros.h"
+
+VoidCallback  LCD_Callback = NULL;
+
 void LCD_Init_Delay(void);
 
 uint8 CheckBit(uint8 Data, uint8 bitNum) {
@@ -70,27 +72,31 @@ void LCD_Disable(void) {
 }
 
 void LCD_WriteCommand(uint8 cmnd) {
-    data_global = cmnd;
     LCD_Write_Upper(cmnd);
-    LCD_RS_Command();    /* RS=0 command reg. */
-    LCD_Write_Operation();    /* RW=0 Write operation */
-    LCD_Enable();    /* Enable pulse */
+    /* RS=0 command reg. */
+    LCD_RS_Command();
+    /* RW=0 Write operation */
+    LCD_Write_Operation();
+    /* Enable pulse */
+    LCD_Enable();
     _delay_us(1);
     LCD_Disable();
     _delay_us(100);
-    /*Delay_ms(1, LCD_Write_Lower);*/
     LCD_Write_Lower(cmnd);
-    LCD_RS_Command();    /* RS=0 command reg. */
-    LCD_Write_Operation();    /* RW=0 Write operation */
-    LCD_Enable();    /* Enable pulse */
+    /* RS=0 command reg. */
+    LCD_RS_Command();
+    /* RW=0 Write operation */
+    LCD_Write_Operation();
+    /* Enable pulse */
+    LCD_Enable();
     _delay_us(1);
     LCD_Disable();
     _delay_us(2);
+    _delay_us(100);
 }
 
 void LCD_WriteChar(uint8 char_data)  /* LCD data0 write function */
 {
-    data_global = char_data;
     LCD_Write_Upper(char_data);
     LCD_RS_Reg();    /* RS=0 command reg. */
     LCD_Write_Operation();    /* RW=0 Write operation */
@@ -109,24 +115,21 @@ void LCD_WriteChar(uint8 char_data)  /* LCD data0 write function */
 
 void LCD_Init_Delay(void) {
     LCD_WriteCommand((uint8)0X02);
-    LCD_WriteCommand((uint8)0x28);        /* Initialization of 16X2 LCD in 8bit mode */
+    LCD_WriteCommand((uint8)0x28);        /* Initialization of 16X2 LCD in 4bit mode */
     LCD_WriteCommand((uint8)0x0C);        /* Display ON Cursor OFF */
     LCD_WriteCommand((uint8)0x06);        /* Auto Increment cursor */
     LCD_WriteCommand((uint8)0x01);        /* clear display */
     _delay_us((float32)2);
+    if(LCD_Callback !=NULL){
+        LCD_Callback();
+    }
 }
 
 void LCD_Init(void)            /* LCD Initialize function */
 {
     DIO_Init((uint8)2);
     DIO_Init((uint8)3);
-    Delay_ms((uint8)20, &LCD_Init_Delay);        /* LCD Power ON DelayFlag always >15ms */
-    LCD_WriteCommand((uint8)0X02);
-    LCD_WriteCommand((uint8)0x28);        /* Initialization of 16X2 LCD in 8bit mode */
-    LCD_WriteCommand((uint8)0x0C);        /* Display ON Cursor OFF */
-    LCD_WriteCommand((uint8)0x06);        /* Auto Increment cursor */
-    LCD_WriteCommand((uint8)0x01);        /* clear display */
-    _delay_us((float32)2);
+    StartSoftwareAlarm((uint8)25, &LCD_Init_Delay);        /* LCD Power ON DelayFlag always >15ms */
 }
 
 
@@ -149,8 +152,7 @@ void LCD_WriteStringAt_xy(uint8 row, uint8 pos, const uint8 str[])  /* Send stri
     else if ((row == (uint8)1) && (pos < (uint8)16))
     {
         LCD_WriteCommand((pos & (uint8)0x0F) | (uint8)0xC0);    /* Command of first row and required position<16 */
-    }
-    else{}
+    }else{}
 
     LCD_WriteString(str);        /* Call LCD string function */
 }
@@ -182,25 +184,3 @@ void LCD_Custom_Char(uint8 loc, const uint8 msg[]) {
         }
     }
 }
-
-/*void test_LCD(void) {
-    uint8 loop4;
-
-    uint8 Characters[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-
-    DIO_Init((uint8)2);
-    DIO_Init((uint8)3);
-    LCD_Init();
-    LCD_WriteCommand((uint8)0x80);
-    LCD_WriteString(" ");
-    LCD_WriteStringAt_xy(0, (uint8) 0, "HELLO");
-    LCD_WriteStringAt_xy(0, (uint8) 12, "Kamal");
-    LCD_WriteCommand(0xc0);
-
-    for (loop4 = (uint8) 0; loop4 < (uint8) 8; loop4++) {
-        LCD_WriteChar(Characters[loop4]);
-        LCD_WriteChar(' ');
-
-    }
-}
-*/

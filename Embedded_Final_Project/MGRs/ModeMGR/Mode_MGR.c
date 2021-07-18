@@ -33,9 +33,9 @@ uint8 checkHeaterResponseFlag = 0;
  *                 
  */
 void SystemPeriodicity_Config(void){
-    PeriodicDelay_ms(200U, &UpdateCurrentTemp);
-    PeriodicDelay_ms(500U, &UpdateCalibratorRead);
-    PeriodicDelay_ms(100U, &UpdateDutyCycle);
+    ConfigPeriodicDelay_ms(200U, &UpdateCurrentTemp);
+    ConfigPeriodicDelay_ms(500U, &UpdateCalibratorRead);
+    ConfigPeriodicDelay_ms(100U, &UpdateDutyCycle);
 }
 
 
@@ -86,7 +86,7 @@ void UpdateSystem(MachineStateType state){
         case NORMAL:
         {
             if (checkHeaterResponseFlag == (uint8)1){
-                DeleteDelay_ms(&CheckHeaterResponse);
+                DeleteSoftwareAlarm(&CheckHeaterResponse);
             }
             if (machineState != NORMAL){
                 PWM_Stop();
@@ -99,7 +99,7 @@ void UpdateSystem(MachineStateType state){
         {
             write_State(STANDBY);
             if (checkHeaterResponseFlag == (uint8)1){
-                DeleteDelay_ms(&CheckHeaterResponse);
+                DeleteSoftwareAlarm(&CheckHeaterResponse);
             }
             if (machineState != STANDBY){
                 DeactivateSystem();
@@ -114,10 +114,10 @@ void UpdateSystem(MachineStateType state){
             write_State(OPERATIONAL);
             if ((machineState != OPERATIONAL) && (machineState != NORMAL)) {
                ActivateSystem();
-                Delay_ms(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
+                StartSoftwareAlarm(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
             } else if (machineState == NORMAL){
                 PWM_Start();
-                Delay_ms(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
+                StartSoftwareAlarm(MAX_TIME_OF_RESPONSE, &CheckHeaterResponse);
             }
             else{
                 /* Empty else clause according to miscra rule 14.10 that All if ... else if constructs shall be terminated with an else clause*/
@@ -130,7 +130,7 @@ void UpdateSystem(MachineStateType state){
         case ERROR:
         {
             if (checkHeaterResponseFlag == (uint8)1){
-                DeleteDelay_ms(&CheckHeaterResponse);
+                DeleteSoftwareAlarm(&CheckHeaterResponse);
             }
             DeactivateSystem();
             machineState = ERROR;

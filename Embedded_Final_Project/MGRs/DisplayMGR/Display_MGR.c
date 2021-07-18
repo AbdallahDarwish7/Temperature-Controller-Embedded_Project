@@ -19,7 +19,7 @@ void DisplayWelcomeScreen(uint8 times) {
     LCD_WriteChar(' ');
 	count = times;
     LCD_WriteStringAt_xy((uint8)0, (uint8)0, (uint8*)"WELCOME");
-    Delay_ms((uint32)100, &Shift_Right);
+    StartSoftwareAlarm((uint32) 100, &Shift_Right);
 }
 
 void Shift_Right(void) {
@@ -27,9 +27,9 @@ void Shift_Right(void) {
 	loop++;
 	if(loop > (uint8)9){
 	    LCD_Shift_L();
-        Delay_ms((uint32)100, &Shift_Left);
+        StartSoftwareAlarm((uint32) 100, &Shift_Left);
 	} else{
-        Delay_ms((uint32)100, &Shift_Right);
+        StartSoftwareAlarm((uint32) 100, &Shift_Right);
 	}
 }
 
@@ -40,12 +40,12 @@ void Shift_Left(void) {
         count--;
 		if(count > (uint8)0){
             LCD_Shift_R();
-            Delay_ms((uint32)100, &Shift_Right);
+            StartSoftwareAlarm((uint32) 100, &Shift_Right);
 		}else{
 			idle_screen();
 		}
 	} else{
-        Delay_ms((uint32)100, &Shift_Left);
+        StartSoftwareAlarm((uint32) 100, &Shift_Left);
 	}
 
 }
@@ -80,6 +80,10 @@ void WriteSetTemp(uint8 set_temp) {
 
 }
 
+void DisplayWelcomeScreenWrapper(void){
+    DisplayWelcomeScreen(3U);
+}
 void Activate_LCD(void){
 	LCD_Init();
+    LCD_Callback = DisplayWelcomeScreenWrapper;
 }

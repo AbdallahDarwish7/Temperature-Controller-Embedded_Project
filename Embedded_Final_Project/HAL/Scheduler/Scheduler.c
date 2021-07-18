@@ -24,7 +24,7 @@ uint32 PeriodicCounts[NUM_PERIODIC_CALLBACKS];
 uint8 PeriodicState[NUM_PERIODIC_CALLBACKS];
 static uint8 TimerIdPeriodicDelay = 1;
 
-void Delay_ms(uint32 delay_ms, VoidCallback callback) {
+void StartSoftwareAlarm(uint32 delay_ms, VoidCallback callback) {
     uint8 timerIsRunning = Timer_Is_Running(TimerIdForOneShotDelay);
     uint8 Loop;
     if (!timerIsRunning) {
@@ -53,7 +53,7 @@ void Delay_ms(uint32 delay_ms, VoidCallback callback) {
     }
 }
 
-void DeleteDelay_ms(VoidCallback callback) {
+void DeleteSoftwareAlarm(VoidCallback callback) {
     cli();
     /* JUSTIFICATION: local variable for the same meaning */
     uint8 Loop;
@@ -87,7 +87,7 @@ ISR(TIMER2_COMP_vect) {
     }
 }
 
-void PeriodicDelay_ms(uint32 delay_ms, VoidCallback callback) {
+void ConfigPeriodicDelay_ms(uint32 delay_ms, VoidCallback callback) {
     /* JUSTIFICATION: local variable for the same meaning */
     uint8 timerIsRunning = Timer_Is_Running(TimerIdPeriodicDelay);
     /* JUSTIFICATION: local variable for the same meaning */

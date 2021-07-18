@@ -106,9 +106,9 @@ void GetSetTempConfig(ParamCallback callback) {
 
 void StopGetSetTemp(void){
     GetSetTempRecFlag =(uint8)0;
-    DeleteDelay_ms(&GetFirstInput);
-    DeleteDelay_ms(&GetSecondInput);
-    DeleteDelay_ms(&WaitEnterKey);
+    DeleteSoftwareAlarm(&GetFirstInput);
+    DeleteSoftwareAlarm(&GetSecondInput);
+    DeleteSoftwareAlarm(&WaitEnterKey);
 }
 
 void StartGetSetTemp(void){
@@ -125,10 +125,10 @@ static void WaitEnterKey(void) {
         GlobalCallback(Temperature);
         Temperature =(uint8)0;
         if(GetSetTempRecFlag){
-            Delay_ms((uint32)200, &GetFirstInput);
+            StartSoftwareAlarm((uint32) 200, &GetFirstInput);
         }
     } else {
-        Delay_ms((uint32)200, &WaitEnterKey);
+        StartSoftwareAlarm((uint32) 200, &WaitEnterKey);
     }
 }
 
@@ -138,12 +138,12 @@ static void GetSecondInput(void) {
     if ((key > (uint8)2) && (key != (uint8)0xff)) {
         Temperature =((uint8) 10 * Temperature) + KeyPad_GetKeyValue(key);
         WriteSetTemp(Temperature);
-        Delay_ms((uint32)200, &WaitEnterKey);
+        StartSoftwareAlarm((uint32) 200, &WaitEnterKey);
     } else if (key != (uint8) 0) {
-        Delay_ms((uint32)200, &GetSecondInput);
+        StartSoftwareAlarm((uint32) 200, &GetSecondInput);
     } else {
         WriteSetTemp(Temperature);
-        Delay_ms((uint32)200, &GetFirstInput);
+        StartSoftwareAlarm((uint32) 200, &GetFirstInput);
     }
 }
 
@@ -157,19 +157,19 @@ static void GetFirstInput(void) {
                 key = KeyPad_GetKey();
                 if (key == (uint8)0xff) {
                     WriteSetTemp(Temperature);
-                    Delay_ms((uint32)200, &GetSecondInput);
+                    StartSoftwareAlarm((uint32) 200, &GetSecondInput);
                     break;
                 }
                 _delay_us((float32)100);
             }
         } else {
             if(GetSetTempRecFlag){
-                Delay_ms((uint32)200, &GetFirstInput);
+                StartSoftwareAlarm((uint32) 200, &GetFirstInput);
             }
         }
     } else {
         if(GetSetTempRecFlag){
-            Delay_ms((uint32)200, &GetFirstInput);
+            StartSoftwareAlarm((uint32) 200, &GetFirstInput);
         }
     }
 }

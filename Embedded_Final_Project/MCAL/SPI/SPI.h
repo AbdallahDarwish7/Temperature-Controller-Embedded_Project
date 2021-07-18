@@ -35,9 +35,9 @@
  *                      Functions Declarations                                  *
  *******************************************************************************/
 
-void SPI_InitMaster(uint8 StartBit, uint8 ClkPolarity);
-void SPI_SendByte(uint8 data);
-uint8 SPI_RecieveByte(void);
+void SPI_InitMaster(uint8 StartBit, uint8 ClkPhase);
+uint8 SPI_SendByte(uint8 data);
+uint8 SPI_ReceiveByte(void);
 
 
 #endif /*FINAL_PROJECT_SPI_H*/

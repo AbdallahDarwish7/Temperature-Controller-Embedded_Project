@@ -15,7 +15,7 @@
 uint8 DelayFlag = 0U;
 int32 main(void) {
     SystemConfig();
-    Delay_ms(6000U, &callback);
+    StartSoftwareAlarm(6000U, &callback);
     uint8 oldCurrTemp = currentTemp;
     uint8 oldSetTemp = setTemp;
     MachineStateType machineState;
@@ -67,7 +67,6 @@ int32 main(void) {
 
 void SystemConfig(void) {
     Activate_LCD();
-    DisplayWelcomeScreen(3U);
     TempMGR_Init();
     InitCalibrator();
     SystemPeriodicity_Config();
@@ -75,5 +74,5 @@ void SystemConfig(void) {
 
 void callback(void){
     DelayFlag = 1U;
-    Delay_ms(200U, &callback);
+    StartSoftwareAlarm(200U, &callback);
 }

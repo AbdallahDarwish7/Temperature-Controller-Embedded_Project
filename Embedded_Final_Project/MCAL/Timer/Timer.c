@@ -339,6 +339,3 @@ uint8 Timer_Is_Running(uint8 TimerId) {
     }
     return IsRunning;
 }
-
-
-
