@@ -92,7 +92,7 @@ uint8 SPI_SendByte(uint8 data) {
 uint8 SPI_ReceiveByte(void)
 {
     /* Send garbage data to recieve the byte */
-    SPDR = 0xff;
+    SPDR = DUMMY;
     while(BIT_IS_CLEAR(SPSR,SPIF) == 1U){} /*wait until SPI interrupt flag=1(data0 is receive correctly)*/
     return SPDR; /*return the received byte from SPI data0 register*/
 }
