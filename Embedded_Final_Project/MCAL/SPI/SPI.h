@@ -10,6 +10,8 @@
 
 
 #define SPI_PORT_NUM ((uint8)1)
+// Just dummy data for sending by SPI to recieve byte from slave.
+#define DUMMY ((uint8)0x00u)
 
 /*******************************************************************************
  *                           DIO SPI Pins                                       *
@@ -38,6 +40,7 @@
 void SPI_InitMaster(uint8 StartBit, uint8 ClkPhase);
 uint8 SPI_SendByte(uint8 data);
 uint8 SPI_ReceiveByte(void);
+
 
 
 #endif /*FINAL_PROJECT_SPI_H*/
