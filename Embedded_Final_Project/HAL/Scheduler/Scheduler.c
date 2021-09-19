@@ -25,6 +25,7 @@ uint8 PeriodicState[NUM_PERIODIC_CALLBACKS];
 static uint8 TimerIdPeriodicDelay = 1;
 
 void StartSoftwareAlarm(uint32 delay_ms, VoidCallback callback) {
+    // Check if timmer is running, if not initialize it with nulls
     uint8 timerIsRunning = Timer_Is_Running(TimerIdForOneShotDelay);
     uint8 Loop;
     if (!timerIsRunning) {
@@ -32,6 +33,7 @@ void StartSoftwareAlarm(uint32 delay_ms, VoidCallback callback) {
             OneShotCallbacks[Loop] = NULL;
         }
     }
+    // Get the first null place in the array to put the new function pointer in it
     for (Loop = 0U; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {
         if (OneShotCallbacks[Loop] == NULL) {
             break;
@@ -41,7 +43,8 @@ void StartSoftwareAlarm(uint32 delay_ms, VoidCallback callback) {
         OneShotCallbacks[Loop] = callback;
         OneShotCounts[Loop] = (uint32)(delay_ms / 25U);
     }
-    /*25ms*/
+    
+    // Initiaize and run the timer
     if (!timerIsRunning) {
         Timer_Init(TimerIdForOneShotDelay, TIMER_CTC_MODE, TIMER_DISCONCTED_COM);
         /* JUSTIFICATION: may be unavoidable when addressing memory mapped registers or other hardware specific features*/
@@ -68,6 +71,7 @@ void DeleteSoftwareAlarm(VoidCallback callback) {
 ISR(TIMER2_COMP_vect) {
     /* JUSTIFICATION: local variables for the same meaning */
     uint8 Loop;
+    // Used to check if there is no callbacks in the array then stop the timer
     uint8 isThereCallback = 0;
     for (Loop = 0U; Loop < NUM_ONE_SHOT_CALLBACKS; Loop++) {
         if (OneShotCallbacks[Loop] != NULL) {
@@ -99,6 +103,7 @@ void ConfigPeriodicDelay_ms(uint32 delay_ms, VoidCallback callback) {
     }
     if (Loop < NUM_PERIODIC_CALLBACKS) {
         PeriodicCallbacks[Loop] = callback;
+        // These are the time needed to call the function
         PeriodicTimerOverflow[Loop] = (uint32)(delay_ms / 100U);
         PeriodicCounts[Loop] = PeriodicTimerOverflow[Loop];
     }
