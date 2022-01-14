@@ -79,5 +79,5 @@ System is consisted of the following:
     * 2. Refer to Chapter 12 in AVR mazidi for LM016 LCD interface.
     * 3. LCD shall be used in 4 pin data mode.
     * 4. All timing constraints shall be respected.
-    * 5. No delay loops is allowed for a time higher than 100us.
+    * 5. <strong style="color: red;">No delay loops is allowed for a time higher than 100us.</strong>
     * 6. Code shall not have any unjustified MISRA violations.
