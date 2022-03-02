@@ -6,7 +6,10 @@ provide the ability to reach a targeted temperature requested by a user interfac
 system shall provide information for the user about the system state, the current
 temperature and the selected set temperature.
 
-## System architecture:
+## System Architecture:
+![](system_architecture.png)
+
+## System Components:
 System is consisted of the following:
 1. Atmega32 Microcontroller.
 2. LM016 character LCD.
@@ -14,8 +17,11 @@ System is consisted of the following:
 4. 4X3 Keypad.
 5. PWM to voltage convertor module.
 6. Calibration resistor.
+7. 
+
 
 ## System application behavior:
+![](https://github.com/AbdallahDrwesh/Temperature-Controller-Embedded_Project/blob/master/Graph%20Design.jpg)
 * **1. Welcome screen:**<br>
   * 1. After power on, system shall display an animated welcome screen.<br>
   * 2. The welcome Screen shall display the word “WELCOME” on the Character LCD.
